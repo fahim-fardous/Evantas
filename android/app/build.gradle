@@ -1,0 +1,203 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+def getCurrentFlavor() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+    Pattern pattern
+    if (tskReqStr.contains("assemble"))
+        pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    else if (tskReqStr.contains("bundle"))
+        pattern = Pattern.compile("bundle(\\w+)(Release|Debug)")
+    else
+        pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
+    Matcher matcher = pattern.matcher(tskReqStr)
+    if (matcher.find())
+        return matcher.group(1).toLowerCase()
+    else {
+        println "NO MATCH FOUND"
+        return ""
+    }
+}
+
+flutter {
+    source '../..'
+    target "lib/main/main_" + getCurrentFlavor() + ".dart"
+}
+
+android {
+    namespace "com.mahfuznow.hello_flutter"
+    compileSdkVersion flutter.compileSdkVersion
+    ndkVersion flutter.ndkVersion
+
+    defaultConfig {
+        applicationId "com.mahfuznow.hello_flutter"
+
+        println("==================ANDROID Gradle Info ======================")
+        println("Current flavor: " + getCurrentFlavor())
+        println("Min SDK version: " + flutter.minSdkVersion)
+        println("Target SDK version: " + flutter.targetSdkVersion)
+        println("App Version code: " + flutterVersionCode)
+        println("App Version name: " + flutterVersionName)
+        println("==================ANDROID Gradle Info ======================")
+
+        minSdkVersion flutter.minSdkVersion
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+
+        multiDexEnabled true
+    }
+
+    flavorDimensions += "env"
+
+    productFlavors {
+        flavor_dev {
+            dimension "env"
+            applicationIdSuffix ".dev"
+            resValue "string", "app_name", "Hello Flutter Dev"
+        }
+        flavor_test {
+            dimension "env"
+            applicationIdSuffix ".test"
+            resValue "string", "app_name", "Hello Flutter Test"
+        }
+        flavor_staging {
+            dimension "env"
+            applicationIdSuffix ".staging"
+            resValue "string", "app_name", "Hello Flutter Staging"
+        }
+        flavor_prod {
+            dimension "env"
+            resValue "string", "app_name", "Hello Flutter"
+        }
+    }
+
+    signingConfigs {
+        flavor_devDebug {
+            storeFile project.rootProject.file("keystore/flavor_devDebug.jks")
+            storePassword project.getSecretKeys("flavor_devDebug.storePassword")
+            keyAlias "flavor_devDebug"
+            keyPassword project.getSecretKeys("flavor_devDebug.keyPassword")
+        }
+        flavor_devRelease {
+            storeFile project.rootProject.file("keystore/flavor_devRelease.jks")
+            storePassword project.getSecretKeys("flavor_devRelease.storePassword")
+            keyAlias "flavor_devRelease"
+            keyPassword project.getSecretKeys("flavor_devRelease.keyPassword")
+        }
+        flavor_testDebug {
+            storeFile project.rootProject.file("keystore/flavor_testDebug.jks")
+            storePassword project.getSecretKeys("flavor_testDebug.storePassword")
+            keyAlias "flavor_testDebug"
+            keyPassword project.getSecretKeys("flavor_testDebug.keyPassword")
+        }
+        flavor_testRelease {
+            storeFile project.rootProject.file("keystore/flavor_testRelease.jks")
+            storePassword project.getSecretKeys("flavor_testRelease.storePassword")
+            keyAlias "flavor_testRelease"
+            keyPassword project.getSecretKeys("flavor_testRelease.keyPassword")
+        }
+        flavor_stagingDebug {
+            storeFile project.rootProject.file("keystore/flavor_stagingDebug.jks")
+            storePassword project.getSecretKeys("flavor_stagingDebug.storePassword")
+            keyAlias "flavor_stagingDebug"
+            keyPassword project.getSecretKeys("flavor_stagingDebug.keyPassword")
+        }
+        flavor_stagingRelease {
+            storeFile project.rootProject.file("keystore/flavor_stagingRelease.jks")
+            storePassword project.getSecretKeys("flavor_stagingRelease.storePassword")
+            keyAlias "flavor_stagingRelease"
+            keyPassword project.getSecretKeys("flavor_stagingRelease.keyPassword")
+        }
+        flavor_prodDebug {
+            storeFile project.rootProject.file("keystore/flavor_prodDebug.jks")
+            storePassword project.getSecretKeys("flavor_prodDebug.storePassword")
+            keyAlias "flavor_prodDebug"
+            keyPassword project.getSecretKeys("flavor_prodDebug.keyPassword")
+        }
+        flavor_prodRelease {
+            storeFile project.rootProject.file("keystore/flavor_prodRelease.jks")
+            storePassword project.getSecretKeys("flavor_prodRelease.storePassword")
+            keyAlias "flavor_prodRelease"
+            keyPassword project.getSecretKeys("flavor_prodRelease.keyPassword")
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            if (getCurrentFlavor().contains("prod")) {
+                signingConfig signingConfigs.flavor_prodDebug
+            } else if (getCurrentFlavor().contains("staging")) {
+                signingConfig signingConfigs.flavor_stagingDebug
+            } else if (getCurrentFlavor().contains("test")) {
+                signingConfig signingConfigs.flavor_testDebug
+            } else {
+                signingConfig signingConfigs.flavor_devDebug
+            }
+        }
+        release {
+            if (getCurrentFlavor().contains("prod")) {
+                signingConfig signingConfigs.flavor_prodRelease
+            } else if (getCurrentFlavor().contains("staging")) {
+                signingConfig signingConfigs.flavor_stagingRelease
+            } else if (getCurrentFlavor().contains("test")) {
+                signingConfig signingConfigs.flavor_testRelease
+            } else {
+                signingConfig signingConfigs.flavor_devRelease
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/app/kotlin'
+    }
+}
+
+dependencies {}
+
+// Function to get secret keys from local.properties
+def getSecretKeys(String keyName) {
+    Properties properties = new Properties()
+    File localPropertiesFile = project.rootProject.file("local.properties")
+    if (localPropertiesFile.canRead()) {
+        properties.load(new FileInputStream(localPropertiesFile))
+    } else {
+        throw new GradleException("Could not read local.properties!")
+    }
+    return properties.getProperty(keyName)
+}
