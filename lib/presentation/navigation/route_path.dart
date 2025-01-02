@@ -1,3 +1,11 @@
+import 'package:hello_flutter/presentation/feature/add_event/route/add_event_argument.dart';
+import 'package:hello_flutter/presentation/feature/add_event/route/add_event_route.dart';
+import 'package:hello_flutter/presentation/feature/profile/route/profile_argument.dart';
+import 'package:hello_flutter/presentation/feature/profile/route/profile_route.dart';
+import 'package:hello_flutter/presentation/feature/event_details/route/event_details_argument.dart';
+import 'package:hello_flutter/presentation/feature/event_details/route/event_details_route.dart';
+import 'package:hello_flutter/presentation/feature/event_list/route/event_list_argument.dart';
+import 'package:hello_flutter/presentation/feature/event_list/route/event_list_route.dart';
 import 'package:hello_flutter/presentation/feature/splash/route/splash_argument.dart';
 import 'package:hello_flutter/presentation/feature/splash/route/splash_route.dart';
 import 'package:hello_flutter/presentation/base/base_argument.dart';
@@ -22,7 +30,11 @@ enum RoutePath {
   movieBookmark,
   setting,
   movieDetails,
-  splash, 
+  splash,
+  eventList,
+  eventDetails,
+  profile,
+  addEvent, 
   unknown;
 
   static RoutePath fromString(String? path) {
@@ -43,6 +55,14 @@ enum RoutePath {
         return RoutePath.movieDetails;
       case '/splash':
         return RoutePath.splash;
+      case '/eventList':
+        return RoutePath.eventList;
+      case '/eventDetails':
+        return RoutePath.eventDetails;
+      case '/profile':
+        return RoutePath.profile;
+      case '/addEvent':
+        return RoutePath.addEvent;
       default:
         return RoutePath.unknown;
     }
@@ -66,6 +86,14 @@ enum RoutePath {
         return '/movieDetails';
       case RoutePath.splash:
         return '/splash';
+      case RoutePath.eventList:
+        return '/eventList';
+      case RoutePath.eventDetails:
+        return '/eventDetails';
+      case RoutePath.profile:
+        return '/profile';
+      case RoutePath.addEvent:
+        return '/addEvent';
       default:
         return '';
     }
@@ -102,6 +130,26 @@ enum RoutePath {
           throw Exception('SplashArgument is required');
         }
         return SplashRoute(arguments: arguments);
+      case RoutePath.eventList:
+        if (arguments is! EventListArgument) {
+          throw Exception('EventListArgument is required');
+        }
+        return EventListRoute(arguments: arguments);
+      case RoutePath.eventDetails:
+        if (arguments is! EventDetailsArgument) {
+          throw Exception('EventDetailsArgument is required');
+        }
+        return EventDetailsRoute(arguments: arguments);
+      case RoutePath.profile:
+        if (arguments is! ProfileArgument) {
+          throw Exception('ProfileArgument is required');
+        }
+        return ProfileRoute(arguments: arguments);
+      case RoutePath.addEvent:
+        if (arguments is! AddEventArgument) {
+          throw Exception('AddEventArgument is required');
+        }
+        return AddEventRoute(arguments: arguments);
       default:
         return UnknownRoute(arguments: arguments);
     }

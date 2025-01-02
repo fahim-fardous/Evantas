@@ -77,4 +77,7 @@ class DarkAppColors extends AppColors {
   Color tripInfoChipIconColor = Colors.white;
   @override
   Color neutralVariant95 = const Color(0xFF2B322B);
+
+  @override
+  Color mainColor = const Color(0xff1cae81);
 }

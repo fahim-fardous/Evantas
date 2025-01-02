@@ -76,6 +76,9 @@ class LightAppColors extends AppColors {
   Color surfaceTint = const Color(0xFF0596CB);
 
   @override
+  Color mainColor = const Color(0xff1cae81);
+
+  @override
   Color tripInfoChipIconColor = Colors.black;
   @override
   Color neutralVariant95 = const Color(0xFFE8F2F3);

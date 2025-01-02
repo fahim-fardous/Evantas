@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "app_name": "Hello Flutter",
+  "app_name": "Evntas",
   "@app_name": {
     "type": "text"
   },
@@ -254,6 +254,34 @@
   },
   "location_error_msg__current_country_not_found": "Current country not found. Please try again",
   "@location_error_msg__current_country_not_found": {
+    "type": "text"
+  },
+  "welcome_back": "Welcome Back,",
+  "@welcome_back": {
+    "type": "text"
+  },
+  "events": "Events",
+  "@events": {
+    "type": "text"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "type": "text"
+  },
+  "dinner": "Dinner",
+  "@dinner": {
+    "type": "text"
+  },
+  "development": "Development",
+  "@development": {
+    "type": "text"
+  },
+  "birthday": "Birthday",
+  "@birthday": {
+    "type": "text"
+  },
+  "special": "Special",
+  "@special": {
     "type": "text"
   }
 }

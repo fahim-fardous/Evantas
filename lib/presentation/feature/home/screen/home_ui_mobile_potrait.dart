@@ -23,15 +23,6 @@ class HomeUiMobilePortraitState extends BaseUiState<HomeUiMobilePortrait> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          F.getLocalizedAppTitleWithFlavor(context.localizations),
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontSize: Dimens.dimen_18,
-              ),
-        ),
-        centerTitle: true,
-      ),
       body: _homeBody(context),
       bottomNavigationBar: _bottomNavigation(),
     );
