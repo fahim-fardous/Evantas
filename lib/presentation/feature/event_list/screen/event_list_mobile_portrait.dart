@@ -89,7 +89,7 @@ class EventListMobilePortraitState
   Widget _buildFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: AppColors.of(context).mainColor,
-      onPressed: (){},
+      onPressed: () {},
       shape: const CircleBorder(),
       child: const Icon(
         Icons.add,
@@ -184,7 +184,13 @@ class EventListMobilePortraitState
     return ValueListenableBuilder(
       valueListenable: widget.viewModel.events,
       builder: (context, events, child) => Column(
-        children: events.asMap().entries.map((entry) => EventCard(event: entry.value)).toList(),
+        children: events
+            .asMap()
+            .entries
+            .map((entry) => GestureDetector(
+                onTap: () => widget.viewModel.onEventClicked(),
+                child: EventCard(event: entry.value)))
+            .toList(),
       ),
     );
   }
