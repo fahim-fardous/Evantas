@@ -3,6 +3,7 @@ import 'package:hello_flutter/main/flavors.dart';
 import 'package:hello_flutter/presentation/base/base_ui_state.dart';
 import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
 import 'package:hello_flutter/presentation/feature/home/home_view_model.dart';
+import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
 import 'package:hello_flutter/presentation/values/dimens.dart';
 
 class HomeUiMobilePortrait extends StatefulWidget {
@@ -43,7 +44,8 @@ class HomeUiMobilePortraitState extends BaseUiState<HomeUiMobilePortrait> {
       builder: (context, value) {
         return NavigationBar(
           elevation: Dimens.dimen_10,
-          surfaceTintColor: Theme.of(context).colorScheme.primary,
+          surfaceTintColor: AppColors.of(context).mainColor,
+          indicatorColor: AppColors.of(context).mainColor.withOpacity(.25),
           selectedIndex: value,
           onDestinationSelected: (index) {
             _pageController.jumpToPage(index);

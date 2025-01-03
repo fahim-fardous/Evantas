@@ -1,4 +1,5 @@
 class Dimens {
+  static double dimen_0 = 0.0;
   static double dimen_1 = 1.0;
   static double dimen_2 = 2.0;
   static double dimen_3 = 3.0;

@@ -283,5 +283,9 @@
   "special": "Special",
   "@special": {
     "type": "text"
+  },
+  "memories": "Memory",
+  "@memories": {
+    "type": "text"
   }
 }

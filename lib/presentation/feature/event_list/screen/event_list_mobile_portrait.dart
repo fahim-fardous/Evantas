@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_adaptive_ui.dart';
 import 'package:hello_flutter/presentation/base/base_ui_state.dart';
 import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
 import 'package:hello_flutter/presentation/common/widget/asset_image_view.dart';
 import 'package:hello_flutter/presentation/feature/event_list/event_list_view_model.dart';
+import 'package:hello_flutter/presentation/feature/event_list/widget/event_card.dart';
 import 'package:hello_flutter/presentation/feature/event_list/widget/event_type_item.dart';
 import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
 import 'package:hello_flutter/presentation/values/dimens.dart';
@@ -22,6 +22,8 @@ class EventListMobilePortraitState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: _buildFloatingActionButton(context),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(Dimens.dimen_16),
@@ -33,6 +35,10 @@ class EventListMobilePortraitState
               SizedBox(height: Dimens.dimen_16),
               _buildEventProgressCard(context),
               SizedBox(height: Dimens.dimen_16),
+              _buildEventTypes(context),
+              SizedBox(
+                height: Dimens.dimen_16,
+              ),
               _buildEventList(context),
             ],
           ),
@@ -63,7 +69,7 @@ class EventListMobilePortraitState
             Text(
               'Fahim',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.scrim,
+                    color: AppColors.of(context).mainColor,
                     fontWeight: FontWeight.bold,
                     fontSize: Dimens.dimen_28,
                     fontFamily: 'Poppins',
@@ -77,6 +83,18 @@ class EventListMobilePortraitState
           height: Dimens.dimen_48,
         ),
       ],
+    );
+  }
+
+  Widget _buildFloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: AppColors.of(context).mainColor,
+      onPressed: (){},
+      shape: const CircleBorder(),
+      child: const Icon(
+        Icons.add,
+        color: Colors.white,
+      ),
     );
   }
 
@@ -130,7 +148,7 @@ class EventListMobilePortraitState
     );
   }
 
-  Widget _buildEventList(BuildContext context) {
+  Widget _buildEventTypes(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.viewModel.eventTypes,
       builder: (context, eventTypes, child) => ValueListenableBuilder(
@@ -158,6 +176,15 @@ class EventListMobilePortraitState
               )
               .toList(),
         ),
+      ),
+    );
+  }
+
+  Widget _buildEventList(BuildContext context) {
+    return ValueListenableBuilder(
+      valueListenable: widget.viewModel.events,
+      builder: (context, events, child) => Column(
+        children: events.asMap().entries.map((entry) => EventCard(event: entry.value)).toList(),
       ),
     );
   }

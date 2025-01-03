@@ -1,3 +1,5 @@
+import 'package:domain/model/event.dart';
+import 'package:domain/repository/event_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
 import 'package:hello_flutter/presentation/feature/event_list/route/event_list_argument.dart';
@@ -6,6 +8,7 @@ import 'package:hello_flutter/presentation/util/value_notifier_list.dart';
 import 'enum/event_type.dart';
 
 class EventListViewModel extends BaseViewModel<EventListArgument> {
+  final EventRepository eventRepository;
 
   final ValueNotifier<String> _message = ValueNotifier('EventList');
 
@@ -19,18 +22,24 @@ class EventListViewModel extends BaseViewModel<EventListArgument> {
 
   ValueNotifierList<EventType> get eventTypes => _eventTypes;
 
-  int count = 0;
+  final ValueNotifierList<Event> _events = ValueNotifierList([]);
 
-  EventListViewModel();
+  ValueNotifierList<Event> get events => _events;
+
+  EventListViewModel(this.eventRepository);
 
   @override
   void onViewReady({EventListArgument? argument}) {
     super.onViewReady();
+    _fetchEvents();
   }
 
-  void onClick() {
-     count++;
-    _message.value = '${message.value}$count';
+  Future<void> _fetchEvents() async {
+    final events = await eventRepository.getEventList();
+
+    if(events.isNotEmpty){
+      _events.value = events;
+    }
   }
 
   void setCurrentIndex(int index) {

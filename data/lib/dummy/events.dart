@@ -15,7 +15,25 @@ class Events {
           id: 0,
           name: 'Fahim Mohammod Fardous',
           profilePhotoUrl:
-              'https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80',
+              'fahim_attendee.jpg',
+        ),
+        Person(
+          id: 1,
+          name: 'Md. Faisal Ahammed',
+          profilePhotoUrl:
+              'faisal_attendee.jpg',
+        ),
+        Person(
+          id: 2,
+          name: 'Rayhah Mahmud',
+          profilePhotoUrl:
+              'profile_avatar.png',
+        ),
+        Person(
+          id: 3,
+          name: 'Rakib Anam Rohid',
+          profilePhotoUrl:
+              'profile_avatar.png',
         ),
       ],
     ),

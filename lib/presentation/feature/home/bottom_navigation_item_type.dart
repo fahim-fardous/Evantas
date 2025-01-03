@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hello_flutter/presentation/feature/event_list/event_list_adaptive_ui.dart';
+import 'package:hello_flutter/presentation/feature/memory/memory_adaptive_ui.dart';
 import 'package:hello_flutter/presentation/feature/profile/profile_adaptive_ui.dart';
 import 'package:hello_flutter/presentation/localization/generated/app_localizations.dart';
 
 enum NavigationItemType {
   eventList,
+  memories,
   profile;
 
   IconData get icon {
@@ -13,6 +15,8 @@ enum NavigationItemType {
         return Icons.event_outlined;
       case NavigationItemType.profile:
         return Icons.face_outlined;
+      case NavigationItemType.memories:
+        return Icons.photo_album_outlined;
     }
   }
 
@@ -22,6 +26,8 @@ enum NavigationItemType {
         return Icons.event;
       case NavigationItemType.profile:
         return Icons.face;
+      case NavigationItemType.memories:
+        return Icons.photo_album;
     }
   }
 
@@ -31,6 +37,8 @@ enum NavigationItemType {
         return const EventListAdaptiveUi();
       case NavigationItemType.profile:
         return const ProfileAdaptiveUi();
+      case NavigationItemType.memories:
+        return const MemoryAdaptiveUi();
     }
   }
 
@@ -40,6 +48,8 @@ enum NavigationItemType {
         return localizations.navigation_item__home;
       case NavigationItemType.profile:
         return localizations.profile;
+      case NavigationItemType.memories:
+        return localizations.memories;
       default:
         return '';
     }

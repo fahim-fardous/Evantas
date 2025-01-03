@@ -1,3 +1,5 @@
+import 'package:hello_flutter/presentation/feature/memory/route/memory_argument.dart';
+import 'package:hello_flutter/presentation/feature/memory/route/memory_route.dart';
 import 'package:hello_flutter/presentation/feature/add_event/route/add_event_argument.dart';
 import 'package:hello_flutter/presentation/feature/add_event/route/add_event_route.dart';
 import 'package:hello_flutter/presentation/feature/profile/route/profile_argument.dart';
@@ -34,7 +36,8 @@ enum RoutePath {
   eventList,
   eventDetails,
   profile,
-  addEvent, 
+  addEvent,
+  memory, 
   unknown;
 
   static RoutePath fromString(String? path) {
@@ -63,6 +66,8 @@ enum RoutePath {
         return RoutePath.profile;
       case '/addEvent':
         return RoutePath.addEvent;
+      case '/memory':
+        return RoutePath.memory;
       default:
         return RoutePath.unknown;
     }
@@ -94,6 +99,8 @@ enum RoutePath {
         return '/profile';
       case RoutePath.addEvent:
         return '/addEvent';
+      case RoutePath.memory:
+        return '/memory';
       default:
         return '';
     }
@@ -150,6 +157,11 @@ enum RoutePath {
           throw Exception('AddEventArgument is required');
         }
         return AddEventRoute(arguments: arguments);
+      case RoutePath.memory:
+        if (arguments is! MemoryArgument) {
+          throw Exception('MemoryArgument is required');
+        }
+        return MemoryRoute(arguments: arguments);
       default:
         return UnknownRoute(arguments: arguments);
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
 import 'package:hello_flutter/presentation/values/dimens.dart';
 
 class EventType extends StatelessWidget {
@@ -19,7 +20,9 @@ class EventType extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(Dimens.dimen_2),
           decoration: BoxDecoration(
-            color: isSelected ? Colors.black : Colors.transparent,
+            color: isSelected
+                ? AppColors.of(context).mainColor
+                : Colors.transparent,
             borderRadius: BorderRadius.circular(Dimens.dimen_50),
           ),
         ),
@@ -27,7 +30,8 @@ class EventType extends StatelessWidget {
         Text(
           name,
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: isSelected ? Colors.black : Colors.grey,
+                color:
+                    isSelected ? AppColors.of(context).mainColor : Colors.grey,
               ),
         )
       ],
