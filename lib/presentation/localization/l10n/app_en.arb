@@ -287,5 +287,9 @@
   "memories": "Memory",
   "@memories": {
     "type": "text"
+  },
+  "join_the_event": "Join The Event",
+  "@join_the_event": {
+    "type": "text"
   }
 }

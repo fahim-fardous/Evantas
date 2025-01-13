@@ -20,7 +20,12 @@ class EventListViewModel extends BaseViewModel<EventListArgument> {
 
   ValueListenable<int> get currentIndex => _currentIndex;
 
-  final ValueNotifierList<EventType> _eventTypes = ValueNotifierList([EventType.dinner, EventType.development, EventType.birthday, EventType.special]);
+  final ValueNotifierList<EventType> _eventTypes = ValueNotifierList([
+    EventType.dinner,
+    EventType.development,
+    EventType.birthday,
+    EventType.special
+  ]);
 
   ValueNotifierList<EventType> get eventTypes => _eventTypes;
 
@@ -39,7 +44,7 @@ class EventListViewModel extends BaseViewModel<EventListArgument> {
   Future<void> _fetchEvents() async {
     final events = await eventRepository.getEventList();
 
-    if(events.isNotEmpty){
+    if (events.isNotEmpty) {
       _events.value = events;
     }
   }
@@ -49,7 +54,7 @@ class EventListViewModel extends BaseViewModel<EventListArgument> {
   }
 
   void onEventClicked() {
-    navigateToScreen(destination: EventDetailsRoute(arguments: EventDetailsArgument()));
+    navigateToScreen(
+        destination: EventDetailsRoute(arguments: EventDetailsArgument()));
   }
-
 }

@@ -7,6 +7,7 @@ class PrimaryButton extends StatelessWidget {
   final EdgeInsets? padding;
   final double? minWidth;
   final IconData? leadingIcon;
+  final Color? buttonColor;
 
   const PrimaryButton({
     super.key,
@@ -15,6 +16,7 @@ class PrimaryButton extends StatelessWidget {
     required this.onPressed,
     this.padding,
     this.minWidth,
+    this.buttonColor,
   });
 
   @override
@@ -22,7 +24,7 @@ class PrimaryButton extends StatelessWidget {
     return MaterialButton(
       onPressed: onPressed,
       minWidth: minWidth,
-      color: Theme.of(context).colorScheme.primary,
+      color: buttonColor ?? Theme.of(context).colorScheme.primary,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(

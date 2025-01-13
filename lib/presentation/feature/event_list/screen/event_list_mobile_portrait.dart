@@ -60,7 +60,7 @@ class EventListMobilePortraitState
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                     color: Theme.of(context).colorScheme.outlineVariant,
                     fontSize: Dimens.dimen_16,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Roboto',
                   ),
             ),
             SizedBox(
@@ -72,7 +72,7 @@ class EventListMobilePortraitState
                     color: AppColors.of(context).mainColor,
                     fontWeight: FontWeight.bold,
                     fontSize: Dimens.dimen_28,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Roboto',
                   ),
             )
           ],
@@ -121,7 +121,7 @@ class EventListMobilePortraitState
                       color:
                           Theme.of(context).colorScheme.scrim.withOpacity(.4),
                       fontSize: Dimens.dimen_28,
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Roboto',
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -130,7 +130,7 @@ class EventListMobilePortraitState
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
                       color: Theme.of(context).colorScheme.scrim,
                       fontSize: Dimens.dimen_28,
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Roboto',
                       fontWeight: FontWeight.bold,
                     ),
               ),
