@@ -1,4 +1,5 @@
 import 'package:domain/model/event_type.dart';
+import 'package:domain/model/event_type.dart';
 
 class Event {
   final int id;

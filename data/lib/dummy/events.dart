@@ -1,5 +1,6 @@
 import 'package:domain/model/event.dart';
 import 'package:domain/model/event_type.dart';
+import 'package:domain/model/event_type.dart';
 
 class Events {
   static List<Event> events = [
