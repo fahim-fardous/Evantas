@@ -1,4 +1,4 @@
-import 'package:domain/model/person.dart';
+import 'package:domain/model/event_type.dart';
 
 class Event {
   final int id;
@@ -7,7 +7,7 @@ class Event {
   final DateTime startDate;
   final DateTime endDate;
   final String location;
-  final List<Person> attendees;
+  final EventType eventType;
 
   Event({
     required this.id,
@@ -16,6 +16,6 @@ class Event {
     required this.startDate,
     required this.endDate,
     required this.location,
-    required this.attendees,
+    required this.eventType,
   });
 }
