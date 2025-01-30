@@ -331,5 +331,9 @@
   "event_type_hint_text": "Select event type",
   "@event_type_hint_text": {
     "type": "text"
+  },
+  "add_reminder__save_btn_text": "Save",
+  "@add_reminder__save_btn_text": {
+    "type": "text"
   }
 }

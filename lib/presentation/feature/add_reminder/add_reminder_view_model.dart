@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
 import 'package:hello_flutter/presentation/feature/add_reminder/route/add_reminder_argument.dart';
+import 'package:hello_flutter/presentation/util/time_formatter.dart';
+import 'package:intl/intl.dart';
 
 class AddReminderViewModel extends BaseViewModel<AddReminderArgument> {
   final ValueNotifier<String> _message = ValueNotifier('AddReminder');
@@ -56,16 +58,22 @@ class AddReminderViewModel extends BaseViewModel<AddReminderArgument> {
 
   void onDateSelected(DateTime date) {
     _date.value = date;
-    dateController.text = date.toString();
+    dateController.text = DateFormat('MMM d, yyyy').format(date);
   }
 
   void onTimeSelected(TimeOfDay time) {
     _time.value = time;
-    timeController.text = time.toString();
+    timeController.text = formatTimeOfDay(time);
   }
 
   void onEventTypeSelected(EventType eventType) {
     _eventType.value = eventType;
+  }
+
+  Future<void> onSaveButtonClicked() async {
+    _message.value = 'Saving Reminder';
+    await Future.delayed(const Duration(seconds: 2));
+    _message.value = 'Reminder Saved';
   }
 
   void onBackButtonPressed() {

@@ -2,6 +2,7 @@ import 'package:domain/model/event_type.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_flutter/presentation/base/base_ui_state.dart';
 import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
+import 'package:hello_flutter/presentation/common/widget/primary_button.dart';
 import 'package:hello_flutter/presentation/feature/add_reminder/add_reminder_view_model.dart';
 import 'package:hello_flutter/presentation/feature/add_reminder/widgets/reminder_date_field.dart';
 import 'package:hello_flutter/presentation/feature/add_reminder/widgets/reminder_event_type_field.dart';
@@ -25,13 +26,15 @@ class AddReminderMobilePortraitState
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Column(
-        children: [
-          _buildAppBar(context),
-          SizedBox(height: Dimens.dimen_16),
-          _buildBody(context),
-        ],
-      )),
+          child: SingleChildScrollView(
+            child: Column(
+                    children: [
+            _buildAppBar(context),
+            SizedBox(height: Dimens.dimen_16),
+            _buildBody(context),
+                    ],
+                  ),
+          )),
     );
   }
 
@@ -75,6 +78,8 @@ class AddReminderMobilePortraitState
           _buildEventTypeField(context),
           SizedBox(height: Dimens.dimen_32),
           _buildLocationField(context),
+          SizedBox(height: Dimens.dimen_64),
+          _buildSaveButton(context),
         ],
       ),
     );
@@ -95,16 +100,24 @@ class AddReminderMobilePortraitState
   }
 
   Widget _buildDateField(BuildContext context) {
-    return ReminderDateField(
-      labelText: context.localizations.event_date_label,
-      onDateSelected: (date) => widget.viewModel.onDateSelected(date),
+    return valueListenableBuilder(
+      listenable: widget.viewModel.dateController,
+      builder: (context, dateController) => ReminderDateField(
+        controller: widget.viewModel.dateController,
+        labelText: context.localizations.event_date_label,
+        onDateSelected: (date) => widget.viewModel.onDateSelected(date),
+      ),
     );
   }
 
   Widget _buildTimeField(BuildContext context) {
-    return ReminderTimeField(
-      labelText: context.localizations.event_time_label,
-      onTimeSelected: (date) => widget.viewModel.onTimeSelected(date),
+    return valueListenableBuilder(
+      listenable: widget.viewModel.timeController,
+      builder: (context, timeController) =>ReminderTimeField(
+        controller: widget.viewModel.timeController,
+        labelText: context.localizations.event_time_label,
+        onTimeSelected: (date) => widget.viewModel.onTimeSelected(date),
+      ),
     );
   }
 
@@ -129,6 +142,14 @@ class AddReminderMobilePortraitState
     return ReminderTextField(
       labelText: context.localizations.event_location_label,
       hintText: context.localizations.event_location_hint_text,
+    );
+  }
+
+  Widget _buildSaveButton(BuildContext context) {
+    return PrimaryButton(
+      label: context.localizations.add_reminder__save_btn_text,
+      onPressed: () => widget.viewModel.onSaveButtonClicked(),
+      minWidth: double.infinity,
     );
   }
 }

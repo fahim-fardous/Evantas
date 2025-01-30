@@ -3,11 +3,13 @@ import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
 import 'package:hello_flutter/presentation/values/dimens.dart';
 
 class ReminderDateField extends StatelessWidget {
+  final TextEditingController controller;
   final String labelText;
   final Function(DateTime) onDateSelected;
 
   const ReminderDateField({
     super.key,
+    required this.controller,
     required this.labelText,
     required this.onDateSelected,
   });
@@ -28,6 +30,7 @@ class ReminderDateField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(Dimens.dimen_8),
