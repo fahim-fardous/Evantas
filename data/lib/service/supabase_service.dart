@@ -9,9 +9,10 @@ class SupabaseService {
     await supabaseClient.from('events').insert({
       'title': event.title,
       'description': event.description,
-      'start_date': event.startDate,
-      'end_date': event.endDate,
+      'date': event.date,
       'location': event.location,
+      'event_type': event.eventType,
+      'time': event.time,
     });
   }
 

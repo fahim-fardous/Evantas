@@ -7,10 +7,10 @@ class EventMapper {
       id: event.id,
       title: event.title,
       description: event.description,
-      startDate: event.startDate,
-      endDate: event.endDate,
+      date: event.date,
       location: event.location,
       eventType: event.eventType,
+      time: event.time
     );
   }
 }

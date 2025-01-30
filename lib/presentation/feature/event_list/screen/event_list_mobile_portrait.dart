@@ -89,7 +89,7 @@ class EventListMobilePortraitState
   Widget _buildFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: AppColors.of(context).mainColor,
-      onPressed: () {},
+      onPressed: () => widget.viewModel.onAddEventButtonClicked(),
       shape: const CircleBorder(),
       child: const Icon(
         Icons.add,
@@ -164,7 +164,7 @@ class EventListMobilePortraitState
                   children: [
                     GestureDetector(
                       onTap: () => widget.viewModel.setCurrentIndex(entry.key),
-                      child: EventType(
+                      child: EventTypeItem(
                         isSelected: index == entry.key,
                         name: entry.value.localizedString,
                       ),

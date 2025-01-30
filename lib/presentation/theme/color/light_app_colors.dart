@@ -4,7 +4,7 @@ import 'app_colors.dart';
 
 class LightAppColors extends AppColors {
   @override
-  Color primary = const Color(0xFF04589b);
+  Color primary = const Color(0xff1cae81);
   @override
   Color onPrimary = const Color(0xFFFFFFFF);
   @override
@@ -77,6 +77,9 @@ class LightAppColors extends AppColors {
 
   @override
   Color mainColor = const Color(0xff1cae81);
+
+  @override
+  Color unfocusedColor = const Color(0x51919EAB);
 
   @override
   Color tripInfoChipIconColor = Colors.black;

@@ -1,22 +1,23 @@
 import 'package:domain/model/event_type.dart';
+import 'package:flutter/material.dart';
 
 class EventResponse {
   final int id;
   final String title;
   final String description;
-  final DateTime startDate;
-  final DateTime endDate;
+  final DateTime date;
   final String location;
   final EventType eventType;
+  final TimeOfDay time;
 
   EventResponse({
     required this.id,
     required this.title,
     required this.description,
-    required this.startDate,
-    required this.endDate,
+    required this.date,
     required this.location,
     required this.eventType,
+    required this.time,
   });
 
   factory EventResponse.fromJson(Map<String, dynamic> json) {
@@ -24,10 +25,10 @@ class EventResponse {
       id: json['id'],
       title: json['title'],
       description: json['description'],
-      startDate: DateTime.parse(json['start_date']),
-      endDate: DateTime.parse(json['end_date']),
+      date: DateTime.parse(json['date']),
       location: json['location'],
       eventType: _getEventType(json['event_type']),
+      time: TimeOfDay.fromDateTime(DateTime.parse(json['time'])),
     );
   }
 

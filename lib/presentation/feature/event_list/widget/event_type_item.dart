@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
 import 'package:hello_flutter/presentation/values/dimens.dart';
 
-class EventType extends StatelessWidget {
+class EventTypeItem extends StatelessWidget {
   final bool isSelected;
   final String name;
 
-  const EventType({
+  const EventTypeItem({
     super.key,
     required this.isSelected,
     required this.name,

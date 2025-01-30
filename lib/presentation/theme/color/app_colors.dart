@@ -35,6 +35,7 @@ abstract class AppColors {
   abstract Color inversePrimary;
   abstract Color surfaceTint;
   abstract Color mainColor;
+  abstract Color unfocusedColor;
 
   abstract Color tripInfoChipIconColor;
   abstract Color neutralVariant95;
