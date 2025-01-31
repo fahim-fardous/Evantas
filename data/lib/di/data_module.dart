@@ -6,11 +6,13 @@ import 'package:data/repository/auth_repository_impl.dart';
 import 'package:data/repository/event_repository_impl.dart';
 import 'package:data/repository/location_repository_impl.dart';
 import 'package:data/repository/movie_repository_impl.dart';
+import 'package:data/service/supabase_service.dart';
 import 'package:domain/di/di_module.dart';
 import 'package:domain/repository/auth_repository.dart';
 import 'package:domain/repository/event_repository.dart';
 import 'package:domain/repository/location_repository.dart';
 import 'package:domain/repository/movie_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DataModule {
   DataModule._internal();
@@ -22,6 +24,7 @@ class DataModule {
   final DiModule _diModule = DiModule();
 
   Future<void> injectDependencies() async {
+    await injectSupabaseService();
     await injectApiClient();
     await injectApiService();
     await injectLocalDataService();
@@ -29,10 +32,22 @@ class DataModule {
   }
 
   Future<void> removeDependencies() async {
+    await removeSupabaseService();
     await removeApiClient();
     await removeApiService();
     await removeLocalDataService();
     await removeRepositories();
+  }
+
+  Future<void> injectSupabaseService() async {
+    final supabaseClient = Supabase.instance.client;
+    await _diModule.registerSingleton<SupabaseService>(SupabaseService(
+      supabaseClient: supabaseClient,
+    ));
+  }
+
+  Future<void> removeSupabaseService() async {
+    await _diModule.unregisterSingleton<SupabaseService>();
   }
 
   Future<void> injectApiClient() async {
@@ -62,6 +77,7 @@ class DataModule {
 
   Future<void> injectRepositories() async {
     final movieApiService = await _diModule.resolve<MovieApiService>();
+    final supabaseService = await _diModule.resolve<SupabaseService>();
     await _diModule.registerSingleton<MovieRepository>(
       MovieRepositoryImpl(movieApiService: movieApiService),
     );
@@ -71,10 +87,13 @@ class DataModule {
     await _diModule
         .registerSingleton<LocationRepository>(LocationRepositoryImpl());
 
-    await _diModule.registerSingleton<EventRepository>(EventRepositoryImpl());
+    await _diModule.registerSingleton<EventRepository>(EventRepositoryImpl(supabaseService));
   }
 
   Future<void> removeRepositories() async {
     await _diModule.unregisterSingleton<MovieRepository>();
+    await _diModule.unregisterSingleton<AuthRepository>();
+    await _diModule.unregisterSingleton<LocationRepository>();
+    await _diModule.unregisterSingleton<EventRepository>();
   }
 }

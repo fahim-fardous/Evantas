@@ -50,7 +50,7 @@ class EventCard extends StatelessWidget {
                       ),
                       SizedBox(width: Dimens.dimen_8),
                       Text(
-                        'MT-15 Dinner',
+                        event.title,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                               color: AppColors.of(context).mainColor,
                               fontSize: Dimens.dimen_18,
@@ -67,7 +67,7 @@ class EventCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'Mobile Team Dinner January, 2025',
+                      event.description ?? '',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             color: AppColors.of(context).mainColor,
                             fontFamily: 'Roboto',

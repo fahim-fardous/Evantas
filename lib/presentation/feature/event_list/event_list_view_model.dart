@@ -44,7 +44,7 @@ class EventListViewModel extends BaseViewModel<EventListArgument> {
   }
 
   Future<void> _fetchEvents() async {
-    final events = await eventRepository.getEventList();
+    final events = await loadData(eventRepository.getEventList());
 
     if (events.isNotEmpty) {
       _events.value = events;

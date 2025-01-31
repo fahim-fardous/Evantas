@@ -68,15 +68,15 @@ class AddReminderMobilePortraitState
       child: Column(
         children: [
           _buildEventTitleField(context),
-          SizedBox(height: Dimens.dimen_32),
+          SizedBox(height: Dimens.dimen_16),
           _buildEventDescriptionField(context),
-          SizedBox(height: Dimens.dimen_32),
+          SizedBox(height: Dimens.dimen_16),
           _buildDateField(context),
-          SizedBox(height: Dimens.dimen_32),
+          SizedBox(height: Dimens.dimen_16),
           _buildTimeField(context),
-          SizedBox(height: Dimens.dimen_32),
+          SizedBox(height: Dimens.dimen_16),
           _buildEventTypeField(context),
-          SizedBox(height: Dimens.dimen_32),
+          SizedBox(height: Dimens.dimen_16),
           _buildLocationField(context),
           SizedBox(height: Dimens.dimen_64),
           _buildSaveButton(context),
@@ -86,14 +86,19 @@ class AddReminderMobilePortraitState
   }
 
   Widget _buildEventTitleField(BuildContext context) {
-    return ReminderTextField(
-      labelText: context.localizations.event_title_label,
-      hintText: context.localizations.event_title_hint_text,
+    return valueListenableBuilder(
+      listenable: widget.viewModel.titleController,
+      builder: (context, titleController) => ReminderTextField(
+        controller: widget.viewModel.titleController,
+        labelText: context.localizations.event_title_label,
+        hintText: context.localizations.event_title_hint_text,
+      ),
     );
   }
 
   Widget _buildEventDescriptionField(BuildContext context) {
     return ReminderTextField(
+      controller: widget.viewModel.descriptionController,
       labelText: context.localizations.event_description_label,
       hintText: context.localizations.event_description_hint_text,
     );
@@ -140,6 +145,7 @@ class AddReminderMobilePortraitState
 
   Widget _buildLocationField(BuildContext context) {
     return ReminderTextField(
+      controller: widget.viewModel.locationController,
       labelText: context.localizations.event_location_label,
       hintText: context.localizations.event_location_hint_text,
     );

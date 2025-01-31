@@ -1,12 +1,17 @@
+import 'package:data/service/supabase_service.dart';
+import 'package:domain/model/event.dart';
 import 'package:domain/model/event_type.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
 import 'package:hello_flutter/presentation/feature/add_reminder/route/add_reminder_argument.dart';
+import 'package:hello_flutter/presentation/localization/text_id.dart';
+import 'package:hello_flutter/presentation/localization/ui_text.dart';
 import 'package:hello_flutter/presentation/util/time_formatter.dart';
 import 'package:intl/intl.dart';
 
 class AddReminderViewModel extends BaseViewModel<AddReminderArgument> {
+  final SupabaseService supabaseService;
   final ValueNotifier<String> _message = ValueNotifier('AddReminder');
 
   ValueListenable<String> get message => _message;
@@ -49,7 +54,9 @@ class AddReminderViewModel extends BaseViewModel<AddReminderArgument> {
 
   int count = 0;
 
-  AddReminderViewModel();
+  AddReminderViewModel({
+    required this.supabaseService,
+  });
 
   @override
   void onViewReady({AddReminderArgument? argument}) {
@@ -71,9 +78,27 @@ class AddReminderViewModel extends BaseViewModel<AddReminderArgument> {
   }
 
   Future<void> onSaveButtonClicked() async {
-    _message.value = 'Saving Reminder';
-    await Future.delayed(const Duration(seconds: 2));
-    _message.value = 'Reminder Saved';
+    if(titleController.text.trim().isEmpty || dateController.text.trim().isEmpty || timeController.text.trim().isEmpty || locationController.text.trim().isEmpty) {
+      showToast(
+        uiText: DynamicUiText(
+          textId: PleaseFillUpAllTheRequiredFieldsTextId(),
+          fallbackText: "Please fill up all fields",
+        ),
+      );
+      return;
+    }
+
+    final event = Event(
+      id: 0,
+      title: titleController.text.trim(),
+      description: descriptionController.text.trim(),
+      date: _date.value,
+      location: locationController.text.trim(),
+      eventType: _eventType.value,
+      time: _time.value,
+    );
+    await supabaseService.addEvent(event);
+    navigateBack();
   }
 
   void onBackButtonPressed() {

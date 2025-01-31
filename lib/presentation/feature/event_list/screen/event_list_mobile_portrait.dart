@@ -109,41 +109,44 @@ class EventListMobilePortraitState
         color: AppColors.of(context).mainColor.withOpacity(.25),
         borderRadius: BorderRadius.circular(Dimens.dimen_16),
       ),
-      child: Row(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'You Have 5',
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color:
-                          Theme.of(context).colorScheme.scrim.withOpacity(.4),
-                      fontSize: Dimens.dimen_28,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              Text(
-                'Upcoming Events',
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.scrim,
-                      fontSize: Dimens.dimen_28,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: AssetImageView(
-              fileName: 'progress_card_img.png',
-              width: Dimens.dimen_128,
-              height: Dimens.dimen_128,
+      child: valueListenableBuilder(
+        listenable: widget.viewModel.events,
+        builder: (context, events) =>Row(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'You Have ${events.length}',
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color:
+                            Theme.of(context).colorScheme.scrim.withOpacity(.4),
+                        fontSize: Dimens.dimen_28,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                Text(
+                  (events.length > 1) ? 'Upcoming Events' : 'Upcoming Event',
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.scrim,
+                        fontSize: Dimens.dimen_28,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ],
             ),
-          )
-        ],
+            Expanded(
+              child: AssetImageView(
+                fileName: 'progress_card_img.png',
+                width: Dimens.dimen_128,
+                height: Dimens.dimen_128,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
