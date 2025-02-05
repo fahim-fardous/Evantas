@@ -10,7 +10,6 @@ class SupabaseService {
 
   Future<void> addEvent(Event event) async {
     await supabaseClient.from('events').insert({
-      'id': event.id,
       'title': event.title,
       'description': event.description,
       'date': event.date.toIso8601String().split('T')[0],

@@ -1,6 +1,7 @@
 import 'package:data/service/supabase_service.dart';
 import 'package:domain/model/event.dart';
 import 'package:domain/model/event_type.dart';
+import 'package:domain/util/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
@@ -89,7 +90,6 @@ class AddReminderViewModel extends BaseViewModel<AddReminderArgument> {
     }
 
     final event = Event(
-      id: 0,
       title: titleController.text.trim(),
       description: descriptionController.text.trim(),
       date: _date.value,
@@ -97,6 +97,7 @@ class AddReminderViewModel extends BaseViewModel<AddReminderArgument> {
       eventType: _eventType.value,
       time: _time.value,
     );
+    Logger.debug("Event: ${event.title} ${event.date} ${event.time} ${event.eventType} ${event.location}");
     await loadData(supabaseService.addEvent(event));
     navigateBack();
   }

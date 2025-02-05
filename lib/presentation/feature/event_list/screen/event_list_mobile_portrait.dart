@@ -1,12 +1,15 @@
+import 'package:domain/model/event.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_flutter/presentation/base/base_ui_state.dart';
 import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
+import 'package:hello_flutter/presentation/common/extension/event_type_ext.dart';
 import 'package:hello_flutter/presentation/common/widget/asset_image_view.dart';
 import 'package:hello_flutter/presentation/feature/event_list/event_list_view_model.dart';
 import 'package:hello_flutter/presentation/feature/event_list/widget/event_card.dart';
 import 'package:hello_flutter/presentation/feature/event_list/widget/event_type_item.dart';
 import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
 import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:intl/intl.dart';
 
 class EventListMobilePortrait extends StatefulWidget {
   final EventListViewModel viewModel;
@@ -19,6 +22,15 @@ class EventListMobilePortrait extends StatefulWidget {
 
 class EventListMobilePortraitState
     extends BaseUiState<EventListMobilePortrait> {
+  Map<DateTime, List<Event>> _groupEventsByDate(List<Event> events) {
+    Map<DateTime, List<Event>> groupedEvents = {};
+    for (var event in events) {
+      final date = DateTime(event.date.year, event.date.month, event.date.day);
+      groupedEvents.putIfAbsent(date, () => []).add(event);
+    }
+    return groupedEvents;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,20 +39,20 @@ class EventListMobilePortraitState
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(Dimens.dimen_16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildAppBar(context),
-              SizedBox(height: Dimens.dimen_16),
-              _buildEventProgressCard(context),
-              SizedBox(height: Dimens.dimen_16),
-              _buildEventTypes(context),
-              SizedBox(
-                height: Dimens.dimen_16,
-              ),
-              _buildEventList(context),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildAppBar(context),
+                SizedBox(height: Dimens.dimen_16),
+                _buildEventProgressCard(context),
+                SizedBox(height: Dimens.dimen_16),
+                _buildEventTypeSelector(context),
+                SizedBox(height: Dimens.dimen_16),
+                _buildEventList(context),
+              ],
+            ),
           ),
         ),
       ),
@@ -63,9 +75,7 @@ class EventListMobilePortraitState
                     fontFamily: 'Roboto',
                   ),
             ),
-            SizedBox(
-              height: Dimens.dimen_4,
-            ),
+            SizedBox(height: Dimens.dimen_4),
             Text(
               'Fahim',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -111,7 +121,7 @@ class EventListMobilePortraitState
       ),
       child: valueListenableBuilder(
         listenable: widget.viewModel.events,
-        builder: (context, events) =>Row(
+        builder: (context, events) => Row(
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -151,7 +161,7 @@ class EventListMobilePortraitState
     );
   }
 
-  Widget _buildEventTypes(BuildContext context) {
+  Widget _buildEventTypeSelector(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.viewModel.eventTypes,
       builder: (context, eventTypes, child) => ValueListenableBuilder(
@@ -185,16 +195,51 @@ class EventListMobilePortraitState
 
   Widget _buildEventList(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: widget.viewModel.events,
-      builder: (context, events, child) => Column(
-        children: events
-            .asMap()
-            .entries
-            .map((entry) => GestureDetector(
-                onTap: () => widget.viewModel.onEventClicked(eventId: entry.value.id),
-                child: EventCard(event: entry.value)))
-            .toList(),
-      ),
+      valueListenable: widget.viewModel.currentIndex,
+      builder: (context, eventType, child) {
+        return ValueListenableBuilder(
+          valueListenable: widget.viewModel.events,
+          builder: (context, events, child) {
+            final filteredEvents = events
+                .where((event) => event.eventType.getEventIndex() == eventType)
+                .toList();
+
+            final groupedEvents = _groupEventsByDate(filteredEvents);
+
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: groupedEvents.keys.length,
+              itemBuilder: (context, index) {
+                final date = groupedEvents.keys.toList()[index];
+                final eventList = groupedEvents[date]!;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Dimens.dimen_16,
+                        vertical: Dimens.dimen_16,
+                      ),
+                      child: Text(
+                        DateFormat('d MMMM').format(date),
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ),
+                    ...eventList.map(
+                      (entry) => GestureDetector(
+                        onTap: () =>
+                            widget.viewModel.onEventClicked(eventId: entry.id),
+                        child: EventCard(event: entry),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        );
+      },
     );
   }
 }

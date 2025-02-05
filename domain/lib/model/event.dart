@@ -12,7 +12,7 @@ class Event {
   final EventType eventType;
 
   Event({
-    required this.id,
+    this.id = 0,
     required this.title,
     this.description,
     required this.date,

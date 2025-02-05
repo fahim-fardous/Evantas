@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hello_flutter/presentation/base/base_ui_state.dart';
 import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
+import 'package:hello_flutter/presentation/common/extension/event_type_ext.dart';
 import 'package:hello_flutter/presentation/common/widget/asset_image_view.dart';
 import 'package:hello_flutter/presentation/common/widget/primary_button.dart';
 import 'package:hello_flutter/presentation/feature/event_details/event_details_view_model.dart';
@@ -140,52 +141,55 @@ class EventDetailsMobilePortraitState
   }
 
   Widget _buildEventHeader(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          padding: EdgeInsets.all(Dimens.dimen_8),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: AppColors.of(context).mainColor,
-            borderRadius: BorderRadius.circular(Dimens.dimen_48),
-          ),
-          child: Icon(
-            Icons.dinner_dining,
-            color: Colors.black,
-            size: Dimens.dimen_24,
-          ),
-        ),
-        valueListenableBuilder(
-          listenable: widget.viewModel.event,
-          builder: (context, event) => Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: Dimens.dimen_24,
-              vertical: Dimens.dimen_10,
-            ),
+    return valueListenableBuilder(
+      listenable: widget.viewModel.event,
+      builder: (context, event) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: EdgeInsets.all(Dimens.dimen_8),
+            alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: Colors.black,
-              shape: BoxShape.rectangle,
+              color: AppColors.of(context).mainColor,
               borderRadius: BorderRadius.circular(Dimens.dimen_48),
             ),
-            alignment: Alignment.center,
-            child: Text(
-              event?.title ?? '',
-              style: Theme.of(context)
-                  .textTheme
-                  .labelMedium
-                  ?.copyWith(color: Colors.white),
+            child: Icon(
+              event?.eventType.getEventIcon(),
+              color: Colors.black,
+              size: Dimens.dimen_24,
             ),
           ),
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.more_vert,
-            size: Dimens.dimen_24,
+          valueListenableBuilder(
+            listenable: widget.viewModel.event,
+            builder: (context, event) => Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: Dimens.dimen_24,
+                vertical: Dimens.dimen_10,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(Dimens.dimen_48),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                event?.title ?? '',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(color: Colors.white),
+              ),
+            ),
           ),
-        ),
-      ],
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.more_vert,
+              size: Dimens.dimen_24,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -204,14 +208,17 @@ class EventDetailsMobilePortraitState
   }
 
   Widget _buildEventImageView(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(Dimens.dimen_16),
-      child: SizedBox(
-        width: double.infinity,
-        height: Dimens.dimen_200,
-        child: const AssetImageView(
-          fileName: 'team_dinner.jpg',
-          fit: BoxFit.fill,
+    return valueListenableBuilder(
+      listenable: widget.viewModel.event,
+      builder: (context, event) => ClipRRect(
+        borderRadius: BorderRadius.circular(Dimens.dimen_16),
+        child: SizedBox(
+          width: double.infinity,
+          height: Dimens.dimen_200,
+          child: AssetImageView(
+            fileName: event?.eventType.getAssetName() ?? '',
+            fit: BoxFit.fill,
+          ),
         ),
       ),
     );

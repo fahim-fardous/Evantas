@@ -1,5 +1,6 @@
 import 'package:domain/model/event.dart';
 import 'package:flutter/material.dart';
+import 'package:hello_flutter/presentation/common/extension/event_type_ext.dart';
 import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
 import 'package:hello_flutter/presentation/values/dimens.dart';
 
@@ -43,7 +44,7 @@ class EventCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(Dimens.dimen_48),
                         ),
                         child: Icon(
-                          Icons.dinner_dining,
+                          event.eventType.getEventIcon(),
                           color: Colors.black,
                           size: Dimens.dimen_24,
                         ),
@@ -53,7 +54,7 @@ class EventCard extends StatelessWidget {
                         event.title,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                               color: AppColors.of(context).mainColor,
-                              fontSize: Dimens.dimen_18,
+                              fontSize: Dimens.dimen_16,
                               fontFamily: 'Roboto',
                             ),
                       ),
@@ -68,10 +69,10 @@ class EventCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       event.description ?? '',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
                             color: AppColors.of(context).mainColor,
                             fontFamily: 'Roboto',
-                            fontSize: Dimens.dimen_24,
+                            fontSize: Dimens.dimen_20,
                           ),
                       maxLines: 3,
                     ),
