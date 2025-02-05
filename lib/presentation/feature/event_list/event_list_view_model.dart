@@ -65,6 +65,7 @@ class EventListViewModel extends BaseViewModel<EventListArgument> {
       destination: AddReminderRoute(
         arguments: AddReminderArgument(),
       ),
+      onPop: _fetchEvents
     );
   }
 }
