@@ -5,22 +5,22 @@ class OnboardingScreenPages {
     OnboardingPage(
       title: 'Team Dinner',
       description: 'Arrange your team dinner with Evntas',
-      image: 'image1',
+      image: 'dinner.svg',
     ),
     OnboardingPage(
       title: 'Development',
       description: 'Arrange your team discussion or meeting with Evntas',
-      image: 'image2',
+      image: 'development.svg',
     ),
     OnboardingPage(
       title: 'Birthday',
       description: 'Arrange your colleagues birthday with Evntas',
-      image: 'image3',
+      image: 'birthday.svg',
     ),
     OnboardingPage(
       title: 'Special',
       description: 'Arrange your special event with Evntas',
-      image: 'image4',
+      image: 'special.svg',
     ),
   ];
 }
