@@ -28,7 +28,7 @@ class EventResponse {
       date: DateTime.parse(json['date']),
       location: json['location'],
       eventType: _getEventType(json['event_type']),
-      time: TimeOfDay.fromDateTime(DateTime.parse(json['time'])),
+      time: _parseTime(json['time']),
     );
   }
 
@@ -45,5 +45,11 @@ class EventResponse {
       default:
         return EventType.unknown;
     }
+  }
+
+  static TimeOfDay _parseTime(String time) {
+    if (time.isEmpty) return const TimeOfDay(hour: 0, minute: 0); // Default value
+    final parts = time.split(':');
+    return TimeOfDay(hour: int.parse(parts[0]), minute: int.parse(parts[1]));
   }
 }

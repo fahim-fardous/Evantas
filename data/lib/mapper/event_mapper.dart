@@ -10,7 +10,7 @@ class EventMapper {
       date: event.date,
       location: event.location,
       eventType: event.eventType,
-      time: event.time
+      time: event.time,
     );
   }
 }

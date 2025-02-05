@@ -191,7 +191,7 @@ class EventListMobilePortraitState
             .asMap()
             .entries
             .map((entry) => GestureDetector(
-                onTap: () => widget.viewModel.onEventClicked(),
+                onTap: () => widget.viewModel.onEventClicked(eventId: entry.value.id),
                 child: EventCard(event: entry.value)))
             .toList(),
       ),

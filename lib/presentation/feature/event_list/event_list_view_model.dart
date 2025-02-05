@@ -55,9 +55,9 @@ class EventListViewModel extends BaseViewModel<EventListArgument> {
     _currentIndex.value = index;
   }
 
-  void onEventClicked() {
+  void onEventClicked({required int eventId}) {
     navigateToScreen(
-        destination: EventDetailsRoute(arguments: EventDetailsArgument()));
+        destination: EventDetailsRoute(arguments: EventDetailsArgument(eventId: eventId)));
   }
 
   void onAddEventButtonClicked() {

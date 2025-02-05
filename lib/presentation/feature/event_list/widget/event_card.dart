@@ -71,6 +71,7 @@ class EventCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             color: AppColors.of(context).mainColor,
                             fontFamily: 'Roboto',
+                            fontSize: Dimens.dimen_24,
                           ),
                       maxLines: 3,
                     ),

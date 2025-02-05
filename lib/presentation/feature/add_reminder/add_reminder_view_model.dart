@@ -97,11 +97,22 @@ class AddReminderViewModel extends BaseViewModel<AddReminderArgument> {
       eventType: _eventType.value,
       time: _time.value,
     );
-    await supabaseService.addEvent(event);
+    await loadData(supabaseService.addEvent(event));
     navigateBack();
   }
 
   void onBackButtonPressed() {
     navigateBack();
+  }
+
+  @override
+  void onDispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    locationController.dispose();
+    eventTypeController.dispose();
+    timeController.dispose();
+    dateController.dispose();
+    super.onDispose();
   }
 }
