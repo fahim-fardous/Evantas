@@ -1,30 +1,29 @@
 import 'package:domain/model/event.dart';
 import 'package:domain/repository/event_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
 import 'package:hello_flutter/presentation/feature/event_details/route/event_details_argument.dart';
-import 'package:hello_flutter/presentation/feature/event_list/route/event_list_argument.dart';
-import 'package:hello_flutter/presentation/util/value_notifier_list.dart';
 
 class EventDetailsViewModel extends BaseViewModel<EventDetailsArgument> {
   final EventRepository eventRepository;
 
-  final ValueNotifierList<Event> _events = ValueNotifierList([]);
+  final ValueNotifier<Event?> _event = ValueNotifier(null);
 
-  ValueNotifierList<Event> get events => _events;
+  ValueNotifier<Event?> get event => _event;
 
   EventDetailsViewModel(this.eventRepository);
 
   @override
   void onViewReady({EventDetailsArgument? argument}) {
     super.onViewReady();
-    _fetchEvents();
+    _fetchEvents(id: argument!.eventId);
   }
 
-  Future<void> _fetchEvents() async {
-    List<Event> events = await loadData(eventRepository.getEventList());
+  Future<void> _fetchEvents({required int id}) async {
+    final event = await loadData(eventRepository.getEventById(id));
 
-    if (events.isNotEmpty) {
-      _events.value = events;
+    if (event != null) {
+      _event.value = event;
     }
   }
 

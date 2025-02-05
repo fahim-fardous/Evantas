@@ -2,6 +2,8 @@ import 'package:domain/model/event.dart';
 import 'package:domain/repository/event_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
+import 'package:hello_flutter/presentation/feature/add_reminder/route/add_reminder_argument.dart';
+import 'package:hello_flutter/presentation/feature/add_reminder/route/add_reminder_route.dart';
 import 'package:hello_flutter/presentation/feature/event_details/route/event_details_argument.dart';
 import 'package:hello_flutter/presentation/feature/event_details/route/event_details_route.dart';
 import 'package:hello_flutter/presentation/feature/event_list/route/event_list_argument.dart';
@@ -42,7 +44,7 @@ class EventListViewModel extends BaseViewModel<EventListArgument> {
   }
 
   Future<void> _fetchEvents() async {
-    final events = await eventRepository.getEventList();
+    final events = await loadData(eventRepository.getEventList());
 
     if (events.isNotEmpty) {
       _events.value = events;
@@ -53,8 +55,17 @@ class EventListViewModel extends BaseViewModel<EventListArgument> {
     _currentIndex.value = index;
   }
 
-  void onEventClicked() {
+  void onEventClicked({required int eventId}) {
     navigateToScreen(
-        destination: EventDetailsRoute(arguments: EventDetailsArgument()));
+        destination: EventDetailsRoute(arguments: EventDetailsArgument(eventId: eventId)));
+  }
+
+  void onAddEventButtonClicked() {
+    navigateToScreen(
+      destination: AddReminderRoute(
+        arguments: AddReminderArgument(),
+      ),
+      onPop: _fetchEvents
+    );
   }
 }

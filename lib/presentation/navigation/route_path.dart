@@ -1,3 +1,7 @@
+import 'package:hello_flutter/presentation/feature/user_onboarding/route/user_onboarding_argument.dart';
+import 'package:hello_flutter/presentation/feature/user_onboarding/route/user_onboarding_route.dart';
+import 'package:hello_flutter/presentation/feature/add_reminder/route/add_reminder_argument.dart';
+import 'package:hello_flutter/presentation/feature/add_reminder/route/add_reminder_route.dart';
 import 'package:hello_flutter/presentation/feature/memory/route/memory_argument.dart';
 import 'package:hello_flutter/presentation/feature/memory/route/memory_route.dart';
 import 'package:hello_flutter/presentation/feature/add_event/route/add_event_argument.dart';
@@ -37,7 +41,9 @@ enum RoutePath {
   eventDetails,
   profile,
   addEvent,
-  memory, 
+  memory,
+  createReminder,
+  userOnboarding, 
   unknown;
 
   static RoutePath fromString(String? path) {
@@ -68,6 +74,10 @@ enum RoutePath {
         return RoutePath.addEvent;
       case '/memory':
         return RoutePath.memory;
+      case '/createReminder':
+        return RoutePath.createReminder;
+      case '/userOnboarding':
+        return RoutePath.userOnboarding;
       default:
         return RoutePath.unknown;
     }
@@ -101,6 +111,10 @@ enum RoutePath {
         return '/addEvent';
       case RoutePath.memory:
         return '/memory';
+      case RoutePath.createReminder:
+        return '/createReminder';
+      case RoutePath.userOnboarding:
+        return '/userOnboarding';
       default:
         return '';
     }
@@ -162,6 +176,16 @@ enum RoutePath {
           throw Exception('MemoryArgument is required');
         }
         return MemoryRoute(arguments: arguments);
+      case RoutePath.createReminder:
+        if (arguments is! AddReminderArgument) {
+          throw Exception('AddReminderArgument is required');
+        }
+        return AddReminderRoute(arguments: arguments);
+      case RoutePath.userOnboarding:
+        if (arguments is! UserOnboardingArgument) {
+          throw Exception('UserOnboardingArgument is required');
+        }
+        return UserOnboardingRoute(arguments: arguments);
       default:
         return UnknownRoute(arguments: arguments);
     }

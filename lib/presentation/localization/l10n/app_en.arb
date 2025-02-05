@@ -291,5 +291,49 @@
   "join_the_event": "Join The Event",
   "@join_the_event": {
     "type": "text"
+  },
+  "event_title_label": "Title",
+  "@event_title_label": {
+    "type": "text"
+  },
+  "event_title_hint_text": "Title",
+  "@event_title_hint_text": {
+    "type": "text"
+  },
+  "event_description_label": "Description(Optional)",
+  "@event_description_label": {
+    "type": "text"
+  },
+  "event_description_hint_text": "Description(Optional)",
+  "@event_description_hint_text": {
+    "type": "text"
+  },
+  "event_date_label": "Date",
+  "@event_date_label": {
+    "type": "text"
+  },
+  "event_time_label": "Time",
+  "@event_time_label": {
+    "type": "text"
+  },
+  "event_location_label": "Location",
+  "@event_location_label": {
+    "type": "text"
+  },
+  "event_location_hint_text": "Location",
+  "@event_location_hint_text": {
+    "type": "text"
+  },
+  "event_type_label": "Event Type",
+  "@event_type_label": {
+    "type": "text"
+  },
+  "event_type_hint_text": "Select event type",
+  "@event_type_hint_text": {
+    "type": "text"
+  },
+  "add_reminder__save_btn_text": "Save",
+  "@add_reminder__save_btn_text": {
+    "type": "text"
   }
 }

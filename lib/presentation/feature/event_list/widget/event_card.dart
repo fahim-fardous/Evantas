@@ -1,6 +1,6 @@
 import 'package:domain/model/event.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/common/widget/attendee_card.dart';
+import 'package:hello_flutter/presentation/common/extension/event_type_ext.dart';
 import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
 import 'package:hello_flutter/presentation/values/dimens.dart';
 
@@ -16,7 +16,10 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      margin: EdgeInsets.symmetric(
+        horizontal: Dimens.dimen_8,
+        vertical: Dimens.dimen_4,
+      ),
       child: Material(
         elevation: Dimens.dimen_1,
         shape: RoundedRectangleBorder(
@@ -37,37 +40,25 @@ class EventCard extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.all(Dimens.dimen_8),
                         decoration: BoxDecoration(
-                          color: AppColors
-                              .of(context)
-                              .mainColor,
+                          color: AppColors.of(context).mainColor,
                           borderRadius: BorderRadius.circular(Dimens.dimen_48),
                         ),
                         child: Icon(
-                          Icons.dinner_dining,
+                          event.eventType.getEventIcon(),
                           color: Colors.black,
                           size: Dimens.dimen_24,
                         ),
                       ),
                       SizedBox(width: Dimens.dimen_8),
                       Text(
-                        'MT-15 Dinner',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .labelLarge
-                            ?.copyWith(
-                          color: AppColors
-                              .of(context)
-                              .mainColor,
-                          fontSize: Dimens.dimen_18,
-                          fontFamily: 'Roboto',
-                        ),
+                        event.title,
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              color: AppColors.of(context).mainColor,
+                              fontSize: Dimens.dimen_16,
+                              fontFamily: 'Roboto',
+                            ),
                       ),
                     ],
-                  ),
-                  AttendeeCard(
-                    event: event,
-                    shouldShowPlus: true,
                   ),
                 ],
               ),
@@ -77,52 +68,16 @@ class EventCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'Mobile Team Dinner January, 2025',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(
-                        color: AppColors
-                            .of(context)
-                            .mainColor,
-                        fontFamily: 'Roboto',
-                      ),
+                      event.description ?? '',
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            color: AppColors.of(context).mainColor,
+                            fontFamily: 'Roboto',
+                            fontSize: Dimens.dimen_20,
+                          ),
                       maxLines: 3,
                     ),
                   ),
                   SizedBox(width: Dimens.dimen_16),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        '${(event.attendees.length / 15 * 100).floor()}%',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.copyWith(
-                          color: AppColors
-                              .of(context)
-                              .mainColor,
-                          fontFamily: 'Roboto',
-                        ),
-                      ),
-                      Text(
-                        'Attending',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .titleSmall
-                            ?.copyWith(
-                          color: Colors.grey,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ],
