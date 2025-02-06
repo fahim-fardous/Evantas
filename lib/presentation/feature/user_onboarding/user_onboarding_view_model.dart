@@ -1,17 +1,19 @@
+import 'package:domain/repository/app_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
-import 'package:hello_flutter/presentation/feature/event_list/route/event_list_argument.dart';
-import 'package:hello_flutter/presentation/feature/event_list/route/event_list_route.dart';
 import 'package:hello_flutter/presentation/feature/home/route/home_argument.dart';
 import 'package:hello_flutter/presentation/feature/home/route/home_route.dart';
 import 'package:hello_flutter/presentation/feature/user_onboarding/route/user_onboarding_argument.dart';
 
 class UserOnboardingViewModel extends BaseViewModel<UserOnboardingArgument> {
+  final AppRepository appRepository;
   final ValueNotifier<int> _currentPage = ValueNotifier<int>(0);
 
   ValueNotifier<int> get currentPage => _currentPage;
 
-  UserOnboardingViewModel();
+  UserOnboardingViewModel({
+    required this.appRepository,
+  });
 
   @override
   void onViewReady({UserOnboardingArgument? argument}) {
@@ -22,7 +24,8 @@ class UserOnboardingViewModel extends BaseViewModel<UserOnboardingArgument> {
     _currentPage.value = index;
   }
 
-  void onSkipPressed() {
+  Future<void> onSkipPressed() async {
+    await appRepository.setOnBoardingComplete(true);
     navigateToScreen(
       destination: HomeRoute(
         arguments: HomeArgument(),
@@ -31,7 +34,8 @@ class UserOnboardingViewModel extends BaseViewModel<UserOnboardingArgument> {
     );
   }
 
-  void onGetStartedPressed() {
+  Future<void> onGetStartedPressed() async {
+    await appRepository.setOnBoardingComplete(true);
     navigateToScreen(
       destination: HomeRoute(
         arguments: HomeArgument(),

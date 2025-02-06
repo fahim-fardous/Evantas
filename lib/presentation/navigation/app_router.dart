@@ -6,9 +6,9 @@ import 'package:hello_flutter/presentation/feature/user_onboarding/route/user_on
 import 'package:hello_flutter/presentation/navigation/route_path.dart';
 
 class AppRouter {
-  static final initialRoute = RoutePath.userOnboarding.toPathString;
+  static final initialRoute = RoutePath.splash.toPathString;
 
-  static BaseArgument initialArguments = UserOnboardingArgument();
+  static BaseArgument initialArguments = SplashArgument();
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final argObj = settings.arguments;

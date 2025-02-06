@@ -12,4 +12,8 @@ abstract class AppRepository {
   Future<void> saveApplicationThemeMode(AppThemeMode themeMode);
 
   Future<AppInfo> getAppInfo();
+
+  Future<bool> isOnBoardingComplete();
+
+  Future<void> setOnBoardingComplete(bool isOnBoardingComplete);
 }

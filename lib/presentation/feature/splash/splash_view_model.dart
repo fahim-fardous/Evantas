@@ -5,6 +5,8 @@ import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
 import 'package:hello_flutter/presentation/feature/auth/login/route/login_argument.dart';
 import 'package:hello_flutter/presentation/feature/auth/login/route/login_route.dart';
 import 'package:hello_flutter/presentation/feature/splash/route/splash_argument.dart';
+import 'package:hello_flutter/presentation/feature/user_onboarding/route/user_onboarding_argument.dart';
+import 'package:hello_flutter/presentation/feature/user_onboarding/route/user_onboarding_route.dart';
 
 class SplashViewModel extends BaseViewModel<SplashArgument> {
   final AppRepository appRepository;
@@ -18,8 +20,12 @@ class SplashViewModel extends BaseViewModel<SplashArgument> {
   @override
   void onViewReady({SplashArgument? argument}) {
     super.onViewReady();
-    _fetchAppInfo();
-    _navigateToNextScreen();
+    _init();
+  }
+
+  void _init() async {
+    await _fetchAppInfo();
+    await _navigateToNextScreen();
   }
 
   Future<void> _fetchAppInfo() async {
@@ -27,13 +33,21 @@ class SplashViewModel extends BaseViewModel<SplashArgument> {
   }
 
   Future<void> _navigateToNextScreen() async {
+    final isOnBoardingComplete = await appRepository.isOnBoardingComplete();
     await Future.delayed(const Duration(seconds: 2));
-    //If user is logged in, navigate to home screen
-    //If user is not logged in, navigate to login screen
-
+    if (isOnBoardingComplete) {
+      navigateToScreen(
+        destination: LoginRoute(
+          arguments: LoginArgument(),
+        ),
+        isClearBackStack: true,
+      );
+      return;
+    }
+    
     navigateToScreen(
-      destination: LoginRoute(
-        arguments: LoginArgument(),
+      destination: UserOnboardingRoute(
+        arguments: UserOnboardingArgument(),
       ),
       isClearBackStack: true,
     );
