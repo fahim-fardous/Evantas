@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_adaptive_ui.dart';
-import 'package:hello_flutter/presentation/feature/movieDetails/binding/movie_details_binding.dart';
-import 'package:hello_flutter/presentation/feature/movieDetails/movie_details_view_model.dart';
-import 'package:hello_flutter/presentation/feature/movieDetails/route/movie_details_argument.dart';
-import 'package:hello_flutter/presentation/feature/movieDetails/route/movie_details_route.dart';
-import 'package:hello_flutter/presentation/feature/movieDetails/screen/movie_details_mobile_landscape.dart';
-import 'package:hello_flutter/presentation/feature/movieDetails/screen/movie_details_mobile_portrait.dart';
+import 'package:evntas/presentation/base/base_adaptive_ui.dart';
+import 'package:evntas/presentation/feature/movieDetails/binding/movie_details_binding.dart';
+import 'package:evntas/presentation/feature/movieDetails/movie_details_view_model.dart';
+import 'package:evntas/presentation/feature/movieDetails/route/movie_details_argument.dart';
+import 'package:evntas/presentation/feature/movieDetails/route/movie_details_route.dart';
+import 'package:evntas/presentation/feature/movieDetails/screen/movie_details_mobile_landscape.dart';
+import 'package:evntas/presentation/feature/movieDetails/screen/movie_details_mobile_portrait.dart';
 
 class MovieDetailsAdaptiveUi
     extends BaseAdaptiveUi<MovieDetailsArgument, MovieDetailsRoute> {

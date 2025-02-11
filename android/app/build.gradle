@@ -50,12 +50,12 @@ flutter {
 }
 
 android {
-    namespace "com.mahfuznow.hello_flutter"
+    namespace "com.mahfuznow.evntas"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     defaultConfig {
-        applicationId "com.mahfuznow.hello_flutter"
+        applicationId "com.mahfuznow.evntas"
 
         println("==================ANDROID Gradle Info ======================")
         println("Current flavor: " + getCurrentFlavor())

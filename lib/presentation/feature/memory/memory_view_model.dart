@@ -1,25 +1,49 @@
-import 'package:flutter/foundation.dart';
-import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
-import 'package:hello_flutter/presentation/feature/memory/route/memory_argument.dart';
+import 'dart:io';
+
+import 'package:domain/repository/memory_repository.dart';
+import 'package:evntas/presentation/base/base_viewmodel.dart';
+import 'package:evntas/presentation/feature/memory/route/memory_argument.dart';
+import 'package:evntas/presentation/localization/ui_text.dart';
+import 'package:evntas/presentation/util/value_notifier_list.dart';
+import 'package:flutter/material.dart';
 
 class MemoryViewModel extends BaseViewModel<MemoryArgument> {
+  final MemoryRepository memoryRepository;
+  final ValueNotifier<List<String>?> _imageFiles = ValueNotifier([]);
 
-  final ValueNotifier<String> _message = ValueNotifier('Memory');
+  ValueNotifier<List<String>?> get imageFiles => _imageFiles;
 
-  ValueListenable<String> get message => _message;
-
-  int count = 0;
-
-  MemoryViewModel();
+  MemoryViewModel({required this.memoryRepository});
 
   @override
   void onViewReady({MemoryArgument? argument}) {
     super.onViewReady();
+    _init();
   }
 
-  void onClick() {
-     count++;
-    _message.value = '${message.value}$count';
+  Future<void> _init() async {
+    final images = await getImages();
+    _imageFiles.value = images;
   }
 
+  Future<void> addImage(File image) async {
+    final images = await getImages();
+
+    if (images.contains(image.path)) {
+      showToast(uiText: FixedUiText(text: "Image already exists"));
+      return;
+    }
+
+    if (_imageFiles.value == null) {
+      return;
+    }
+
+    await loadData(memoryRepository.saveImage(image.path));
+    _imageFiles.value = _imageFiles.value!..add(image.path);
+  }
+
+  Future<List<String>> getImages() async {
+    final images = await loadData(memoryRepository.getImages());
+    return images;
+  }
 }

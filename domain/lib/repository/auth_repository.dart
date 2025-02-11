@@ -1,4 +1,5 @@
 import 'package:domain/model/user_session.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class AuthRepository {
   Future<UserSession> login({
@@ -16,4 +17,6 @@ abstract class AuthRepository {
   Future<bool> logout();
 
   Future<bool> isLoggedIn();
+
+  Future<GoogleSignInAccount?> signInWithGoogle();
 }

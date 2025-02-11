@@ -335,5 +335,9 @@
   "add_reminder__save_btn_text": "Save",
   "@add_reminder__save_btn_text": {
     "type": "text"
+  },
+  "login__google_btn_text": "Login with Google",
+  "@login__google_btn_text": {
+    "type": "text"
   }
 }

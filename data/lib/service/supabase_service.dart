@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:data/remote/response/event_response.dart';
+import 'package:data/remote/response/memory_response.dart';
 import 'package:domain/model/event.dart';
 import 'package:domain/util/logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -27,7 +30,23 @@ class SupabaseService {
   }
 
   Future<EventResponse?> getEventById(int id) async {
-    final response = await supabaseClient.from('events').select().eq('id', id).single();
+    final response = await supabaseClient.from('events').select()
+        .eq('id', id)
+        .single();
     return EventResponse.fromJson(response);
+  }
+
+  Future<void> saveImage(String imagePath) async {
+    await supabaseClient.from('memories').insert({
+      'image_path': imagePath,
+      'uploaded_by': '10BTd%6shsFDG'
+    });
+  }
+
+  Future<List<MemoryResponse>> getImages() async {
+    final response = await supabaseClient.from('memories').select();
+    return response.map((memory){
+      return MemoryResponse.fromJson(memory);
+    }).toList();
   }
 }

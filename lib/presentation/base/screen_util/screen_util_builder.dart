@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hello_flutter/presentation/base/adaptive_util/platform_utils.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/base/adaptive_util/platform_utils.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class ScreenUtilBuilder extends StatelessWidget {
   final Widget? child;

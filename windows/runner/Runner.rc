@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.sbu_europe.hello_flutter" "\0"
-            VALUE "FileDescription", "hello_flutter" "\0"
+            VALUE "CompanyName", "com.sbu_europe.evntas" "\0"
+            VALUE "FileDescription", "evntas" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "hello_flutter" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.sbu_europe.hello_flutter. All rights reserved." "\0"
-            VALUE "OriginalFilename", "hello_flutter.exe" "\0"
-            VALUE "ProductName", "hello_flutter" "\0"
+            VALUE "InternalName", "evntas" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 com.sbu_europe.evntas. All rights reserved." "\0"
+            VALUE "OriginalFilename", "evntas.exe" "\0"
+            VALUE "ProductName", "evntas" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

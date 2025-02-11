@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/feature/splash/screen/splash_mobile_portrait.dart';
+import 'package:evntas/presentation/feature/splash/screen/splash_mobile_portrait.dart';
 
 class SplashMobileLandscape extends SplashMobilePortrait {
   const SplashMobileLandscape({required super.viewModel, super.key});

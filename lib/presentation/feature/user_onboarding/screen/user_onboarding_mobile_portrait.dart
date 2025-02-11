@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/common/widget/primary_button.dart';
-import 'package:hello_flutter/presentation/feature/user_onboarding/pages/onboarding_screen_pages.dart';
-import 'package:hello_flutter/presentation/feature/user_onboarding/user_onboarding_view_model.dart';
-import 'package:hello_flutter/presentation/feature/user_onboarding/widget/user_onboarding_page_view.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/common/widget/primary_button.dart';
+import 'package:evntas/presentation/feature/user_onboarding/pages/onboarding_screen_pages.dart';
+import 'package:evntas/presentation/feature/user_onboarding/user_onboarding_view_model.dart';
+import 'package:evntas/presentation/feature/user_onboarding/widget/user_onboarding_page_view.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class UserOnboardingMobilePortrait extends StatefulWidget {
   final UserOnboardingViewModel viewModel;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
-import 'package:hello_flutter/presentation/feature/auth/login/screen/login_ui_mobile_portrait.dart';
-import 'package:hello_flutter/presentation/values/app_assets.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/common/extension/context_ext.dart';
+import 'package:evntas/presentation/feature/auth/login/screen/login_ui_mobile_portrait.dart';
+import 'package:evntas/presentation/values/app_assets.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class LoginUiMobileLandscape extends LoginUiMobilePortrait {
   const LoginUiMobileLandscape({required super.viewModel, super.key});

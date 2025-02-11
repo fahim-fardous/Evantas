@@ -1,4 +1,4 @@
-import 'package:hello_flutter/presentation/feature/user_onboarding/model/onboarding_page.dart';
+import 'package:evntas/presentation/feature/user_onboarding/model/onboarding_page.dart';
 
 class OnboardingScreenPages {
   static final List<OnboardingPage> onboardingPages = [

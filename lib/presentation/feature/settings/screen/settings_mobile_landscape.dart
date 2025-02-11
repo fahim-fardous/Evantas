@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/feature/settings/screen/settings_mobile_portrait.dart';
-import 'package:hello_flutter/presentation/feature/settings/screen/widgets/language_settings.dart';
-import 'package:hello_flutter/presentation/feature/settings/screen/widgets/theme_settings.dart';
+import 'package:evntas/presentation/feature/settings/screen/settings_mobile_portrait.dart';
+import 'package:evntas/presentation/feature/settings/screen/widgets/language_settings.dart';
+import 'package:evntas/presentation/feature/settings/screen/widgets/theme_settings.dart';
 
 class SettingsMobileLandscape extends SettingsMobilePortrait {
   const SettingsMobileLandscape({required super.viewModel, super.key});

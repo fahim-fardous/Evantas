@@ -1,8 +1,16 @@
 import 'package:data/local/shared_preference/entity/user_session_shared_pref_entity.dart';
+import 'package:data/service/google_api_service.dart';
 import 'package:domain/model/user_session.dart';
 import 'package:domain/repository/auth_repository.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
+  final GoogleSignInService googleSignInService;
+
+  AuthRepositoryImpl({
+    required this.googleSignInService,
+  });
+
   @override
   Future<UserSession> login({
     required String email,
@@ -66,5 +74,11 @@ class AuthRepositoryImpl extends AuthRepository {
         (await UserSessionSharedPrefEntity.example.getFromSharedPref())
             as UserSessionSharedPrefEntity;
     return userSessionSharedPref.toUserSession();
+  }
+
+  @override
+  Future<GoogleSignInAccount?> signInWithGoogle() async {
+    final googleSignInAccount = await googleSignInService.signIn();
+    return googleSignInAccount;
   }
 }

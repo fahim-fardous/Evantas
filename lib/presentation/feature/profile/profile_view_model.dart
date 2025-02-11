@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
-import 'package:hello_flutter/presentation/feature/profile/route/profile_argument.dart';
+import 'package:evntas/presentation/base/base_viewmodel.dart';
+import 'package:evntas/presentation/feature/profile/route/profile_argument.dart';
 
 class ProfileViewModel extends BaseViewModel<ProfileArgument> {
 

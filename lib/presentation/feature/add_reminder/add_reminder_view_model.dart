@@ -4,11 +4,11 @@ import 'package:domain/model/event_type.dart';
 import 'package:domain/util/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
-import 'package:hello_flutter/presentation/feature/add_reminder/route/add_reminder_argument.dart';
-import 'package:hello_flutter/presentation/localization/text_id.dart';
-import 'package:hello_flutter/presentation/localization/ui_text.dart';
-import 'package:hello_flutter/presentation/util/time_formatter.dart';
+import 'package:evntas/presentation/base/base_viewmodel.dart';
+import 'package:evntas/presentation/feature/add_reminder/route/add_reminder_argument.dart';
+import 'package:evntas/presentation/localization/text_id.dart';
+import 'package:evntas/presentation/localization/ui_text.dart';
+import 'package:evntas/presentation/util/time_formatter.dart';
 import 'package:intl/intl.dart';
 
 class AddReminderViewModel extends BaseViewModel<AddReminderArgument> {

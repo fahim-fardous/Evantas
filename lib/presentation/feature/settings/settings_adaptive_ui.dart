@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_adaptive_ui.dart';
-import 'package:hello_flutter/presentation/feature/settings/binding/settings_binding.dart';
-import 'package:hello_flutter/presentation/feature/settings/route/settings_argument.dart';
-import 'package:hello_flutter/presentation/feature/settings/route/settings_route.dart';
-import 'package:hello_flutter/presentation/feature/settings/screen/settings_mobile_landscape.dart';
-import 'package:hello_flutter/presentation/feature/settings/screen/settings_mobile_portrait.dart';
-import 'package:hello_flutter/presentation/feature/settings/settings_view_model.dart';
+import 'package:evntas/presentation/base/base_adaptive_ui.dart';
+import 'package:evntas/presentation/feature/settings/binding/settings_binding.dart';
+import 'package:evntas/presentation/feature/settings/route/settings_argument.dart';
+import 'package:evntas/presentation/feature/settings/route/settings_route.dart';
+import 'package:evntas/presentation/feature/settings/screen/settings_mobile_landscape.dart';
+import 'package:evntas/presentation/feature/settings/screen/settings_mobile_portrait.dart';
+import 'package:evntas/presentation/feature/settings/settings_view_model.dart';
 
 class SettingsAdaptiveUi
     extends BaseAdaptiveUi<SettingsArgument, SettingsRoute> {

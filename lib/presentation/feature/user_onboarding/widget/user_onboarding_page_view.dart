@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/common/widget/asset_image_view.dart';
-import 'package:hello_flutter/presentation/feature/user_onboarding/model/onboarding_page.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/common/widget/asset_image_view.dart';
+import 'package:evntas/presentation/feature/user_onboarding/model/onboarding_page.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class UserOnboardingPageView extends StatelessWidget {
   final OnboardingPage onboardingPage;

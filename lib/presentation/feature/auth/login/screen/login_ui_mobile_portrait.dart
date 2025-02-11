@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
-import 'package:hello_flutter/presentation/common/widget/overflow_scroll_view.dart';
-import 'package:hello_flutter/presentation/common/widget/primary_button.dart';
-import 'package:hello_flutter/presentation/feature/auth/login/login_view_model.dart';
-import 'package:hello_flutter/presentation/feature/auth/login/widgets/login_email_text_field.dart';
-import 'package:hello_flutter/presentation/feature/auth/login/widgets/login_password_text_field.dart';
-import 'package:hello_flutter/presentation/localization/extension/email_validation_error_ext.dart';
-import 'package:hello_flutter/presentation/localization/extension/password_validation_error_ext.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/common/extension/context_ext.dart';
+import 'package:evntas/presentation/common/widget/asset_image_view.dart';
+import 'package:evntas/presentation/common/widget/overflow_scroll_view.dart';
+import 'package:evntas/presentation/common/widget/primary_button.dart';
+import 'package:evntas/presentation/feature/auth/login/login_view_model.dart';
+import 'package:evntas/presentation/feature/auth/login/widgets/login_email_text_field.dart';
+import 'package:evntas/presentation/feature/auth/login/widgets/login_password_text_field.dart';
+import 'package:evntas/presentation/localization/extension/email_validation_error_ext.dart';
+import 'package:evntas/presentation/localization/extension/password_validation_error_ext.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class LoginUiMobilePortrait extends StatefulWidget {
   final LoginViewModel viewModel;
@@ -65,7 +66,9 @@ class LoginUiMobilePortraitState extends BaseUiState<LoginUiMobilePortrait> {
           SizedBox(height: Dimens.dimen_20),
           loginButton(context),
           forgotPasswordButton(context),
-          SizedBox(height: Dimens.dimen_100),
+          SizedBox(height: Dimens.dimen_16),
+          googleLogin(context),
+          SizedBox(height: Dimens.dimen_100)
         ],
       ),
     );
@@ -133,6 +136,7 @@ class LoginUiMobilePortraitState extends BaseUiState<LoginUiMobilePortrait> {
     return PrimaryButton(
       label: context.localizations.login__login_btn_text,
       onPressed: () => widget.viewModel.onLoginButtonClicked(),
+      minWidth: double.infinity,
     );
   }
 
@@ -146,6 +150,44 @@ class LoginUiMobilePortraitState extends BaseUiState<LoginUiMobilePortrait> {
             ),
       ),
       onLongPress: () => widget.viewModel.onForgotPasswordButtonLongPressed(),
+    );
+  }
+
+  Widget googleLogin(BuildContext context) {
+    return InkWell(
+      onTap: () => widget.viewModel.signInWithGoogle(),
+      child: Container(
+        width: double.infinity,
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(Dimens.dimen_4),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Theme.of(context).colorScheme.primary,
+            width: Dimens.dimen_2,
+          ),
+          borderRadius: BorderRadius.circular(Dimens.dimen_24),
+          color: Colors.white,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            AssetImageView(
+              fileName: 'google_icon.png',
+              width: Dimens.dimen_40,
+              height: Dimens.dimen_40,
+              fit: BoxFit.fill,
+            ),
+            SizedBox(width: Dimens.dimen_4),
+            Text(
+              context.localizations.login__google_btn_text,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
