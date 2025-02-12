@@ -1,3 +1,5 @@
+import 'package:evntas/presentation/feature/image_viewer/route/image_viewer_argument.dart';
+import 'package:evntas/presentation/feature/image_viewer/route/image_viewer_route.dart';
 import 'package:evntas/presentation/feature/user_onboarding/route/user_onboarding_argument.dart';
 import 'package:evntas/presentation/feature/user_onboarding/route/user_onboarding_route.dart';
 import 'package:evntas/presentation/feature/add_reminder/route/add_reminder_argument.dart';
@@ -43,7 +45,8 @@ enum RoutePath {
   addEvent,
   memory,
   createReminder,
-  userOnboarding, 
+  userOnboarding,
+  imageViewer, 
   unknown;
 
   static RoutePath fromString(String? path) {
@@ -78,6 +81,8 @@ enum RoutePath {
         return RoutePath.createReminder;
       case '/userOnboarding':
         return RoutePath.userOnboarding;
+      case '/imageViewer':
+        return RoutePath.imageViewer;
       default:
         return RoutePath.unknown;
     }
@@ -115,6 +120,8 @@ enum RoutePath {
         return '/createReminder';
       case RoutePath.userOnboarding:
         return '/userOnboarding';
+      case RoutePath.imageViewer:
+        return '/imageViewer';
       default:
         return '';
     }
@@ -186,6 +193,11 @@ enum RoutePath {
           throw Exception('UserOnboardingArgument is required');
         }
         return UserOnboardingRoute(arguments: arguments);
+      case RoutePath.imageViewer:
+        if (arguments is! ImageViewerArgument) {
+          throw Exception('ImageViewerArgument is required');
+        }
+        return ImageViewerRoute(arguments: arguments);
       default:
         return UnknownRoute(arguments: arguments);
     }

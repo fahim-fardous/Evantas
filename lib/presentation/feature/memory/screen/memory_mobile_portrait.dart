@@ -1,7 +1,4 @@
 import 'dart:io';
-import 'dart:math';
-
-import 'package:domain/util/logger.dart';
 import 'package:evntas/presentation/common/widget/asset_image_view.dart';
 import 'package:evntas/presentation/theme/color/app_colors.dart';
 import 'package:evntas/presentation/values/dimens.dart';
@@ -41,15 +38,36 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await _pickImage(ImageSource.gallery);
-        },
-        backgroundColor: AppColors.of(context).primary,
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.camera_alt,
-          color: Colors.white,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Align(
+        alignment: Alignment.bottomRight,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FloatingActionButton(
+              onPressed: () async {
+                await _pickImage(ImageSource.gallery);
+              },
+              backgroundColor: Colors.deepPurple,
+              shape: const CircleBorder(),
+              child: const Icon(
+                Icons.photo,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(height: Dimens.dimen_8),
+            FloatingActionButton(
+              onPressed: () async {
+                await _pickImage(ImageSource.camera);
+              },
+              backgroundColor: AppColors.of(context).primary,
+              shape: const CircleBorder(),
+              child: const Icon(
+                Icons.camera_alt,
+                color: Colors.white,
+              ),
+            )
+          ],
         ),
       ),
       body: SafeArea(
@@ -63,7 +81,7 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
                 valueListenable: widget.viewModel.imageFiles,
                 builder: (context, images, _) {
                   if(images == null) {
-                    return SizedBox.shrink();
+                    return const SizedBox.shrink();
                   }
                   return (images.isNotEmpty)
                       ? Expanded(
@@ -73,9 +91,12 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
                             crossAxisSpacing: Dimens.dimen_10,
                             itemCount: images.length,
                             itemBuilder: (context, index) {
-                              return Image(
-                                image: FileImage(
-                                  File(images[index]),
+                              return GestureDetector(
+                                onTap: () => widget.viewModel.onImagePressed(index),
+                                child: Image(
+                                  image: FileImage(
+                                    File(images[index]),
+                                  ),
                                 ),
                               );
                             },
