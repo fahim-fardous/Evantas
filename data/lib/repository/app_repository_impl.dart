@@ -75,4 +75,15 @@ class AppRepositoryImpl implements AppRepository {
       buildNumber: buildNumber,
     );
   }
+
+  @override
+  Future<bool> isOnboarded() async{
+    bool? isOnboarded = await sharedPrefManager.getValue<bool>('onboarded', false);
+    return isOnboarded ?? false;
+  }
+
+  @override
+  Future<void> setOnboardingCompleted() async{
+    await sharedPrefManager.saveValue('onboarded', true);
+  }
 }

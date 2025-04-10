@@ -1,12 +1,13 @@
+import 'package:domain/repository/app_repository.dart';
 import 'package:hello_flutter/presentation/base/base_binding.dart';
 import 'package:hello_flutter/presentation/feature/user_onboarding/user_onboarding_view_model.dart';
 
 class UserOnboardingBinding extends BaseBinding {
   @override
   Future<void> addDependencies() async {
-    // UserOnboardingRepository userOnboardingRepository = await diModule.resolve<UserOnboardingRepository>();
+    AppRepository appRepository = await diModule.resolve<AppRepository>();
     return diModule.registerInstance(
-      UserOnboardingViewModel(),
+      UserOnboardingViewModel(appRepository: appRepository),
     );
   }
 
