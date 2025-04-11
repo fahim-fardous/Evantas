@@ -1,21 +1,34 @@
 import 'dart:io';
 import 'package:data/service/supabase_service.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:dio/dio.dart';
+import 'package:domain/repository/memory_repository.dart';
+import 'package:domain/util/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
 import 'package:hello_flutter/presentation/feature/memory/route/memory_argument.dart';
+import 'package:hello_flutter/presentation/feature/memory_details/route/memory_details_argument.dart';
+import 'package:hello_flutter/presentation/feature/memory_details/route/memory_details_route.dart';
 import 'package:hello_flutter/presentation/localization/ui_text.dart';
 import 'package:hello_flutter/presentation/util/value_notifier_list.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class MemoryViewModel extends BaseViewModel<MemoryArgument> {
   final SupabaseService supabaseService;
+  final MemoryRepository memoryRepository;
 
   final ValueNotifierList<String> _uploadedImages = ValueNotifierList([]);
 
   ValueNotifierList<String> get uploadedImages => _uploadedImages;
 
-  MemoryViewModel({required this.supabaseService});
+  MemoryViewModel({
+    required this.supabaseService,
+    required this.memoryRepository,
+  });
 
   @override
   void onViewReady({MemoryArgument? argument}) {
@@ -24,73 +37,96 @@ class MemoryViewModel extends BaseViewModel<MemoryArgument> {
   }
 
   Future<void> uploadPhoto(ImageSource source) async {
-    try {
-      final ImagePicker picker = ImagePicker();
-      final XFile? image = await picker.pickImage(source: source);
-
-      if (image != null) {
-        final File file = File(image.path);
-        final String fileName = "${DateTime.now().microsecondsSinceEpoch}.jpg";
-
-        await supabaseService.supabaseClient.storage.from('photos').upload(
-              fileName,
-              file,
-              fileOptions: const FileOptions(
-                cacheControl: '3600',
-                upsert: false,
-              ),
-            );
-
-        final String publicUrl = supabaseService.supabaseClient.storage
-            .from('photos')
-            .getPublicUrl(fileName);
-
-        _uploadedImages.value = [..._uploadedImages.value, publicUrl];
-      }
-    } catch (e) {
-      showToast(uiText: FixedUiText(text: e.toString()));
-    }
+    await loadData(memoryRepository.uploadPhoto(source));
+    _fetchImages();
   }
 
   Future<void> _fetchImages() async {
-    try {
-      final response =
-      await supabaseService.supabaseClient.storage.from('photos').list();
+    final response = await loadData(memoryRepository.fetchImages());
 
-      if (response.isEmpty) return;
+    if (response.isEmpty) return;
 
-      if (response.isNotEmpty) {
-        final List<String> urls = response
-            .where((file) => file.name != '.emptyFolderPlaceholder') // Filter out the placeholder
-            .map((file) {
-          return supabaseService.supabaseClient.storage
-              .from('photos')
-              .getPublicUrl(file.name);
-        }).toList();
+    if (response.isNotEmpty) {
+      final List<String> urls = response
+          .where((file) => file.name != '.emptyFolderPlaceholder')
+          .map((file) {
+        return supabaseService.supabaseClient.storage
+            .from('photos')
+            .getPublicUrl(file.name);
+      }).toList();
 
-        _uploadedImages.value = urls;
-      }
-    } catch (e) {
-      // Handle any errors that occur during the request
-      print("Error fetching images: $e");
-    } catch (e) {
-      showToast(uiText: FixedUiText(text: e.toString()));
+      _uploadedImages.value = urls;
     }
   }
 
-  void pickImage() {
-    // Assuming you want to show a dialog like in the previous example
-    // This would typically be handled in the UI layer, but including here for completeness
-    // You might want to move this to your widget instead
+  Future<void> downloadPhoto(String url) async {
+    try {
+      PermissionStatus status;
+
+      if (Platform.isAndroid) {
+        // Android-specific permission logic
+        Permission permission = (await _getAndroidSdkVersion() >= 33)
+            ? Permission.photos
+            : Permission.storage;
+        status = await permission.request();
+      } else {
+        // iOS: No preemptive permission request needed; Photos prompt happens on save
+        status = PermissionStatus.granted;
+      }
+
+      downloadPhotoOnPermissionGranted(status, url);
+    } catch (e) {
+      Logger.error("Error downloading file: $e");
+      showToast(uiText: FixedUiText(text: "Failed to download image"));
+    }
   }
 
-  void onBackButtonPressed() {
-    navigateBack();
+  Future<void> downloadPhotoOnPermissionGranted(
+      PermissionStatus status, String url) async {
+    if (status.isGranted) {
+      try {
+        // Get the directory to save the file (e.g., temporary or external storage)
+        final directory =
+            await getTemporaryDirectory(); // Or use getExternalStorageDirectory() for Android
+        final fileName = url.split('/').last; // Extract file name from URL
+        final filePath = '${directory.path}/$fileName';
+
+        // Download the file using Dio
+        await Dio().download(url, filePath);
+
+        // Show success message
+        showToast(uiText: FixedUiText(text: "Image saved to $filePath"));
+      } catch (e) {
+        throw Exception("Failed to download image: $e");
+      }
+    } else if (status.isDenied) {
+      showToast(
+          uiText: FixedUiText(
+              text: Platform.isAndroid
+                  ? "Please grant storage permission"
+                  : "Please allow access to Photos"));
+    } else if (status.isPermanentlyDenied) {
+      showToast(
+          uiText: FixedUiText(
+              text: "Permission denied. Please enable it in settings."));
+      await openAppSettings();
+    }
   }
 
-  @override
-  void dispose() {
-    _uploadedImages.dispose();
-    super.onDispose();
+  Future<int> _getAndroidSdkVersion() async {
+    if (Platform.isAndroid) {
+      return (await DeviceInfoPlugin().androidInfo).version.sdkInt ?? 0;
+    }
+    return 0;
+  }
+
+  void onTapPhoto(int index) {
+    navigateToScreen(
+      destination: MemoryDetailsRoute(
+        arguments: MemoryDetailsArgument(
+          initialIndex: index,
+        ),
+      ),
+    );
   }
 }

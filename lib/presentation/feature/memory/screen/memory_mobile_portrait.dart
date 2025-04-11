@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hello_flutter/presentation/base/base_ui_state.dart';
 import 'package:hello_flutter/presentation/feature/memory/memory_view_model.dart';
+import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
+import 'package:hello_flutter/presentation/util/constants.dart';
 import 'package:hello_flutter/presentation/values/dimens.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -18,8 +20,8 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Memory"),
-        leading: IconButton(onPressed: () => widget.viewModel.onBackButtonPressed(), icon: Icon(Icons.arrow_back)),
+        title: const Text("Memory"),
+        centerTitle: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: _buildFloatingActionButton(context),
@@ -28,7 +30,9 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
           listenable: widget.viewModel.uploadedImages,
           builder: (context, value) => Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: Dimens.dimen_16, vertical: Dimens.dimen_16),
+              horizontal: Dimens.dimen_16,
+              vertical: Dimens.dimen_16,
+            ),
             child: Column(
               children: [
                 Expanded(
@@ -40,11 +44,16 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
                       mainAxisSpacing: Dimens.dimen_4,
                       childAspectRatio: 1, // square cells
                     ),
-                    itemBuilder: (context, index) => Image.network(
-                      value.isNotEmpty
-                          ? value[index]
-                          : 'https://ixcgefrdqdlqmpveunyu.supabase.co/storage/v1/object/public/photos/empty_placeholder.jpg',
-                      fit: BoxFit.cover,
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () => widget.viewModel.onTapPhoto(
+                        index,
+                      ),
+                      child: Image.network(
+                        value.isNotEmpty
+                            ? value[index]
+                            : Constants.emptyPlaceholderUrl,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 )
@@ -57,9 +66,35 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
   }
 
   Widget _buildFloatingActionButton(BuildContext context) {
-    return FloatingActionButton(
-      child: const Icon(Icons.add),
-      onPressed: () => widget.viewModel.uploadPhoto(ImageSource.camera),
+    return Padding(
+      padding: EdgeInsets.only(left: Dimens.dimen_16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          FloatingActionButton(
+            heroTag: "camera",
+            backgroundColor: AppColors.of(context).mainColor,
+            child: const Icon(
+              Icons.camera_alt,
+              color: Colors.white,
+            ),
+            onPressed: () => widget.viewModel.uploadPhoto(ImageSource.camera),
+          ),
+          SizedBox(
+            width: Dimens.dimen_4,
+          ),
+          FloatingActionButton(
+            heroTag: "gallery",
+            backgroundColor: AppColors.of(context).secondary,
+            child: const Icon(
+              Icons.image,
+              color: Colors.white,
+            ),
+            onPressed: () => widget.viewModel.uploadPhoto(ImageSource.gallery),
+          ),
+        ],
+      ),
     );
   }
 }

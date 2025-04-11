@@ -1,3 +1,5 @@
+import 'package:hello_flutter/presentation/feature/memory_details/route/memory_details_argument.dart';
+import 'package:hello_flutter/presentation/feature/memory_details/route/memory_details_route.dart';
 import 'package:hello_flutter/presentation/feature/user_onboarding/route/user_onboarding_argument.dart';
 import 'package:hello_flutter/presentation/feature/user_onboarding/route/user_onboarding_route.dart';
 import 'package:hello_flutter/presentation/feature/add_reminder/route/add_reminder_argument.dart';
@@ -43,7 +45,8 @@ enum RoutePath {
   addEvent,
   memory,
   createReminder,
-  userOnboarding, 
+  userOnboarding,
+  memoryDetails, 
   unknown;
 
   static RoutePath fromString(String? path) {
@@ -78,6 +81,8 @@ enum RoutePath {
         return RoutePath.createReminder;
       case '/userOnboarding':
         return RoutePath.userOnboarding;
+      case '/memoryDetails':
+        return RoutePath.memoryDetails;
       default:
         return RoutePath.unknown;
     }
@@ -115,6 +120,8 @@ enum RoutePath {
         return '/createReminder';
       case RoutePath.userOnboarding:
         return '/userOnboarding';
+      case RoutePath.memoryDetails:
+        return '/memoryDetails';
       default:
         return '';
     }
@@ -186,6 +193,11 @@ enum RoutePath {
           throw Exception('UserOnboardingArgument is required');
         }
         return UserOnboardingRoute(arguments: arguments);
+      case RoutePath.memoryDetails:
+        if (arguments is! MemoryDetailsArgument) {
+          throw Exception('MemoryDetailsArgument is required');
+        }
+        return MemoryDetailsRoute(arguments: arguments);
       default:
         return UnknownRoute(arguments: arguments);
     }
