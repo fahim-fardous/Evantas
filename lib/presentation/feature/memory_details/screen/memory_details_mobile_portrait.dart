@@ -28,10 +28,27 @@ class MemoryDetailsMobilePortraitState
           listenable: widget.viewModel.uploadedImages,
           builder: (context, value) => valueListenableBuilder(
             listenable: widget.viewModel.currentIndex,
-            builder: (context, index) =>
-                (index != null) ? Text("Photo ${index + 1}") : Container(),
+            builder: (context, index) => (value.isNotEmpty && index != null)
+                ? Text(value[index].split('/').last)
+                : Container(),
           ),
         ),
+        actions: [
+          valueListenableBuilder(
+              listenable: widget.viewModel.uploadedImages,
+              builder: (context, value) => valueListenableBuilder(
+                    listenable: widget.viewModel.currentIndex,
+                    builder: (context, index) => (index != null)
+                        ? IconButton(
+                            onPressed: () => {
+                                  widget.viewModel
+                                      .downloadPhoto(
+                                          value[index])
+                                },
+                            icon: const Icon(Icons.download))
+                        : Container(),
+                  ))
+        ],
       ),
       body: valueListenableBuilder(
         listenable: widget.viewModel.uploadedImages,
@@ -40,7 +57,6 @@ class MemoryDetailsMobilePortraitState
             return const Center(child: CircularProgressIndicator());
           }
 
-          // ✅ Initialize controller only once when images are ready
           _pageController ??= PageController(initialPage: widget.initialIndex);
 
           return PageView.builder(
