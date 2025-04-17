@@ -1,16 +1,18 @@
-import 'package:hello_flutter/presentation/base/base_binding.dart';
+import 'package:domain/repository/auth_repository.dart';
+import 'package:evntas/presentation/base/base_binding.dart';
+import 'package:evntas/presentation/feature/profile/profile_view_model.dart';
 
 class ProfileBinding extends BaseBinding {
   @override
   Future<void> addDependencies() async {
-    // ProfileRepository profileRepository = await diModule.resolve<ProfileRepository>();
-    // return diModule.registerInstance(
-    //   ProfileViewModel(profileRepository: profileRepository),
-    // );
+    AuthRepository authRepository = await diModule.resolve<AuthRepository>();
+    return diModule.registerInstance(
+      ProfileViewModel(authRepository: authRepository),
+    );
   }
 
   @override
   Future<void> removeDependencies() async {
-    // return diModule.unregister<ProfileViewModel>();
+    return diModule.unregister<ProfileViewModel>();
   }
 }

@@ -1,25 +1,29 @@
+import 'package:domain/repository/auth_repository.dart';
 import 'package:flutter/foundation.dart';
-import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
-import 'package:hello_flutter/presentation/feature/profile/route/profile_argument.dart';
+import 'package:evntas/presentation/base/base_viewmodel.dart';
+import 'package:evntas/presentation/feature/profile/route/profile_argument.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class ProfileViewModel extends BaseViewModel<ProfileArgument> {
+  final AuthRepository authRepository;
 
-  final ValueNotifier<String> _message = ValueNotifier('Profile');
+  final ValueNotifier<GoogleSignInAccount?> _user = ValueNotifier(null);
+  ValueNotifier<GoogleSignInAccount?> get user => _user;
 
-  ValueListenable<String> get message => _message;
-
-  int count = 0;
-
-  ProfileViewModel();
+  ProfileViewModel({required this.authRepository});
 
   @override
   void onViewReady({ProfileArgument? argument}) {
     super.onViewReady();
+    fetchUserInfo();
   }
 
-  void onClick() {
-     count++;
-    _message.value = '${message.value}$count';
+  Future<void> fetchUserInfo() async {
+    final userInfo = await authRepository.getCurrentGoogleUser();
+
+    if (userInfo != null) {
+      _user.value = userInfo;
+    }
   }
 
 }
