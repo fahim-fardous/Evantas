@@ -6,6 +6,7 @@ import 'package:data/repository/auth_repository_impl.dart';
 import 'package:data/repository/event_repository_impl.dart';
 import 'package:data/repository/location_repository_impl.dart';
 import 'package:data/repository/movie_repository_impl.dart';
+import 'package:data/service/google_sign_in_service.dart';
 import 'package:data/service/supabase_service.dart';
 import 'package:domain/di/di_module.dart';
 import 'package:domain/repository/auth_repository.dart';
@@ -27,6 +28,7 @@ class DataModule {
     await injectSupabaseService();
     await injectApiClient();
     await injectApiService();
+    await injectGoogleSignInService();
     await injectLocalDataService();
     await injectRepositories();
   }
@@ -35,6 +37,7 @@ class DataModule {
     await removeSupabaseService();
     await removeApiClient();
     await removeApiService();
+    await removeGoogleSignInService();
     await removeLocalDataService();
     await removeRepositories();
   }
@@ -69,6 +72,14 @@ class DataModule {
     await _diModule.unregisterSingleton<MovieApiService>();
   }
 
+  Future<void> injectGoogleSignInService() async {
+    await _diModule.registerSingleton<GoogleSignInService>(GoogleSignInService());
+  }
+
+  Future<void> removeGoogleSignInService() async {
+    await _diModule.unregisterSingleton<GoogleSignInService>();
+  }
+
   Future<void> injectLocalDataService() async {
     //TODO: Implement local service injection
   }
@@ -78,11 +89,12 @@ class DataModule {
   Future<void> injectRepositories() async {
     final movieApiService = await _diModule.resolve<MovieApiService>();
     final supabaseService = await _diModule.resolve<SupabaseService>();
+    final googleSignInService = await _diModule.resolve<GoogleSignInService>();
     await _diModule.registerSingleton<MovieRepository>(
       MovieRepositoryImpl(movieApiService: movieApiService),
     );
 
-    await _diModule.registerSingleton<AuthRepository>(AuthRepositoryImpl());
+    await _diModule.registerSingleton<AuthRepository>(AuthRepositoryImpl(googleSignInService));
 
     await _diModule
         .registerSingleton<LocationRepository>(LocationRepositoryImpl());
