@@ -1,15 +1,15 @@
 import 'package:domain/model/event_type.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
-import 'package:hello_flutter/presentation/common/widget/primary_button.dart';
-import 'package:hello_flutter/presentation/feature/add_reminder/add_reminder_view_model.dart';
-import 'package:hello_flutter/presentation/feature/add_reminder/widgets/reminder_date_field.dart';
-import 'package:hello_flutter/presentation/feature/add_reminder/widgets/reminder_event_type_field.dart';
-import 'package:hello_flutter/presentation/feature/add_reminder/widgets/reminder_text_field.dart';
-import 'package:hello_flutter/presentation/feature/add_reminder/widgets/reminder_time_field.dart';
-import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/common/extension/context_ext.dart';
+import 'package:evntas/presentation/common/widget/primary_button.dart';
+import 'package:evntas/presentation/feature/add_reminder/add_reminder_view_model.dart';
+import 'package:evntas/presentation/feature/add_reminder/widgets/reminder_date_field.dart';
+import 'package:evntas/presentation/feature/add_reminder/widgets/reminder_event_type_field.dart';
+import 'package:evntas/presentation/feature/add_reminder/widgets/reminder_text_field.dart';
+import 'package:evntas/presentation/feature/add_reminder/widgets/reminder_time_field.dart';
+import 'package:evntas/presentation/theme/color/app_colors.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class AddReminderMobilePortrait extends StatefulWidget {
   final AddReminderViewModel viewModel;

@@ -1,4 +1,4 @@
-import 'package:hello_flutter/presentation/base/base_binding.dart';
+import 'package:evntas/presentation/base/base_binding.dart';
 
 class MemoryBinding extends BaseBinding {
   @override

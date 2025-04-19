@@ -1,5 +1,5 @@
-import 'package:hello_flutter/presentation/feature/auth/validator/email_validator.dart';
-import 'package:hello_flutter/presentation/localization/generated/app_localizations.dart';
+import 'package:evntas/presentation/feature/auth/validator/email_validator.dart';
+import 'package:evntas/presentation/localization/generated/app_localizations.dart';
 
 extension EmailValidationErrorExt on EmailValidationError {
   String getLocalizedMessage(AppLocalizations localizations) {

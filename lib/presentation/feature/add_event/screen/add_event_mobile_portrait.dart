@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/feature/add_event/add_event_view_model.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/feature/add_event/add_event_view_model.dart';
 
 class AddEventMobilePortrait extends StatefulWidget {
   final AddEventViewModel viewModel;

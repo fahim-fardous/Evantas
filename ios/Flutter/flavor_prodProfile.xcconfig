@@ -3,5 +3,5 @@
 
 FLUTTER_TARGET=lib/main/main_flavor_prod.dart
 ASSET_PREFIX=flavor_prod
-BUNDLE_NAME=Hello Flutter
-BUNDLE_DISPLAY_NAME=Hello Flutter
+BUNDLE_NAME=Evntas
+BUNDLE_DISPLAY_NAME=Evntas

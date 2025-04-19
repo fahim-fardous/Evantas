@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
-import 'package:hello_flutter/presentation/theme/text_theme/text_theme.dart';
+import 'package:evntas/presentation/theme/color/app_colors.dart';
+import 'package:evntas/presentation/theme/text_theme/text_theme.dart';
 
 abstract class AppTheme {
   abstract final AppColors appColors;

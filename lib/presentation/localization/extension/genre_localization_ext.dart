@@ -1,5 +1,5 @@
 import 'package:domain/model/genre.dart';
-import 'package:hello_flutter/presentation/localization/generated/app_localizations.dart';
+import 'package:evntas/presentation/localization/generated/app_localizations.dart';
 
 extension GenreLocalizationExt on Genre {
   String getLocalizedName(AppLocalizations localizations) {

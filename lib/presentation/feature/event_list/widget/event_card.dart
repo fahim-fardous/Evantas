@@ -1,8 +1,8 @@
 import 'package:domain/model/event.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/common/extension/event_type_ext.dart';
-import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/common/extension/event_type_ext.dart';
+import 'package:evntas/presentation/theme/color/app_colors.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;

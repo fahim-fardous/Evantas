@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/feature/memory/memory_view_model.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/feature/memory/memory_view_model.dart';
 
 class MemoryMobilePortrait extends StatefulWidget {
   final MemoryViewModel viewModel;

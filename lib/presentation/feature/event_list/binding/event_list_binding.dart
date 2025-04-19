@@ -1,6 +1,6 @@
 import 'package:domain/repository/event_repository.dart';
-import 'package:hello_flutter/presentation/base/base_binding.dart';
-import 'package:hello_flutter/presentation/feature/event_list/event_list_view_model.dart';
+import 'package:evntas/presentation/base/base_binding.dart';
+import 'package:evntas/presentation/feature/event_list/event_list_view_model.dart';
 
 class EventListBinding extends BaseBinding {
   @override

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/main/flavors.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
-import 'package:hello_flutter/presentation/feature/home/home_view_model.dart';
-import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/main/flavors.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/common/extension/context_ext.dart';
+import 'package:evntas/presentation/feature/home/home_view_model.dart';
+import 'package:evntas/presentation/theme/color/app_colors.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class HomeUiMobilePortrait extends StatefulWidget {
   final HomeViewModel viewModel;

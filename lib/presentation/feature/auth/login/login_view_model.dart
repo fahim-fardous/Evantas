@@ -1,13 +1,13 @@
 import 'package:domain/repository/auth_repository.dart';
 import 'package:flutter/foundation.dart';
-import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
-import 'package:hello_flutter/presentation/feature/auth/login/route/login_argument.dart';
-import 'package:hello_flutter/presentation/feature/auth/validator/email_validator.dart';
-import 'package:hello_flutter/presentation/feature/auth/validator/password_validator.dart';
-import 'package:hello_flutter/presentation/feature/home/route/home_argument.dart';
-import 'package:hello_flutter/presentation/feature/home/route/home_route.dart';
-import 'package:hello_flutter/presentation/localization/text_id.dart';
-import 'package:hello_flutter/presentation/localization/ui_text.dart';
+import 'package:evntas/presentation/base/base_viewmodel.dart';
+import 'package:evntas/presentation/feature/auth/login/route/login_argument.dart';
+import 'package:evntas/presentation/feature/auth/validator/email_validator.dart';
+import 'package:evntas/presentation/feature/auth/validator/password_validator.dart';
+import 'package:evntas/presentation/feature/home/route/home_argument.dart';
+import 'package:evntas/presentation/feature/home/route/home_route.dart';
+import 'package:evntas/presentation/localization/text_id.dart';
+import 'package:evntas/presentation/localization/ui_text.dart';
 
 class LoginViewModel extends BaseViewModel<LoginArgument> {
   final AuthRepository authRepository;

@@ -1,6 +1,6 @@
 import 'package:domain/exceptions/base_exception.dart';
-import 'package:hello_flutter/presentation/base/base_route.dart';
-import 'package:hello_flutter/presentation/localization/ui_text.dart';
+import 'package:evntas/presentation/base/base_route.dart';
+import 'package:evntas/presentation/localization/ui_text.dart';
 
 class BaseState {}
 

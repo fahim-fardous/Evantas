@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
-import 'package:hello_flutter/presentation/feature/memory/route/memory_argument.dart';
+import 'package:evntas/presentation/base/base_viewmodel.dart';
+import 'package:evntas/presentation/feature/memory/route/memory_argument.dart';
 
 class MemoryViewModel extends BaseViewModel<MemoryArgument> {
 

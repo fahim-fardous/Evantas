@@ -1,5 +1,5 @@
-import 'package:hello_flutter/presentation/localization/generated/app_localizations.dart';
-import 'package:hello_flutter/presentation/localization/text_id.dart';
+import 'package:evntas/presentation/localization/generated/app_localizations.dart';
+import 'package:evntas/presentation/localization/text_id.dart';
 
 abstract class UiText {
   TextId get textId;

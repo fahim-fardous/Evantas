@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class AppTextTheme extends TextTheme {
   final TextStyle _commonTextStyle = GoogleFonts.inter();
