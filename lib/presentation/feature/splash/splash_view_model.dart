@@ -1,5 +1,8 @@
 import 'package:domain/model/app_info.dart';
 import 'package:domain/repository/app_repository.dart';
+import 'package:domain/repository/auth_repository.dart';
+import 'package:evntas/presentation/feature/home/route/home_argument.dart';
+import 'package:evntas/presentation/feature/home/route/home_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:evntas/presentation/base/base_viewmodel.dart';
 import 'package:evntas/presentation/feature/auth/login/route/login_argument.dart';
@@ -10,8 +13,12 @@ import 'package:evntas/presentation/feature/user_onboarding/route/user_onboardin
 
 class SplashViewModel extends BaseViewModel<SplashArgument> {
   final AppRepository appRepository;
+  final AuthRepository authRepository;
 
-  SplashViewModel({required this.appRepository});
+  SplashViewModel({
+    required this.appRepository,
+    required this.authRepository,
+  });
 
   final ValueNotifier<AppInfo?> _appInfo = ValueNotifier(null);
 
@@ -34,8 +41,18 @@ class SplashViewModel extends BaseViewModel<SplashArgument> {
 
   Future<void> _navigateToNextScreen() async {
     final isOnBoardingComplete = await appRepository.isOnBoardingComplete();
-    await Future.delayed(const Duration(seconds: 2));
-    if (isOnBoardingComplete) {
+    final isUserLoggedIn = await authRepository.isLoggedIn();
+    if (!isOnBoardingComplete) {
+      navigateToScreen(
+        destination: UserOnboardingRoute(
+          arguments: UserOnboardingArgument(),
+        ),
+        isClearBackStack: true,
+      );
+      return;
+    }
+
+    if (!isUserLoggedIn) {
       navigateToScreen(
         destination: LoginRoute(
           arguments: LoginArgument(),
@@ -44,10 +61,10 @@ class SplashViewModel extends BaseViewModel<SplashArgument> {
       );
       return;
     }
-    
+
     navigateToScreen(
-      destination: UserOnboardingRoute(
-        arguments: UserOnboardingArgument(),
+      destination: HomeRoute(
+        arguments: HomeArgument(userId: '123'),
       ),
       isClearBackStack: true,
     );

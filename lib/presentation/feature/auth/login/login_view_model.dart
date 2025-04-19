@@ -63,13 +63,19 @@ class LoginViewModel extends BaseViewModel<LoginArgument> {
       password: 'password.value!',
     ));
 
-    navigateToScreen(
-      destination: HomeRoute(arguments: HomeArgument(userId: '123')),
-      isClearBackStack: true,
-    );
+    signInWithGoogle();
   }
 
   onForgotPasswordButtonClicked() {}
 
   onForgotPasswordButtonLongPressed() {}
+
+  Future<void> signInWithGoogle() async{
+    await loadData(authRepository.signInWithGoogle());
+
+    navigateToScreen(
+      destination: HomeRoute(arguments: HomeArgument(userId: '123')),
+      isClearBackStack: true,
+    );
+  }
 }
