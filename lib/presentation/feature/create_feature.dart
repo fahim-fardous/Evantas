@@ -48,7 +48,7 @@ String get featureViewModelFile =>
 String get featureAdaptiveUiFile =>
     '$featurePath/${featurePathName}_adaptive_ui.dart';
 
-const String packageName = 'package:hello_flutter';
+const String packageName = 'package:evntas';
 
 void main(List<String> arguments) {
   String? inputFeatureName = '';

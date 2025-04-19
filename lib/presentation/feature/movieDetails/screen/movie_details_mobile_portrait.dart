@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:domain/model/genre.dart';
 import 'package:domain/model/movie_details.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/common/widget/network_image_view.dart';
-import 'package:hello_flutter/presentation/common/widget/rating_view.dart';
-import 'package:hello_flutter/presentation/feature/movieDetails/movie_details_view_model.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/common/widget/network_image_view.dart';
+import 'package:evntas/presentation/common/widget/rating_view.dart';
+import 'package:evntas/presentation/feature/movieDetails/movie_details_view_model.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class MovieDetailsUiMobilePortrait extends StatefulWidget {
   final MovieDetailsViewModel viewModel;

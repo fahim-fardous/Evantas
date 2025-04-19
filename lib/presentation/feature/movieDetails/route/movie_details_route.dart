@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_route.dart';
-import 'package:hello_flutter/presentation/feature/movieDetails/movie_details_adaptive_ui.dart';
-import 'package:hello_flutter/presentation/feature/movieDetails/route/movie_details_argument.dart';
-import 'package:hello_flutter/presentation/navigation/route_path.dart';
+import 'package:evntas/presentation/base/base_route.dart';
+import 'package:evntas/presentation/feature/movieDetails/movie_details_adaptive_ui.dart';
+import 'package:evntas/presentation/feature/movieDetails/route/movie_details_argument.dart';
+import 'package:evntas/presentation/navigation/route_path.dart';
 
 class MovieDetailsRoute extends BaseRoute<MovieDetailsArgument> {
   @override

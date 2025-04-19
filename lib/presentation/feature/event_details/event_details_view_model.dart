@@ -1,8 +1,8 @@
 import 'package:domain/model/event.dart';
 import 'package:domain/repository/event_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
-import 'package:hello_flutter/presentation/feature/event_details/route/event_details_argument.dart';
+import 'package:evntas/presentation/base/base_viewmodel.dart';
+import 'package:evntas/presentation/feature/event_details/route/event_details_argument.dart';
 
 class EventDetailsViewModel extends BaseViewModel<EventDetailsArgument> {
   final EventRepository eventRepository;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_adaptive_ui.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
-import 'package:hello_flutter/presentation/common/widget/asset_image_view.dart';
-import 'package:hello_flutter/presentation/feature/splash/splash_view_model.dart';
-import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/base/base_adaptive_ui.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/common/extension/context_ext.dart';
+import 'package:evntas/presentation/common/widget/asset_image_view.dart';
+import 'package:evntas/presentation/feature/splash/splash_view_model.dart';
+import 'package:evntas/presentation/theme/color/app_colors.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class SplashMobilePortrait extends StatefulWidget {
   final SplashViewModel viewModel;

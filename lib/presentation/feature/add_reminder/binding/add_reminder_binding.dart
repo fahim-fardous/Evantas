@@ -1,6 +1,6 @@
 import 'package:data/service/supabase_service.dart';
-import 'package:hello_flutter/presentation/base/base_binding.dart';
-import 'package:hello_flutter/presentation/feature/add_reminder/add_reminder_view_model.dart';
+import 'package:evntas/presentation/base/base_binding.dart';
+import 'package:evntas/presentation/feature/add_reminder/add_reminder_view_model.dart';
 
 class AddReminderBinding extends BaseBinding {
   @override

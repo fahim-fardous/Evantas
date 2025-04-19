@@ -1,4 +1,4 @@
-import 'package:hello_flutter/presentation/localization/generated/app_localizations.dart';
+import 'package:evntas/presentation/localization/generated/app_localizations.dart';
 
 abstract class TextId {
   String getLocalizedText(AppLocalizations localizations);

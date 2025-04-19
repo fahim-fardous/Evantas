@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
-import 'package:hello_flutter/presentation/feature/add_event/route/add_event_argument.dart';
+import 'package:evntas/presentation/base/base_viewmodel.dart';
+import 'package:evntas/presentation/feature/add_event/route/add_event_argument.dart';
 
 class AddEventViewModel extends BaseViewModel<AddEventArgument> {
 
