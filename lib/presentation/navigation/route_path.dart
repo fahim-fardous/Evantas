@@ -1,7 +1,7 @@
-import 'package:hello_flutter/presentation/feature/memory_details/route/memory_details_argument.dart';
-import 'package:hello_flutter/presentation/feature/memory_details/route/memory_details_route.dart';
 import 'package:evntas/presentation/feature/edit_profile/route/edit_profile_argument.dart';
 import 'package:evntas/presentation/feature/edit_profile/route/edit_profile_route.dart';
+import 'package:evntas/presentation/feature/memory_details/route/memory_details_argument.dart';
+import 'package:evntas/presentation/feature/memory_details/route/memory_details_route.dart';
 import 'package:evntas/presentation/feature/profile/route/profile_argument.dart';
 import 'package:evntas/presentation/feature/profile/route/profile_route.dart';
 import 'package:evntas/presentation/feature/user_onboarding/route/user_onboarding_argument.dart';
@@ -51,8 +51,8 @@ enum RoutePath {
   createReminder,
   userOnboarding,
   memoryDetails,
-  userOnboarding,
   editProfile,
+  profilePicture, 
   unknown;
 
   static RoutePath fromString(String? path) {
@@ -93,6 +93,8 @@ enum RoutePath {
         return RoutePath.profile;
       case '/editProfile':
         return RoutePath.editProfile;
+      case '/profilePicture':
+        return RoutePath.profilePicture;
       default:
         return RoutePath.unknown;
     }
@@ -134,6 +136,8 @@ enum RoutePath {
         return '/memoryDetails';
       case RoutePath.editProfile:
         return '/editProfile';
+      case RoutePath.profilePicture:
+        return '/profilePicture';
       default:
         return '';
     }
@@ -215,6 +219,11 @@ enum RoutePath {
           throw Exception('EditProfileArgument is required');
         }
         return EditProfileRoute(arguments: arguments);
+      case RoutePath.profilePicture:
+        if (arguments is! ProfilePictureArgument) {
+          throw Exception('ProfilePictureArgument is required');
+        }
+        return ProfilePictureRoute(arguments: arguments);
       default:
         return UnknownRoute(arguments: arguments);
     }

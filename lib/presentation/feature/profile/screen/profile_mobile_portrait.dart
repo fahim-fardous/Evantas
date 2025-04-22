@@ -135,16 +135,24 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextWithIcon(
-              icon: Icons.person_2_rounded,
-              text: context.localizations.see_profile_picture,
-              onTap: () {},
+            valueListenableBuilder(
+              listenable: widget.viewModel.userData,
+              builder: (context, user) => TextWithIcon(
+                icon: Icons.person_2_rounded,
+                text: context.localizations.see_profile_picture,
+                onTap: () {
+                  widget.viewModel.onSeeProfilePicture(
+                    user?.photoUrl ?? '',
+                  );
+                  Navigator.pop(context);
+                },
+              ),
             ),
             SizedBox(height: Dimens.dimen_20),
             TextWithIcon(
               icon: Icons.photo_album,
               text: context.localizations.select_profile_picture,
-              onTap: (){},
+              onTap: () {},
             )
           ],
         ),
