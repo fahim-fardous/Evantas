@@ -4,6 +4,7 @@ import 'package:data/local/shared_preference/shared_pref_manager.dart';
 import 'package:domain/model/app_info.dart';
 import 'package:domain/model/app_language.dart';
 import 'package:domain/model/app_theme_mode.dart';
+import 'package:domain/model/google_user_data.dart';
 import 'package:domain/repository/app_repository.dart';
 import 'package:domain/util/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -85,5 +86,49 @@ class AppRepositoryImpl implements AppRepository {
   @override
   Future<void> setOnBoardingComplete(bool isOnBoardingComplete) async{
     await sharedPrefManager.saveValue('isOnboarded', isOnBoardingComplete);
+  }
+
+  @override
+  Future<void> setUserId(String id) async{
+    await sharedPrefManager.saveValue('userId', id);
+  }
+
+  @override
+  Future<String> getUserId() async{
+    final id = await sharedPrefManager.getValue('userId', '');
+    return id ?? '';
+  }
+
+  @override
+  Future<void> setUserName(GoogleUserData userData) async{
+    await sharedPrefManager.saveValue('userName', userData.name);
+  }
+
+  @override
+  Future<String> getUserName() async{
+    final name = await sharedPrefManager.getValue('userName', '');
+    return name ?? '';
+  }
+
+  @override
+  Future<void> setUserEmail(GoogleUserData userData) async{
+    await sharedPrefManager.saveValue('userEmail', userData.email);
+  }
+
+  @override
+  Future<String> getUserEmail() async{
+    final email = await sharedPrefManager.getValue('userEmail', '');
+    return email ?? '';
+  }
+
+  @override
+  Future<void> setUserPhotoUrl(GoogleUserData userData) async{
+    await sharedPrefManager.saveValue('userPhotoUrl', userData.photoUrl);
+  }
+
+  @override
+  Future<String> getUserPhotoUrl() async{
+    final photoUrl = await sharedPrefManager.getValue('userPhotoUrl', '');
+    return photoUrl ?? '';
   }
 }

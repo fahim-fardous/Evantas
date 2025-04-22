@@ -1,10 +1,10 @@
-class UserData {
+class GoogleUserData {
   final String id;
   final String name;
   final String email;
   final String photoUrl;
 
-  UserData({
+  GoogleUserData({
     required this.id,
     required this.name,
     required this.email,

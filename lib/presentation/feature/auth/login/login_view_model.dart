@@ -1,3 +1,4 @@
+import 'package:domain/repository/app_repository.dart';
 import 'package:domain/repository/auth_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:evntas/presentation/base/base_viewmodel.dart';
@@ -11,8 +12,12 @@ import 'package:evntas/presentation/localization/ui_text.dart';
 
 class LoginViewModel extends BaseViewModel<LoginArgument> {
   final AuthRepository authRepository;
+  final AppRepository appRepository;
 
-  LoginViewModel({required this.authRepository});
+  LoginViewModel({
+    required this.authRepository,
+    required this.appRepository,
+  });
 
   final ValueNotifier<String?> _email = ValueNotifier(null);
 
@@ -70,8 +75,16 @@ class LoginViewModel extends BaseViewModel<LoginArgument> {
 
   onForgotPasswordButtonLongPressed() {}
 
-  Future<void> signInWithGoogle() async{
-    await loadData(authRepository.signInWithGoogle());
+  Future<void> signInWithGoogle() async {
+    final userData = await loadData(authRepository.signInWithGoogle());
+
+    await appRepository.setUserId(userData.id);
+
+    final user = await authRepository.getUserById(userData.id);
+
+    if(user == null){
+      await authRepository.addUser(userData);
+    }
 
     navigateToScreen(
       destination: HomeRoute(arguments: HomeArgument(userId: '123')),

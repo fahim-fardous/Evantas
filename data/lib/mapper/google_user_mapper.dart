@@ -1,9 +1,9 @@
-import 'package:domain/model/user_data.dart';
+import 'package:domain/model/google_user_data.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class UserMapper{
-  static UserData mapResponseToDomain(GoogleSignInAccount? googleUser) {
-    return UserData(
+class GoogleUserMapper{
+  static GoogleUserData mapResponseToDomain(GoogleSignInAccount? googleUser) {
+    return GoogleUserData(
       id: googleUser?.id ?? '',
       name: googleUser?.displayName ?? '',
       email: googleUser?.email ?? '',

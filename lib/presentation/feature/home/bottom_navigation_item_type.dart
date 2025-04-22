@@ -12,7 +12,7 @@ enum NavigationItemType {
   IconData get icon {
     switch (this) {
       case NavigationItemType.eventList:
-        return Icons.event_outlined;
+        return Icons.home_outlined;
       case NavigationItemType.profile:
         return Icons.face_outlined;
       case NavigationItemType.memories:
@@ -23,7 +23,7 @@ enum NavigationItemType {
   IconData get selectedIcon {
     switch (this) {
       case NavigationItemType.eventList:
-        return Icons.event;
+        return Icons.home;
       case NavigationItemType.profile:
         return Icons.face;
       case NavigationItemType.memories:

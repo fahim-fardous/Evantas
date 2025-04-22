@@ -1,3 +1,5 @@
+import 'package:evntas/presentation/feature/profile/route/profile_argument.dart';
+import 'package:evntas/presentation/feature/profile/route/profile_route.dart';
 import 'package:evntas/presentation/feature/user_onboarding/route/user_onboarding_argument.dart';
 import 'package:evntas/presentation/feature/user_onboarding/route/user_onboarding_route.dart';
 import 'package:evntas/presentation/feature/add_reminder/route/add_reminder_argument.dart';
@@ -43,7 +45,7 @@ enum RoutePath {
   addEvent,
   memory,
   createReminder,
-  userOnboarding, 
+  userOnboarding,
   unknown;
 
   static RoutePath fromString(String? path) {
@@ -78,6 +80,8 @@ enum RoutePath {
         return RoutePath.createReminder;
       case '/userOnboarding':
         return RoutePath.userOnboarding;
+      case '/profile':
+        return RoutePath.profile;
       default:
         return RoutePath.unknown;
     }

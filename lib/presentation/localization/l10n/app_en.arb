@@ -238,7 +238,7 @@
   },
   "location_error__something_went_wrong": "Something went wrong with location",
   "@location_error__something_went_wrong": {
-   "type": "text"
+    "type": "text"
   },
   "location_error__msg__please_turn_on_location": "Please turn on your location to continue",
   "@location_error__msg__please_turn_on_location": {
@@ -334,6 +334,18 @@
   },
   "add_reminder__save_btn_text": "Save",
   "@add_reminder__save_btn_text": {
+    "type": "text"
+  },
+  "edit_profile": "Edit Profile",
+  "@edit_profile": {
+    "type": "text"
+  },
+  "issues": "Issues",
+  "@issues": {
+    "type": "text"
+  },
+  "points": "Points",
+  "@points": {
     "type": "text"
   }
 }

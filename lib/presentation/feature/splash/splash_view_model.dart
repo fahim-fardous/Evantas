@@ -41,7 +41,7 @@ class SplashViewModel extends BaseViewModel<SplashArgument> {
 
   Future<void> _navigateToNextScreen() async {
     final isOnBoardingComplete = await appRepository.isOnBoardingComplete();
-    final isUserLoggedIn = await authRepository.isLoggedIn();
+    final isUserLoggedIn = await authRepository.isSignedIn();
     if (!isOnBoardingComplete) {
       navigateToScreen(
         destination: UserOnboardingRoute(

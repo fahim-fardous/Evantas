@@ -73,7 +73,8 @@ class DataModule {
   }
 
   Future<void> injectGoogleSignInService() async {
-    await _diModule.registerSingleton<GoogleSignInService>(GoogleSignInService());
+    await _diModule
+        .registerSingleton<GoogleSignInService>(GoogleSignInService());
   }
 
   Future<void> removeGoogleSignInService() async {
@@ -94,12 +95,16 @@ class DataModule {
       MovieRepositoryImpl(movieApiService: movieApiService),
     );
 
-    await _diModule.registerSingleton<AuthRepository>(AuthRepositoryImpl(googleSignInService));
+    await _diModule.registerSingleton<AuthRepository>(AuthRepositoryImpl(
+      googleSignInService: googleSignInService,
+      supabaseService: supabaseService,
+    ));
 
     await _diModule
         .registerSingleton<LocationRepository>(LocationRepositoryImpl());
 
-    await _diModule.registerSingleton<EventRepository>(EventRepositoryImpl(supabaseService));
+    await _diModule.registerSingleton<EventRepository>(
+        EventRepositoryImpl(supabaseService));
   }
 
   Future<void> removeRepositories() async {

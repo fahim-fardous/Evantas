@@ -1,5 +1,8 @@
+import 'package:data/mapper/google_user_mapper.dart';
 import 'package:data/remote/response/event_response.dart';
+import 'package:data/remote/response/user_response.dart';
 import 'package:domain/model/event.dart';
+import 'package:domain/model/google_user_data.dart';
 import 'package:domain/util/logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -27,7 +30,28 @@ class SupabaseService {
   }
 
   Future<EventResponse?> getEventById(int id) async {
-    final response = await supabaseClient.from('events').select().eq('id', id).single();
+    final response =
+        await supabaseClient.from('events').select().eq('id', id).single();
     return EventResponse.fromJson(response);
+  }
+
+  Future<void> addUser(GoogleUserData user) async {
+    await supabaseClient.from('users').insert({
+      'name': user.name,
+      'email': user.email,
+      'photo_url': user.photoUrl,
+      'fcm_token': user.id,
+      'role': 'admin',
+      'user_id': user.id
+    });
+  }
+
+  Future<UserDataResponse> getUserById(String userId) async {
+    final response = await supabaseClient
+        .from('users')
+        .select()
+        .eq('user_id', userId)
+        .single();
+    return UserDataResponse.fromJson(response);
   }
 }
