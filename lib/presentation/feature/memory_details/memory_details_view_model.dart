@@ -1,63 +1,66 @@
 import 'dart:io';
+
 import 'package:data/service/supabase_service.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/repository/memory_repository.dart';
 import 'package:domain/util/logger.dart';
 import 'package:flutter/foundation.dart';
-import 'package:evntas/presentation/base/base_viewmodel.dart';
-import 'package:evntas/presentation/feature/memory/route/memory_argument.dart';
+import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
 import 'package:hello_flutter/presentation/feature/memory_details/route/memory_details_argument.dart';
-import 'package:hello_flutter/presentation/feature/memory_details/route/memory_details_route.dart';
 import 'package:hello_flutter/presentation/localization/ui_text.dart';
 import 'package:hello_flutter/presentation/util/value_notifier_list.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-class MemoryViewModel extends BaseViewModel<MemoryArgument> {
-  final SupabaseService supabaseService;
+class MemoryDetailsViewModel extends BaseViewModel<MemoryDetailsArgument> {
   final MemoryRepository memoryRepository;
+  final SupabaseService supabaseService;
 
   final ValueNotifierList<String> _uploadedImages = ValueNotifierList([]);
 
   ValueNotifierList<String> get uploadedImages => _uploadedImages;
 
-  MemoryViewModel({
-    required this.supabaseService,
+  final ValueNotifier<int?> _currentIndex = ValueNotifier(null);
+
+  ValueListenable<int?> get currentIndex => _currentIndex;
+
+  final ValueNotifier<int?> _initialIndex = ValueNotifier(null);
+
+  ValueListenable<int?> get initialIndex => _initialIndex;
+
+  MemoryDetailsViewModel({
     required this.memoryRepository,
+    required this.supabaseService,
   });
 
   @override
-  void onViewReady({MemoryArgument? argument}) {
-    super.onViewReady(argument: argument);
-    _fetchImages();
+  void onViewReady({MemoryDetailsArgument? argument}) {
+    super.onViewReady();
+    _initialIndex.value = argument!.initialIndex;
+    _currentIndex.value = argument.initialIndex;
+    fetchImages();
   }
 
-  Future<void> uploadPhoto(ImageSource source) async {
-    await loadData(memoryRepository.uploadPhoto(source));
-    _fetchImages();
+  void onPageChanged(int index) {
+    _currentIndex.value = index;
   }
 
-  Future<void> _fetchImages() async {
-      final response =
-          await loadData(memoryRepository.fetchImages());
+  Future<void> fetchImages() async {
+    final images = await loadData(memoryRepository.fetchImages());
 
-      if (response.isEmpty) return;
+    if (images.isNotEmpty) {
+      final List<String> urls = images
+          .where((file) => file.name != '.emptyFolderPlaceholder')
+          .map((file) {
+        return supabaseService.supabaseClient.storage
+            .from('photos')
+            .getPublicUrl(file.name);
+      }).toList();
 
-      if (response.isNotEmpty) {
-        final List<String> urls = response
-            .where((file) => file.name != '.emptyFolderPlaceholder')
-            .map((file) {
-          return supabaseService.supabaseClient.storage
-              .from('photos')
-              .getPublicUrl(file.name);
-        }).toList();
-
-        _uploadedImages.value = urls;
-      }
+      _uploadedImages.value = urls;
+    }
   }
 
   Future<void> downloadPhoto(String url) async {
@@ -107,15 +110,5 @@ class MemoryViewModel extends BaseViewModel<MemoryArgument> {
       return (await DeviceInfoPlugin().androidInfo).version.sdkInt ?? 0;
     }
     return 0;
-  }
-
-  void onTapPhoto(int index) {
-    navigateToScreen(
-      destination: MemoryDetailsRoute(
-        arguments: MemoryDetailsArgument(
-          initialIndex: index,
-        ),
-      ),
-    );
   }
 }

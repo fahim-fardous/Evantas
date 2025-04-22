@@ -1,4 +1,3 @@
-import 'package:domain/model/event.dart';
 import 'package:flutter/material.dart';
 import 'package:evntas/presentation/base/base_ui_state.dart';
 import 'package:evntas/presentation/common/extension/context_ext.dart';
@@ -8,6 +7,7 @@ import 'package:evntas/presentation/feature/event_list/event_list_view_model.dar
 import 'package:evntas/presentation/feature/event_list/widget/event_card.dart';
 import 'package:evntas/presentation/feature/event_list/widget/event_type_item.dart';
 import 'package:evntas/presentation/theme/color/app_colors.dart';
+import 'package:hello_flutter/presentation/util/helper_function.dart';
 import 'package:evntas/presentation/values/dimens.dart';
 import 'package:intl/intl.dart';
 
@@ -22,25 +22,6 @@ class EventListMobilePortrait extends StatefulWidget {
 
 class EventListMobilePortraitState
     extends BaseUiState<EventListMobilePortrait> {
-  Map<DateTime, List<Event>> _groupEventsByDate(List<Event> events) {
-    Map<DateTime, List<Event>> groupedEvents = {};
-
-    for (var event in events) {
-      final date = DateTime(event.date.year, event.date.month, event.date.day);
-      groupedEvents.putIfAbsent(date, () => []).add(event);
-    }
-
-    final sortedKeys = groupedEvents.keys.toList()
-      ..sort((a, b) => a.compareTo(b));
-
-    Map<DateTime, List<Event>> sortedGroupedEvents = {
-      for (var key in sortedKeys) key: groupedEvents[key]!
-    };
-
-    return sortedGroupedEvents;
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -214,7 +195,8 @@ class EventListMobilePortraitState
                 .where((event) => event.eventType.getEventIndex() == eventType)
                 .toList();
 
-            final groupedEvents = _groupEventsByDate(filteredEvents);
+            final groupedEvents =
+                HelperFunction.groupEventsByDate(filteredEvents);
 
             return ListView.builder(
               shrinkWrap: true,

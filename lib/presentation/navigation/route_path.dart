@@ -1,3 +1,5 @@
+import 'package:hello_flutter/presentation/feature/memory_details/route/memory_details_argument.dart';
+import 'package:hello_flutter/presentation/feature/memory_details/route/memory_details_route.dart';
 import 'package:evntas/presentation/feature/edit_profile/route/edit_profile_argument.dart';
 import 'package:evntas/presentation/feature/edit_profile/route/edit_profile_route.dart';
 import 'package:evntas/presentation/feature/profile/route/profile_argument.dart';
@@ -48,7 +50,9 @@ enum RoutePath {
   memory,
   createReminder,
   userOnboarding,
-  editProfile, 
+  memoryDetails,
+  userOnboarding,
+  editProfile,
   unknown;
 
   static RoutePath fromString(String? path) {
@@ -83,6 +87,8 @@ enum RoutePath {
         return RoutePath.createReminder;
       case '/userOnboarding':
         return RoutePath.userOnboarding;
+      case '/memoryDetails':
+        return RoutePath.memoryDetails;
       case '/profile':
         return RoutePath.profile;
       case '/editProfile':
@@ -124,6 +130,8 @@ enum RoutePath {
         return '/createReminder';
       case RoutePath.userOnboarding:
         return '/userOnboarding';
+      case RoutePath.memoryDetails:
+        return '/memoryDetails';
       case RoutePath.editProfile:
         return '/editProfile';
       default:
@@ -197,6 +205,11 @@ enum RoutePath {
           throw Exception('UserOnboardingArgument is required');
         }
         return UserOnboardingRoute(arguments: arguments);
+      case RoutePath.memoryDetails:
+        if (arguments is! MemoryDetailsArgument) {
+          throw Exception('MemoryDetailsArgument is required');
+        }
+        return MemoryDetailsRoute(arguments: arguments);
       case RoutePath.editProfile:
         if (arguments is! EditProfileArgument) {
           throw Exception('EditProfileArgument is required');
