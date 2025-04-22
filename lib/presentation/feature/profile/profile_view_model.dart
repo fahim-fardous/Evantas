@@ -44,8 +44,8 @@ class ProfileViewModel extends BaseViewModel<ProfileArgument> {
   }
 
   Future<void> signOut() async {
+    await appRepository.clearAll();
     await loadData(authRepository.signOut());
-
     navigateToScreen(
       destination: LoginRoute(
         arguments: LoginArgument(),

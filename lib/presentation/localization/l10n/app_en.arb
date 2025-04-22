@@ -347,5 +347,13 @@
   "points": "Points",
   "@points": {
     "type": "text"
+  },
+  "select_profile_picture": "Select profile picture",
+  "@select_profile_picture": {
+  "type": "text"
+  },
+  "see_profile_picture": "See profile picture",
+  "@see_profile_picture": {
+  "type": "text"
   }
 }

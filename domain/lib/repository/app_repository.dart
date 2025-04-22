@@ -21,16 +21,6 @@ abstract class AppRepository {
   Future<void> setUserId(String id);
 
   Future<String> getUserId();
-
-  Future<void> setUserName(GoogleUserData userData);
-
-  Future<String> getUserName();
-
-  Future<void> setUserEmail(GoogleUserData userData);
-
-  Future<String> getUserEmail();
-
-  Future<void> setUserPhotoUrl(GoogleUserData userData);
-
-  Future<String> getUserPhotoUrl();
+  
+  Future<void> clearAll();
 }

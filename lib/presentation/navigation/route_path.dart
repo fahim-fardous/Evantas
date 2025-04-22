@@ -1,3 +1,5 @@
+import 'package:evntas/presentation/feature/edit_profile/route/edit_profile_argument.dart';
+import 'package:evntas/presentation/feature/edit_profile/route/edit_profile_route.dart';
 import 'package:evntas/presentation/feature/profile/route/profile_argument.dart';
 import 'package:evntas/presentation/feature/profile/route/profile_route.dart';
 import 'package:evntas/presentation/feature/user_onboarding/route/user_onboarding_argument.dart';
@@ -46,6 +48,7 @@ enum RoutePath {
   memory,
   createReminder,
   userOnboarding,
+  editProfile, 
   unknown;
 
   static RoutePath fromString(String? path) {
@@ -82,6 +85,8 @@ enum RoutePath {
         return RoutePath.userOnboarding;
       case '/profile':
         return RoutePath.profile;
+      case '/editProfile':
+        return RoutePath.editProfile;
       default:
         return RoutePath.unknown;
     }
@@ -119,6 +124,8 @@ enum RoutePath {
         return '/createReminder';
       case RoutePath.userOnboarding:
         return '/userOnboarding';
+      case RoutePath.editProfile:
+        return '/editProfile';
       default:
         return '';
     }
@@ -190,6 +197,11 @@ enum RoutePath {
           throw Exception('UserOnboardingArgument is required');
         }
         return UserOnboardingRoute(arguments: arguments);
+      case RoutePath.editProfile:
+        if (arguments is! EditProfileArgument) {
+          throw Exception('EditProfileArgument is required');
+        }
+        return EditProfileRoute(arguments: arguments);
       default:
         return UnknownRoute(arguments: arguments);
     }

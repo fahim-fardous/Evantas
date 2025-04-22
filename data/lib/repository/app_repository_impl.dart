@@ -100,35 +100,7 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<void> setUserName(GoogleUserData userData) async{
-    await sharedPrefManager.saveValue('userName', userData.name);
-  }
-
-  @override
-  Future<String> getUserName() async{
-    final name = await sharedPrefManager.getValue('userName', '');
-    return name ?? '';
-  }
-
-  @override
-  Future<void> setUserEmail(GoogleUserData userData) async{
-    await sharedPrefManager.saveValue('userEmail', userData.email);
-  }
-
-  @override
-  Future<String> getUserEmail() async{
-    final email = await sharedPrefManager.getValue('userEmail', '');
-    return email ?? '';
-  }
-
-  @override
-  Future<void> setUserPhotoUrl(GoogleUserData userData) async{
-    await sharedPrefManager.saveValue('userPhotoUrl', userData.photoUrl);
-  }
-
-  @override
-  Future<String> getUserPhotoUrl() async{
-    final photoUrl = await sharedPrefManager.getValue('userPhotoUrl', '');
-    return photoUrl ?? '';
+  Future<void> clearAll() async{
+    await sharedPrefManager.clearAll();
   }
 }
