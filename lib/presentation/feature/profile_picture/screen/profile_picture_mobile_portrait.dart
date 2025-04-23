@@ -23,29 +23,30 @@ class ProfilePictureMobilePortraitState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _buildAppBar(context),
-        body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CachedNetworkImage(
-                width: double.infinity,
-                height: Dimens.dimen_300,
-                imageUrl: widget.profilePhotoUrl,
-                fit: BoxFit.cover,
-              ),
-            ],
-          ),
-        )
+      appBar: _buildAppBar(context),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CachedNetworkImage(
+              width: double.infinity,
+              imageUrl: widget.profilePhotoUrl,
+              fit: BoxFit.cover,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      title: Text('Profile Picture'),
-      leading: IconButton(onPressed: () => widget.viewModel.onBackPress(),
-          icon: Icon(Icons.arrow_back)),
+      title: const Text('Profile Picture'),
+      leading: IconButton(
+        onPressed: () => widget.viewModel.onBackPress(),
+        icon: const Icon(Icons.arrow_back),
+      ),
     );
   }
 }

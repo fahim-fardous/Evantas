@@ -141,10 +141,10 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
                 icon: Icons.person_2_rounded,
                 text: context.localizations.see_profile_picture,
                 onTap: () {
+                  Navigator.pop(context);
                   widget.viewModel.onSeeProfilePicture(
                     user?.photoUrl ?? '',
                   );
-                  Navigator.pop(context);
                 },
               ),
             ),
@@ -152,7 +152,10 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
             TextWithIcon(
               icon: Icons.photo_album,
               text: context.localizations.select_profile_picture,
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                widget.viewModel.selectProfilePicture();
+              },
             )
           ],
         ),

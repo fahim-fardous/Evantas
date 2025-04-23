@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:evntas/presentation/base/base_ui_state.dart';
 import 'package:evntas/presentation/feature/memory/memory_view_model.dart';
-import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
-import 'package:hello_flutter/presentation/util/constants.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/theme/color/app_colors.dart';
+import 'package:evntas/presentation/util/constants.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MemoryMobilePortrait extends StatefulWidget {

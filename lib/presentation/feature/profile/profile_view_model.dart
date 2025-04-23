@@ -3,6 +3,7 @@ import 'package:domain/model/google_user_data.dart';
 import 'package:domain/model/user_response_data.dart';
 import 'package:domain/repository/app_repository.dart';
 import 'package:domain/repository/auth_repository.dart';
+import 'package:domain/repository/profile_repository.dart';
 import 'package:evntas/presentation/feature/auth/login/route/login_argument.dart';
 import 'package:evntas/presentation/feature/auth/login/route/login_route.dart';
 import 'package:evntas/presentation/feature/profile_picture/route/profile_picture_argument.dart';
@@ -14,10 +15,12 @@ import 'package:evntas/presentation/feature/profile/route/profile_argument.dart'
 class ProfileViewModel extends BaseViewModel<ProfileArgument> {
   final AuthRepository authRepository;
   final AppRepository appRepository;
+  final ProfileRepository profileRepository;
 
   ProfileViewModel({
     required this.authRepository,
     required this.appRepository,
+    required this.profileRepository,
   });
 
   final ValueNotifier<UserResponseData?> _userData = ValueNotifier(null);
@@ -64,5 +67,11 @@ class ProfileViewModel extends BaseViewModel<ProfileArgument> {
         ),
       ),
     );
+  }
+
+  Future<void> selectProfilePicture() async{
+    final userId = await appRepository.getUserId();
+    await loadData(profileRepository.updateProfilePhoto(userId));
+    _fetchUserInfo();
   }
 }

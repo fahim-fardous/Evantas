@@ -7,7 +7,7 @@ class UserOnboardingBinding extends BaseBinding {
   @override
   Future<void> addDependencies() async {
     AppRepository appRepository = await diModule.resolve<AppRepository>();
-    AppRepository appRepository = await diModule.resolve<AppRepository>();
+    //AppRepository appRepository = await diModule.resolve<AppRepository>();
     return diModule.registerInstance(
       UserOnboardingViewModel(appRepository: appRepository),
     );

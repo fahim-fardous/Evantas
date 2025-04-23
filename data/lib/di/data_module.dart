@@ -1,3 +1,4 @@
+import 'package:data/local/shared_preference/shared_pref_manager.dart';
 import 'package:data/remote/api_client/api_client.dart';
 import 'package:data/remote/api_client/movie_api_client.dart';
 import 'package:data/remote/api_service/movie_api_service.dart';
@@ -7,6 +8,7 @@ import 'package:data/repository/event_repository_impl.dart';
 import 'package:data/repository/location_repository_impl.dart';
 import 'package:data/repository/memory_repository_impl.dart';
 import 'package:data/repository/movie_repository_impl.dart';
+import 'package:data/repository/profile_repository_impl.dart';
 import 'package:data/service/google_sign_in_service.dart';
 import 'package:data/service/supabase_service.dart';
 import 'package:domain/di/di_module.dart';
@@ -15,6 +17,7 @@ import 'package:domain/repository/event_repository.dart';
 import 'package:domain/repository/location_repository.dart';
 import 'package:domain/repository/memory_repository.dart';
 import 'package:domain/repository/movie_repository.dart';
+import 'package:domain/repository/profile_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DataModule {
@@ -109,6 +112,10 @@ class DataModule {
         EventRepositoryImpl(supabaseService));
     await _diModule.registerSingleton<MemoryRepository>(
         MemoryRepositoryImpl(supabaseService: supabaseService));
+
+    await _diModule.registerSingleton<ProfileRepository>(ProfileRepositoryImpl(
+      supabaseService: supabaseService,
+    ));
   }
 
   Future<void> removeRepositories() async {
@@ -116,5 +123,6 @@ class DataModule {
     await _diModule.unregisterSingleton<AuthRepository>();
     await _diModule.unregisterSingleton<LocationRepository>();
     await _diModule.unregisterSingleton<EventRepository>();
+    await _diModule.unregisterSingleton<ProfileRepository>();
   }
 }

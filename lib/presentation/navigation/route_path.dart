@@ -4,6 +4,8 @@ import 'package:evntas/presentation/feature/memory_details/route/memory_details_
 import 'package:evntas/presentation/feature/memory_details/route/memory_details_route.dart';
 import 'package:evntas/presentation/feature/profile/route/profile_argument.dart';
 import 'package:evntas/presentation/feature/profile/route/profile_route.dart';
+import 'package:evntas/presentation/feature/profile_picture/route/profile_picture_argument.dart';
+import 'package:evntas/presentation/feature/profile_picture/route/profile_picture_route.dart';
 import 'package:evntas/presentation/feature/user_onboarding/route/user_onboarding_argument.dart';
 import 'package:evntas/presentation/feature/user_onboarding/route/user_onboarding_route.dart';
 import 'package:evntas/presentation/feature/add_reminder/route/add_reminder_argument.dart';
