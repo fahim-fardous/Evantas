@@ -46,12 +46,27 @@ class SupabaseService {
     });
   }
 
-  Future<UserDataResponse> getUserById(String userId) async {
-    final response = await supabaseClient
-        .from('users')
-        .select()
-        .eq('user_id', userId)
-        .single();
-    return UserDataResponse.fromJson(response);
+  Future<UserDataResponse?> getUserById(String userId) async {
+    try {
+      final isUserExists = await supabaseClient
+          .from('users')
+          .select()
+          .eq('user_id', userId)
+          .limit(1)
+          .maybeSingle();
+
+      if (isUserExists == null) {
+        return null;
+      }
+
+      final response = await supabaseClient
+          .from('users')
+          .select()
+          .eq('user_id', userId)
+          .single();
+      return UserDataResponse.fromJson(response);
+    } catch (e) {
+      return null;
+    }
   }
 }

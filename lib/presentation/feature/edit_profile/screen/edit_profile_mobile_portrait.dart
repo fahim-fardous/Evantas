@@ -7,8 +7,10 @@ import 'package:evntas/presentation/feature/edit_profile/edit_profile_view_model
 
 class EditProfileMobilePortrait extends StatefulWidget {
   final EditProfileViewModel viewModel;
+  final String userId;
 
-  const EditProfileMobilePortrait({required this.viewModel, super.key});
+  const EditProfileMobilePortrait(
+      {required this.viewModel, required this.userId, super.key,});
 
   @override
   State<StatefulWidget> createState() => EditProfileMobilePortraitState();
@@ -26,26 +28,44 @@ class EditProfileMobilePortraitState
         title: Text(context.localizations.edit_profile),
         centerTitle: true,
         leading: IconButton(
-            onPressed: () => widget.viewModel.onBackPressed(),
-            icon: const Icon(Icons.arrow_back)),
+          onPressed: (){
+            widget.viewModel.onBackPressed();
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
       body: _buildBody(context),
     );
   }
 
   Widget _buildBody(BuildContext context) {
-    return Column(
-      children: [
-        OutlinedTextField(
+    return Padding(
+      padding: EdgeInsets.all(Dimens.dimen_16),
+      child: Column(
+        children: [
+          OutlinedTextField(
             controller: _nameController,
             labelText: "Name",
-            hintText: "Update your name"),
-        SizedBox(height: Dimens.dimen_16),
-        OutlinedTextField(
+            hintText: "Update your name",
+          ),
+          SizedBox(height: Dimens.dimen_16),
+          OutlinedTextField(
             controller: _emailController,
             labelText: "Email",
-            hintText: "Update your email")
-      ],
+            hintText: "Update your email",
+          ),
+          SizedBox(height: Dimens.dimen_16),
+          ElevatedButton(
+            onPressed: () =>
+                widget.viewModel.onSavePressed(
+                  widget.userId,
+                  _nameController.text,
+                  _emailController.text,
+                ),
+            child: Text(context.localizations.save),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -41,6 +41,7 @@ class OutlinedTextField extends StatelessWidget {
       ),
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
+      onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
     );
   }
 }

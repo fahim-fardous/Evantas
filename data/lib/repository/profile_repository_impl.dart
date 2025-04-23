@@ -16,8 +16,14 @@ class ProfileRepositoryImpl extends ProfileRepository {
 
   @override
   Future<void> updateProfile(UserResponseData user) {
-    // TODO: implement updateProfile
-    throw UnimplementedError();
+    try {
+      return supabaseService.supabaseClient.from('users').update({
+        'name': user.name,
+        'email': user.email,
+      }).eq('user_id', user.userId);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override

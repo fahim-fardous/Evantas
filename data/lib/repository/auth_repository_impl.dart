@@ -133,6 +133,7 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<UserResponseData?> getUserById(String id) async {
     try {
       final user = await supabaseService.getUserById(id);
+      if(user == null) return null;
       return UserResponseMapper.mapResponseToDomain(user);
     } catch (e) {
       rethrow;

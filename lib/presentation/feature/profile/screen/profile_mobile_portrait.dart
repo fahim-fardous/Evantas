@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:domain/model/user_response_data.dart';
 import 'package:evntas/presentation/common/extension/context_ext.dart';
-import 'package:evntas/presentation/feature/profile/widgets/BoxWithTextAndArrow.dart';
+import 'package:evntas/presentation/feature/profile/widgets/info_card.dart';
+import 'package:evntas/presentation/feature/profile/widgets/profile_menu_tile.dart';
 import 'package:evntas/presentation/feature/profile/widgets/TextWithIcon.dart';
 import 'package:evntas/presentation/values/dimens.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,9 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
               listenable: widget.viewModel.userData,
               builder: (context, value) => Text(
                 value?.name ?? '',
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
             ),
             SizedBox(height: Dimens.dimen_4),
@@ -63,26 +66,68 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
-            SizedBox(height: Dimens.dimen_64),
-            BoxWithTextAndArrow(
+            SizedBox(height: Dimens.dimen_16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InfoCard(value: 6, title: 'Points'),
+                SizedBox(width: Dimens.dimen_10),
+                InfoCard(value: 3, title: 'Issues'),
+              ],
+            ),
+            SizedBox(height: Dimens.dimen_36),
+            ProfileMenuTile(
+              icon: Icons.account_circle_outlined,
               text: "Edit Profile",
               color: Theme.of(context).colorScheme.primary,
+              onTap: () => widget.viewModel.onEditProfilePressed(),
             ),
             SizedBox(height: Dimens.dimen_16),
-            BoxWithTextAndArrow(
+            ProfileMenuTile(
+              icon: Icons.error_outline,
               text: 'Issues',
               color: Theme.of(context).colorScheme.primary,
             ),
             SizedBox(height: Dimens.dimen_16),
-            BoxWithTextAndArrow(
+            ProfileMenuTile(
+              icon: Icons.stars,
               text: 'Points',
               color: Theme.of(context).colorScheme.primary,
             ),
             SizedBox(height: Dimens.dimen_16),
-            BoxWithTextAndArrow(
+            ProfileMenuTile(
+              icon: Icons.lock_open,
               text: 'Logout',
               color: Theme.of(context).colorScheme.error,
-              onTap: () => widget.viewModel.signOut(),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                          title: const Text("Logout"),
+                          content:
+                              const Text("Are you sure you want to logout?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text("Cancel"),
+                            ),
+                            TextButton(
+                              onPressed: () => widget.viewModel.signOut(),
+                              child: Text(
+                                "Sign out",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge
+                                    ?.copyWith(
+                                      color:
+                                          Theme.of(context).colorScheme.error,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ));
+              },
             ),
           ],
         ),

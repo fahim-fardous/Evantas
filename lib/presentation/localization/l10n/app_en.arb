@@ -355,5 +355,9 @@
   "see_profile_picture": "See profile picture",
   "@see_profile_picture": {
   "type": "text"
+  },
+  "save": "Save",
+  "@save": {
+  "type": "text"
   }
 }

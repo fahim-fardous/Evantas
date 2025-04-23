@@ -20,11 +20,11 @@ class EditProfileAdaptiveUiState extends BaseAdaptiveUiState<EditProfileArgument
 
   @override
   StatefulWidget mobilePortraitContents(BuildContext context) {
-    return EditProfileMobilePortrait(viewModel: viewModel);
+    return EditProfileMobilePortrait(viewModel: viewModel, userId: widget.argument?.userId ?? '',);
   }
 
   @override
   StatefulWidget mobileLandscapeContents(BuildContext context) {
-    return EditProfileMobileLandscape(viewModel: viewModel);
+    return EditProfileMobileLandscape(viewModel: viewModel, userId: widget.argument?.userId ?? '',);
   }
 }

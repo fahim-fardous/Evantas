@@ -6,11 +6,14 @@ import 'package:domain/repository/auth_repository.dart';
 import 'package:domain/repository/profile_repository.dart';
 import 'package:evntas/presentation/feature/auth/login/route/login_argument.dart';
 import 'package:evntas/presentation/feature/auth/login/route/login_route.dart';
+import 'package:evntas/presentation/feature/edit_profile/route/edit_profile_argument.dart';
+import 'package:evntas/presentation/feature/edit_profile/route/edit_profile_route.dart';
 import 'package:evntas/presentation/feature/profile_picture/route/profile_picture_argument.dart';
 import 'package:evntas/presentation/feature/profile_picture/route/profile_picture_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:evntas/presentation/base/base_viewmodel.dart';
 import 'package:evntas/presentation/feature/profile/route/profile_argument.dart';
+import 'package:flutter/material.dart';
 
 class ProfileViewModel extends BaseViewModel<ProfileArgument> {
   final AuthRepository authRepository;
@@ -45,6 +48,16 @@ class ProfileViewModel extends BaseViewModel<ProfileArgument> {
       fcmToken: user.fcmToken,
       role: user.role,
       userId: user.userId,
+    );
+  }
+
+  Future<void> onEditProfilePressed() async {
+    final userId = await appRepository.getUserId();
+    navigateToScreen(
+      destination: EditProfileRoute(
+        arguments: EditProfileArgument(userId:userId),
+      ),
+      onPop: () => _fetchUserInfo(),
     );
   }
 

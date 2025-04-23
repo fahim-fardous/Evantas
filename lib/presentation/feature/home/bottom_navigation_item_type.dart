@@ -54,4 +54,15 @@ enum NavigationItemType {
         return '';
     }
   }
+
+  bool isAuthenticationRequired() {
+    switch (this) {
+      case NavigationItemType.eventList:
+        return false;
+      case NavigationItemType.profile:
+        return true;
+      case NavigationItemType.memories:
+        return true;
+    }
+  }
 }
