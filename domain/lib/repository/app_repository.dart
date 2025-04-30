@@ -20,7 +20,7 @@ abstract class AppRepository {
 
   Future<void> setUserId(String id);
 
-  Future<String> getUserId();
+  Future<String?> getUserId();
   
   Future<void> clearAll();
 }

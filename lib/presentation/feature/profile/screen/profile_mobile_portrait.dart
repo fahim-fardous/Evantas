@@ -73,7 +73,11 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
               children: [
                 InfoCard(value: 6, title: 'Points'),
                 SizedBox(width: Dimens.dimen_10),
-                InfoCard(value: 3, title: 'Issues'),
+                valueListenableBuilder(
+                  listenable: widget.viewModel.issueCount,
+                  builder: (context, value) =>
+                      InfoCard(value: value, title: 'Issues'),
+                ),
               ],
             ),
             SizedBox(height: Dimens.dimen_36),
@@ -88,6 +92,7 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
               icon: Icons.error_outline,
               text: 'Issues',
               color: Theme.of(context).colorScheme.primary,
+              onTap: () => widget.viewModel.onIssuesPressed(),
             ),
             SizedBox(height: Dimens.dimen_16),
             ProfileMenuTile(
@@ -102,31 +107,28 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
               color: Theme.of(context).colorScheme.error,
               onTap: () {
                 showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                          title: const Text("Logout"),
-                          content:
-                              const Text("Are you sure you want to logout?"),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text("Cancel"),
-                            ),
-                            TextButton(
-                              onPressed: () => widget.viewModel.signOut(),
-                              child: Text(
-                                "Sign out",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge
-                                    ?.copyWith(
-                                      color:
-                                          Theme.of(context).colorScheme.error,
-                                    ),
-                              ),
-                            ),
-                          ],
-                        ));
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text("Logout"),
+                    content: const Text("Are you sure you want to logout?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text("Cancel"),
+                      ),
+                      TextButton(
+                        onPressed: () => widget.viewModel.signOut(),
+                        child: Text(
+                          "Sign out",
+                          style:
+                              Theme.of(context).textTheme.labelLarge?.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               },
             ),
           ],

@@ -6,12 +6,16 @@ class OutlinedTextField extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
   final String hintText;
+  final int? maxLines;
+  final TextInputType? keyboardType;
 
   const OutlinedTextField({
     super.key,
     required this.controller,
     required this.labelText,
     required this.hintText,
+    this.maxLines = 1,
+    this.keyboardType = TextInputType.text,
   });
 
   @override
@@ -39,8 +43,10 @@ class OutlinedTextField extends StatelessWidget {
           ),
         ),
       ),
-      keyboardType: TextInputType.text,
+      keyboardType: keyboardType,
       textInputAction: TextInputAction.next,
+      maxLines: maxLines,
+
       onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
     );
   }

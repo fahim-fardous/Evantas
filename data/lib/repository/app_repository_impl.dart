@@ -94,9 +94,9 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<String> getUserId() async{
+  Future<String?> getUserId() async{
     final id = await sharedPrefManager.getValue('userId', '');
-    return id ?? '';
+    return id;
   }
 
   @override

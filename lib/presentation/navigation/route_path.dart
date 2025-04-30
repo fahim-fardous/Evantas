@@ -1,3 +1,9 @@
+import 'package:evntas/presentation/feature/issue_details/route/issue_details_argument.dart';
+import 'package:evntas/presentation/feature/issue_details/route/issue_details_route.dart';
+import 'package:evntas/presentation/feature/add_issue/route/add_issue_argument.dart';
+import 'package:evntas/presentation/feature/add_issue/route/add_issue_route.dart';
+import 'package:evntas/presentation/feature/issue_list/route/issue_list_argument.dart';
+import 'package:evntas/presentation/feature/issue_list/route/issue_list_route.dart';
 import 'package:evntas/presentation/feature/edit_profile/route/edit_profile_argument.dart';
 import 'package:evntas/presentation/feature/edit_profile/route/edit_profile_route.dart';
 import 'package:evntas/presentation/feature/memory_details/route/memory_details_argument.dart';
@@ -54,7 +60,10 @@ enum RoutePath {
   userOnboarding,
   memoryDetails,
   editProfile,
-  profilePicture, 
+  profilePicture,
+  issueList,
+  addIssue,
+  issueDetails,
   unknown;
 
   static RoutePath fromString(String? path) {
@@ -97,6 +106,12 @@ enum RoutePath {
         return RoutePath.editProfile;
       case '/profilePicture':
         return RoutePath.profilePicture;
+      case '/issueList':
+        return RoutePath.issueList;
+      case '/addIssue':
+        return RoutePath.addIssue;
+      case '/issueDetails':
+        return RoutePath.issueDetails;
       default:
         return RoutePath.unknown;
     }
@@ -140,6 +155,12 @@ enum RoutePath {
         return '/editProfile';
       case RoutePath.profilePicture:
         return '/profilePicture';
+      case RoutePath.issueList:
+        return '/issueList';
+      case RoutePath.addIssue:
+        return '/addIssue';
+      case RoutePath.issueDetails:
+        return '/issueDetails';
       default:
         return '';
     }
@@ -226,6 +247,21 @@ enum RoutePath {
           throw Exception('ProfilePictureArgument is required');
         }
         return ProfilePictureRoute(arguments: arguments);
+      case RoutePath.issueList:
+        if (arguments is! IssueListArgument) {
+          throw Exception('IssueListArgument is required');
+        }
+        return IssueListRoute(arguments: arguments);
+      case RoutePath.addIssue:
+        if (arguments is! AddIssueArgument) {
+          throw Exception('AddIssueArgument is required');
+        }
+        return AddIssueRoute(arguments: arguments);
+      case RoutePath.issueDetails:
+        if (arguments is! IssueDetailsArgument) {
+          throw Exception('IssueDetailsArgument is required');
+        }
+        return IssueDetailsRoute(arguments: arguments);
       default:
         return UnknownRoute(arguments: arguments);
     }
