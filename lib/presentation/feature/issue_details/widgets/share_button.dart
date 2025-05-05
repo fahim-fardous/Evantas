@@ -10,22 +10,17 @@ class ShareButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: Dimens.dimen_8,
-        vertical: Dimens.dimen_6,
+        horizontal: Dimens.dimen_16,
+        vertical: Dimens.dimen_8,
       ),
       decoration: BoxDecoration(
-        color: AppColors.of(context).mainColor.withOpacity(.8),
-        borderRadius: BorderRadius.circular(Dimens.dimen_32),
+        color: Colors.grey.withOpacity(.1),
+        borderRadius: BorderRadius.circular(Dimens.dimen_8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          AssetImageView(
-            fileName: 'share.png',
-            width: Dimens.dimen_20,
-            height: Dimens.dimen_20,
-            color: Colors.white,
-          ),
+          Icon(Icons., color: Theme.of(context).colorScheme.primary,),
           SizedBox(width: Dimens.dimen_8),
           Text(
             "Share",

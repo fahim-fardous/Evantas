@@ -14,12 +14,12 @@ class VoteBox extends StatelessWidget {
       children: [
         Container(
           padding: EdgeInsets.symmetric(
-            horizontal: Dimens.dimen_8,
-            vertical: Dimens.dimen_6,
+            horizontal: Dimens.dimen_16,
+            vertical: Dimens.dimen_8,
           ),
           decoration: BoxDecoration(
-            color: AppColors.of(context).mainColor.withOpacity(.8),
-            borderRadius: BorderRadius.circular(Dimens.dimen_32),
+            color: Colors.grey.withOpacity(.1),
+            borderRadius: BorderRadius.circular(Dimens.dimen_8),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,

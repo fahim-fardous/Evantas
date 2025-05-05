@@ -49,15 +49,20 @@ class IssueDetailsMobilePortraitState
   Widget _buildBody(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Dimens.dimen_16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildUserInfo(context),
-          SizedBox(height: Dimens.dimen_16),
-          _buildIssueDetails(context),
-          SizedBox(height: Dimens.dimen_16),
-          _buildVoteAndComment(context),
-        ],
+      child: valueListenableBuilder(
+        listenable: widget.viewModel.issue,
+        builder: (context, value) => value == null
+            ? const SizedBox.shrink()
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildUserInfo(context),
+                  SizedBox(height: Dimens.dimen_16),
+                  _buildIssueDetails(context),
+                  SizedBox(height: Dimens.dimen_16),
+                  _buildInteractionBar(context),
+                ],
+              ),
       ),
     );
   }
@@ -129,7 +134,7 @@ class IssueDetailsMobilePortraitState
     );
   }
 
-  Widget _buildVoteAndComment(BuildContext context) {
+  Widget _buildInteractionBar(BuildContext context) {
     return Row(
       children: [
         VoteBox(vote: 12),
