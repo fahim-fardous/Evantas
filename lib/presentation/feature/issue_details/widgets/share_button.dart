@@ -20,7 +20,7 @@ class ShareButton extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons., color: Theme.of(context).colorScheme.primary,),
+          Icon(Icons.send, color: Theme.of(context).colorScheme.primary,),
           SizedBox(width: Dimens.dimen_8),
           Text(
             "Share",
