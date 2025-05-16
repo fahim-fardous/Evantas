@@ -58,9 +58,18 @@ class IssueListMobilePortraitState
           ),
           child: ListView.separated(
             itemCount: value.length,
-            itemBuilder: (context, index) => IssueCardListTile(
-              issue: value[index],
-              onTap: (id) => widget.viewModel.onIssueClicked(id),
+            itemBuilder: (context, index) => valueListenableBuilder(
+              listenable: widget.viewModel.issueVotedByCurrentUser,
+              builder: (context, issueVotedByCurrentUser) => IssueCardListTile(
+                issue: value[index],
+                isLiked: issueVotedByCurrentUser.any((issue) =>
+                    issue.id == value[index].id && issue.isLiked == true),
+                isDisliked: issueVotedByCurrentUser.any((issue) =>
+                    issue.id == value[index].id && issue.isDisliked == true),
+                onTap: (id) => widget.viewModel.onIssueClicked(id),
+                onLikeTap: (index) => widget.viewModel.onLikeTap(index),
+                onDislikeTap: (index) => widget.viewModel.onDislikeTap(index),
+              ),
             ),
             separatorBuilder: (context, index) => SizedBox(
               height: Dimens.dimen_16,

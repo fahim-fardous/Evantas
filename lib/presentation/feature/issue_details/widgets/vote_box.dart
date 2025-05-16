@@ -4,9 +4,20 @@ import 'package:evntas/presentation/values/dimens.dart';
 import 'package:flutter/material.dart';
 
 class VoteBox extends StatelessWidget {
-  final int vote;
+  final int issueId;
+  final int upvote;
+  final int downvote;
+  final Function(int) onLikeTap;
+  final Function(int) onDislikeTap;
 
-  const VoteBox({super.key, required this.vote});
+  const VoteBox({
+    super.key,
+    required this.issueId,
+    required this.upvote,
+    required this.downvote,
+    required this.onLikeTap,
+    required this.onDislikeTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,28 +36,44 @@ class VoteBox extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              AssetImageView(
-                fileName: 'arrow_up.png',
-                color: Colors.white,
-                width: Dimens.dimen_18,
-                height: Dimens.dimen_18,
+              GestureDetector(
+                onTap: () => onLikeTap(issueId),
+                child: AssetImageView(
+                  fileName: 'like_icon.png',
+                  color: Theme.of(context).colorScheme.primary,
+                  width: Dimens.dimen_18,
+                  height: Dimens.dimen_18,
+                ),
               ),
               SizedBox(
                 width: Dimens.dimen_8,
               ),
               Text(
-                vote.toString(),
+                upvote.toString(),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: Dimens.dimen_14,
                     ),
               ),
               SizedBox(width: Dimens.dimen_8),
-              AssetImageView(
-                fileName: 'arrow_down.png',
-                color: Colors.white,
-                width: Dimens.dimen_18,
-                height: Dimens.dimen_18,
+              GestureDetector(
+                onTap: () => onDislikeTap(issueId),
+                child: AssetImageView(
+                  fileName: 'dislike_icon.png',
+                  color: Theme.of(context).colorScheme.primary,
+                  width: Dimens.dimen_18,
+                  height: Dimens.dimen_18,
+                ),
+              ),
+              SizedBox(
+                width: Dimens.dimen_8,
+              ),
+              Text(
+                downvote.toString(),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: Dimens.dimen_14,
+                    ),
               ),
             ],
           ),

@@ -83,4 +83,7 @@ class DarkAppColors extends AppColors {
 
   @override
   Color unfocusedColor = const Color(0x51919EAB);
+
+  @override
+  Color dividerColor = const Color(0xFF888989);
 }

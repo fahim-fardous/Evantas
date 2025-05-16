@@ -1,4 +1,4 @@
-class IssueResponse{
+class IssueResponse {
   final int id;
   final String title;
   final String description;
@@ -6,6 +6,9 @@ class IssueResponse{
   final DateTime createdAt;
   final int upvote;
   final int downvote;
+  final int? commentCount;
+  final bool? isLiked;
+  final bool? isDisliked;
 
   IssueResponse({
     required this.id,
@@ -15,6 +18,9 @@ class IssueResponse{
     required this.createdAt,
     required this.upvote,
     required this.downvote,
+    required this.commentCount,
+    this.isLiked,
+    this.isDisliked,
   });
 
   factory IssueResponse.fromJson(Map<String, dynamic> json) {
@@ -26,6 +32,9 @@ class IssueResponse{
       createdAt: DateTime.parse(json['created_at']),
       upvote: json['upvote'],
       downvote: json['downvote'],
+      commentCount: json['comment_count'] ?? 0,
+      isLiked: json['is_liked'] ?? false,
+      isDisliked: json['is_disliked'] ?? false,
     );
   }
 }

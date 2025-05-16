@@ -11,6 +11,8 @@ class IssueMapper {
       createdAt: response.createdAt,
       upvoteCount: response.upvote,
       downvoteCount: response.downvote,
+      isLiked: response.isLiked,
+      isDisliked: response.isDisliked,
     );
   }
 }

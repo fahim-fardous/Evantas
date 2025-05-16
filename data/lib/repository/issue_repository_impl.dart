@@ -1,8 +1,11 @@
 import 'package:data/mapper/answer_mapper.dart';
+import 'package:data/mapper/comment_mapper.dart';
 import 'package:data/mapper/issue_mapper.dart';
 import 'package:data/service/supabase_service.dart';
 import 'package:domain/model/answer.dart';
+import 'package:domain/model/comment.dart';
 import 'package:domain/model/issue.dart';
+import 'package:domain/model/issue_vote.dart';
 import 'package:domain/repository/issue_repository.dart';
 
 class IssueRepositoryImpl extends IssueRepository {
@@ -20,9 +23,9 @@ class IssueRepositoryImpl extends IssueRepository {
   }
 
   @override
-  Future<List<Issue>> fetchIssues() async {
+  Future<List<Issue>> getIssues(String userId) async {
     try {
-      final issues = await supabaseService.getIssues();
+      final issues = await supabaseService.getIssues(userId);
       return issues
           .map((issue) => IssueMapper.mapResponseToDomain(issue))
           .toList();
@@ -62,12 +65,70 @@ class IssueRepositoryImpl extends IssueRepository {
   }
 
   @override
-  Future<void> saveAnswer({required Answer answer}) async{
-   try{
-     await supabaseService.addAnswer(answer);
-   }
-   catch(e){
-     rethrow;
-   }
+  Future<void> saveAnswer({required Answer answer}) async {
+    try {
+      await supabaseService.addAnswer(answer);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> likeIssue(Issue issue, String userId) async {
+    try {
+      return supabaseService.likeIssue(issue, userId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> dislikeIssue(Issue issue, String userId) async {
+    try {
+      await supabaseService.dislikeIssue(issue,userId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<Issue>> getIssueVotesByCurrentUser(String userId) async{
+    try{
+      final issueVotes = await supabaseService.getIssueVotesByCurrentUser(userId);
+      return issueVotes.map((issueVote) => IssueMapper.mapResponseToDomain(issueVote)).toList();
+    }catch(e){
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Issue?> getIssueVoteById(int issueId, String userId) async{
+    try{
+      final issueVote = await supabaseService.getIssueVoteById(issueId, userId);
+      if(issueVote == null) return null;
+      return IssueMapper.mapResponseToDomain(issueVote);
+    }catch(e){
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void > addComment(Comment comment) async{
+    try{
+      await supabaseService.addComment(comment);
+    }catch(e){
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<Comment>> fetchCommentsByIssueId(int id) async{
+    try{
+      final comments = await supabaseService.getCommentsByIssueId(id);
+      if(comments.isEmpty) return [];
+      return comments.map((comment) => CommentMapper.mapResponseToDomain(comment)).toList();
+    }catch(e){
+      rethrow;
+    }
   }
 }

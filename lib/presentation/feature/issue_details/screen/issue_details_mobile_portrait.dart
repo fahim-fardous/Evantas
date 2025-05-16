@@ -1,14 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:evntas/presentation/common/widget/outlined_text_field.dart';
-import 'package:evntas/presentation/common/widget/primary_button.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/feature/issue_details/issue_details_view_model.dart';
 import 'package:evntas/presentation/feature/issue_details/widgets/comment_box.dart';
-import 'package:evntas/presentation/feature/issue_details/widgets/share_button.dart';
-import 'package:evntas/presentation/feature/issue_details/widgets/vote_box.dart';
+import 'package:evntas/presentation/theme/color/app_colors.dart';
 import 'package:evntas/presentation/util/helper_function.dart';
 import 'package:evntas/presentation/values/dimens.dart';
 import 'package:flutter/material.dart';
-import 'package:evntas/presentation/base/base_ui_state.dart';
-import 'package:evntas/presentation/feature/issue_details/issue_details_view_model.dart';
 
 class IssueDetailsMobilePortrait extends StatefulWidget {
   final IssueDetailsViewModel viewModel;
@@ -33,6 +30,7 @@ class IssueDetailsMobilePortraitState
     return Scaffold(
       appBar: _buildAppBar(context),
       body: _buildBody(context),
+      bottomNavigationBar: _buildCommentField(context),
     );
   }
 
@@ -53,15 +51,20 @@ class IssueDetailsMobilePortraitState
         listenable: widget.viewModel.issue,
         builder: (context, value) => value == null
             ? const SizedBox.shrink()
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildUserInfo(context),
-                  SizedBox(height: Dimens.dimen_16),
-                  _buildIssueDetails(context),
-                  SizedBox(height: Dimens.dimen_16),
-                  _buildInteractionBar(context),
-                ],
+            : SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildUserInfo(context),
+                    SizedBox(height: Dimens.dimen_16),
+                    _buildIssueDetails(context),
+                    SizedBox(height: Dimens.dimen_8),
+                    Divider(color: Colors.grey.shade400),
+                    SizedBox(height: Dimens.dimen_8),
+                    _buildCommentSection(context),
+                    SizedBox(height: Dimens.dimen_8),
+                  ],
+                ),
               ),
       ),
     );
@@ -96,7 +99,6 @@ class IssueDetailsMobilePortraitState
         Text(
           ".",
           style: Theme.of(context).textTheme.labelMedium,
-          textAlign: TextAlign.start,
         ),
         SizedBox(width: Dimens.dimen_4),
         valueListenableBuilder(
@@ -104,7 +106,6 @@ class IssueDetailsMobilePortraitState
           builder: (context, value) => Text(
             HelperFunction.timeAgo(value?.createdAt ?? DateTime.now()),
             style: Theme.of(context).textTheme.bodySmall,
-            textAlign: TextAlign.start,
           ),
         ),
       ],
@@ -134,15 +135,76 @@ class IssueDetailsMobilePortraitState
     );
   }
 
-  Widget _buildInteractionBar(BuildContext context) {
-    return Row(
-      children: [
-        VoteBox(vote: 12),
-        SizedBox(width: Dimens.dimen_12),
-        CommentBox(commentCount: 12),
-        SizedBox(width: Dimens.dimen_16),
-        ShareButton(),
-      ],
+  Widget _buildCommentSection(BuildContext context) {
+    return valueListenableBuilder(
+      listenable: widget.viewModel.comments,
+      builder: (context, comments) {
+        return valueListenableBuilder(
+          listenable: widget.viewModel.users,
+          builder: (context, users) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                comments.isNotEmpty ? "Comments" : "Start a conversation",
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+              SizedBox(height: Dimens.dimen_8),
+              comments.isNotEmpty
+                  ? ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: comments.length,
+                      itemBuilder: (context, index) {
+                        return CommentBox(
+                          comment: comments[index],
+                          user: users[index],
+                        );
+                      },
+                      separatorBuilder: (context, index) => SizedBox(
+                        height: Dimens.dimen_16,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildCommentField(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.all(Dimens.dimen_16),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: answerController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(Dimens.dimen_8),
+                  ),
+                  hintText: "Enter your comment",
+                ),
+                minLines: 1,
+                maxLines: 2,
+                onTapOutside: (_) =>
+                    FocusManager.instance.primaryFocus?.unfocus(),
+              ),
+            ),
+            SizedBox(height: Dimens.dimen_16),
+            IconButton(
+              onPressed: () {
+                widget.viewModel
+                    .saveComment(answerController.text, widget.issueId);
+                answerController.clear();
+              },
+              icon: Icon(Icons.send, color: AppColors.of(context).mainColor),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -85,4 +85,7 @@ class LightAppColors extends AppColors {
   Color tripInfoChipIconColor = Colors.black;
   @override
   Color neutralVariant95 = const Color(0xFFE8F2F3);
+
+  @override
+  Color dividerColor = const Color(0xFFCBCDCD);
 }

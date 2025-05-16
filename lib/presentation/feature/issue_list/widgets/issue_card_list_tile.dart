@@ -6,12 +6,20 @@ import 'package:flutter/material.dart';
 
 class IssueCardListTile extends StatelessWidget {
   final Issue issue;
+  final bool isLiked;
+  final bool isDisliked;
   final Function(int) onTap;
+  final Function(int) onLikeTap;
+  final Function(int) onDislikeTap;
 
   const IssueCardListTile({
     super.key,
+    required this.isLiked,
+    required this.isDisliked,
     required this.issue,
     required this.onTap,
+    required this.onLikeTap,
+    required this.onDislikeTap,
   });
 
   @override
@@ -81,35 +89,50 @@ class IssueCardListTile extends StatelessWidget {
                 right: Dimens.dimen_16,
                 bottom: Dimens.dimen_8,
               ),
-              child: Row(children: [
-                AssetImageView(
-                  fileName: 'arrow_up.png',
-                  width: Dimens.dimen_16,
-                  height: Dimens.dimen_16,
-                ),
-                SizedBox(width: Dimens.dimen_8),
-                Text(
-                  '${issue.upvoteCount} votes',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                      ),
-                ),
-                SizedBox(width: Dimens.dimen_16),
-                AssetImageView(
-                  fileName: 'arrow_down.png',
-                  width: Dimens.dimen_16,
-                  height: Dimens.dimen_16,
-                ),
-                SizedBox(width: Dimens.dimen_8),
-                Text(
-                  '${issue.downvoteCount} votes',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                      ),
-                )
-              ]),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => onLikeTap(issue.id),
+                    child: AssetImageView(
+                      fileName: 'like_icon.png',
+                      width: Dimens.dimen_16,
+                      height: Dimens.dimen_16,
+                      color: isLiked
+                          ? Theme.of(context).colorScheme.primary
+                          : null,
+                    ),
+                  ),
+                  SizedBox(width: Dimens.dimen_8),
+                  Text(
+                    '${issue.upvoteCount} ${issue.upvoteCount <= 1 ? 'vote' : 'votes'}',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal,
+                        ),
+                  ),
+                  SizedBox(width: Dimens.dimen_16),
+                  GestureDetector(
+                    onTap: () => onDislikeTap(issue.id),
+                    child: AssetImageView(
+                      fileName: 'dislike_icon.png',
+                      width: Dimens.dimen_16,
+                      height: Dimens.dimen_16,
+                      color:
+                          isDisliked
+                              ? Theme.of(context).colorScheme.error
+                              : null,
+                    ),
+                  ),
+                  SizedBox(width: Dimens.dimen_8),
+                  Text(
+                    '${issue.downvoteCount} ${issue.downvoteCount <= 1 ? 'vote' : 'votes'}',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal,
+                        ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -7,6 +7,10 @@ class Issue{
   final DateTime createdAt;
   final int upvoteCount;
   final int downvoteCount;
+  final int commentCount;
+  final bool? isLiked;
+  final bool? isDisliked;
+  final String? voterId;
 
   Issue({
     required this.id,
@@ -17,5 +21,9 @@ class Issue{
     required this.createdAt,
     this.upvoteCount = 0,
     this.downvoteCount = 0,
+    this.commentCount = 0,
+    this.isLiked,
+    this.isDisliked,
+    this.voterId,
   });
 }

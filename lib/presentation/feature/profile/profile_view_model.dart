@@ -126,7 +126,18 @@ class ProfileViewModel extends BaseViewModel<ProfileArgument> {
   }
 
   Future<void> fetchIssues() async {
-    final issues = await issueRepository.fetchIssues();
+    final userId = await appRepository.getUserId();
+
+    if (userId == null) {
+      showToast(
+        uiText: FixedUiText(
+          text: "Please login first",
+        ),
+      );
+      return;
+    }
+
+    final issues = await issueRepository.getIssues(userId);
 
     if (issues.isNotEmpty) {
       _issueCount.value = issues.length;
