@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_route.dart';
-import 'package:hello_flutter/presentation/navigation/route_path.dart';
-import 'package:hello_flutter/presentation/feature/memory_details/memory_details_adaptive_ui.dart';
-import 'package:hello_flutter/presentation/feature/memory_details/route/memory_details_argument.dart';
+import 'package:evntas/presentation/base/base_route.dart';
+import 'package:evntas/presentation/navigation/route_path.dart';
+import 'package:evntas/presentation/feature/memory_details/memory_details_adaptive_ui.dart';
+import 'package:evntas/presentation/feature/memory_details/route/memory_details_argument.dart';
 
 class MemoryDetailsRoute extends BaseRoute<MemoryDetailsArgument> {
   @override

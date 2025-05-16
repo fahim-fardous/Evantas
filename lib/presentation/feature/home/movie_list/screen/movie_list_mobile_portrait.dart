@@ -1,12 +1,12 @@
 import 'package:domain/model/movie.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
-import 'package:hello_flutter/presentation/common/widget/network_image_view.dart';
-import 'package:hello_flutter/presentation/common/widget/rating_view.dart';
-import 'package:hello_flutter/presentation/feature/home/movie_list/movie_list_view_model.dart';
-import 'package:hello_flutter/presentation/localization/extension/genre_localization_ext.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/common/extension/context_ext.dart';
+import 'package:evntas/presentation/common/widget/network_image_view.dart';
+import 'package:evntas/presentation/common/widget/rating_view.dart';
+import 'package:evntas/presentation/feature/home/movie_list/movie_list_view_model.dart';
+import 'package:evntas/presentation/localization/extension/genre_localization_ext.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class MovieListUiMobilePortrait extends StatefulWidget {
   final MovieListViewModel viewModel;

@@ -1,6 +1,6 @@
 import 'package:domain/repository/movie_repository.dart';
-import 'package:hello_flutter/presentation/base/base_binding.dart';
-import 'package:hello_flutter/presentation/feature/movieDetails/movie_details_view_model.dart';
+import 'package:evntas/presentation/base/base_binding.dart';
+import 'package:evntas/presentation/feature/movieDetails/movie_details_view_model.dart';
 
 class MovieDetailsBinding extends BaseBinding {
   @override

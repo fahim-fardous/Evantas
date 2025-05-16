@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
-import 'package:hello_flutter/presentation/common/extension/event_type_ext.dart';
-import 'package:hello_flutter/presentation/common/widget/asset_image_view.dart';
-import 'package:hello_flutter/presentation/feature/event_list/event_list_view_model.dart';
-import 'package:hello_flutter/presentation/feature/event_list/widget/event_card.dart';
-import 'package:hello_flutter/presentation/feature/event_list/widget/event_type_item.dart';
-import 'package:hello_flutter/presentation/theme/color/app_colors.dart';
-import 'package:hello_flutter/presentation/util/helper_function.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/common/extension/context_ext.dart';
+import 'package:evntas/presentation/common/extension/event_type_ext.dart';
+import 'package:evntas/presentation/common/widget/asset_image_view.dart';
+import 'package:evntas/presentation/feature/event_list/event_list_view_model.dart';
+import 'package:evntas/presentation/feature/event_list/widget/event_card.dart';
+import 'package:evntas/presentation/feature/event_list/widget/event_type_item.dart';
+import 'package:evntas/presentation/theme/color/app_colors.dart';
+import 'package:evntas/presentation/util/helper_function.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 import 'package:intl/intl.dart';
 
 class EventListMobilePortrait extends StatefulWidget {

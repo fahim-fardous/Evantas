@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/feature/event_list/event_list_adaptive_ui.dart';
-import 'package:hello_flutter/presentation/feature/memory/memory_adaptive_ui.dart';
-import 'package:hello_flutter/presentation/feature/profile/profile_adaptive_ui.dart';
-import 'package:hello_flutter/presentation/localization/generated/app_localizations.dart';
+import 'package:evntas/presentation/feature/event_list/event_list_adaptive_ui.dart';
+import 'package:evntas/presentation/feature/memory/memory_adaptive_ui.dart';
+import 'package:evntas/presentation/feature/profile/profile_adaptive_ui.dart';
+import 'package:evntas/presentation/localization/generated/app_localizations.dart';
 
 enum NavigationItemType {
   eventList,

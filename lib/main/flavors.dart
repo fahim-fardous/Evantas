@@ -1,5 +1,5 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:hello_flutter/presentation/localization/generated/app_localizations.dart';
+import 'package:evntas/presentation/localization/generated/app_localizations.dart';
 
 enum AppFlavor {
   dev,

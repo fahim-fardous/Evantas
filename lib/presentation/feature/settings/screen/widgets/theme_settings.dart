@@ -1,8 +1,8 @@
 import 'package:domain/model/app_theme_mode.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
-import 'package:hello_flutter/presentation/feature/settings/settings_view_model.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/common/extension/context_ext.dart';
+import 'package:evntas/presentation/feature/settings/settings_view_model.dart';
 
 class ThemeSettings extends StatefulWidget {
   final SettingsViewModel viewModel;

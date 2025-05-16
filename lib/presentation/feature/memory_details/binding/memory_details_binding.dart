@@ -1,7 +1,7 @@
 import 'package:data/service/supabase_service.dart';
 import 'package:domain/repository/memory_repository.dart';
-import 'package:hello_flutter/presentation/base/base_binding.dart';
-import 'package:hello_flutter/presentation/feature/memory_details/memory_details_view_model.dart';
+import 'package:evntas/presentation/base/base_binding.dart';
+import 'package:evntas/presentation/feature/memory_details/memory_details_view_model.dart';
 
 class MemoryDetailsBinding extends BaseBinding {
   @override

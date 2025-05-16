@@ -1,12 +1,12 @@
 import 'package:data/local/shared_preference/shared_pref_manager.dart';
 import 'package:domain/repository/app_repository.dart';
 import 'package:flutter/foundation.dart';
-import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
-import 'package:hello_flutter/presentation/feature/event_list/route/event_list_argument.dart';
-import 'package:hello_flutter/presentation/feature/event_list/route/event_list_route.dart';
-import 'package:hello_flutter/presentation/feature/home/route/home_argument.dart';
-import 'package:hello_flutter/presentation/feature/home/route/home_route.dart';
-import 'package:hello_flutter/presentation/feature/user_onboarding/route/user_onboarding_argument.dart';
+import 'package:evntas/presentation/base/base_viewmodel.dart';
+import 'package:evntas/presentation/feature/event_list/route/event_list_argument.dart';
+import 'package:evntas/presentation/feature/event_list/route/event_list_route.dart';
+import 'package:evntas/presentation/feature/home/route/home_argument.dart';
+import 'package:evntas/presentation/feature/home/route/home_route.dart';
+import 'package:evntas/presentation/feature/user_onboarding/route/user_onboarding_argument.dart';
 
 class UserOnboardingViewModel extends BaseViewModel<UserOnboardingArgument> {
   final AppRepository appRepository;

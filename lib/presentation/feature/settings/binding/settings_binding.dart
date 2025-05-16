@@ -1,6 +1,6 @@
-import 'package:hello_flutter/presentation/app/app_viewmodel.dart';
-import 'package:hello_flutter/presentation/base/base_binding.dart';
-import 'package:hello_flutter/presentation/feature/settings/settings_view_model.dart';
+import 'package:evntas/presentation/app/app_viewmodel.dart';
+import 'package:evntas/presentation/base/base_binding.dart';
+import 'package:evntas/presentation/feature/settings/settings_view_model.dart';
 
 class SettingsBinding extends BaseBinding {
   @override

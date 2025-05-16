@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/feature/user_onboarding/screen/user_onboarding_mobile_portrait.dart';
+import 'package:evntas/presentation/feature/user_onboarding/screen/user_onboarding_mobile_portrait.dart';
 
 class UserOnboardingMobileLandscape extends UserOnboardingMobilePortrait {
   const UserOnboardingMobileLandscape({required super.viewModel, super.key});
