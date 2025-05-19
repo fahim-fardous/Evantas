@@ -30,9 +30,19 @@ class CommentBox extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(user.name, style: Theme.of(context).textTheme.labelMedium),
+            Text(
+              user.name,
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+            ),
             SizedBox(height: Dimens.dimen_8),
-            Text(comment.comment),
+            Text(
+              comment.comment,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+            ),
           ],
         ),
       ],

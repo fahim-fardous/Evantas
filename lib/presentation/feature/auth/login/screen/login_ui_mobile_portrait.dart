@@ -1,3 +1,4 @@
+import 'package:evntas/presentation/common/widget/asset_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:evntas/presentation/base/base_ui_state.dart';
 import 'package:evntas/presentation/common/extension/context_ext.dart';
@@ -65,6 +66,7 @@ class LoginUiMobilePortraitState extends BaseUiState<LoginUiMobilePortrait> {
           SizedBox(height: Dimens.dimen_20),
           loginButton(context),
           forgotPasswordButton(context),
+          _buildGoogleLoginButton(context),
           SizedBox(height: Dimens.dimen_100),
         ],
       ),
@@ -146,6 +148,24 @@ class LoginUiMobilePortraitState extends BaseUiState<LoginUiMobilePortrait> {
             ),
       ),
       onLongPress: () => widget.viewModel.onForgotPasswordButtonLongPressed(),
+    );
+  }
+
+  Widget _buildGoogleLoginButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () => widget.viewModel.signInWithGoogle(),
+      style: ElevatedButton.styleFrom(
+        shape: const CircleBorder(),
+        padding: const EdgeInsets.all(12),
+        backgroundColor: Colors.white,
+        shadowColor: Colors.grey.withOpacity(0.5),
+        elevation: 4,
+      ),
+      child: AssetImageView(
+        fileName: "google_logo.svg",
+        height: Dimens.dimen_24,
+        width: Dimens.dimen_24,
+      ),
     );
   }
 }

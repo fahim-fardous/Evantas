@@ -10,6 +10,7 @@ import 'package:evntas/presentation/base/base_viewmodel.dart';
 import 'package:evntas/presentation/feature/memory_details/route/memory_details_argument.dart';
 import 'package:evntas/presentation/localization/ui_text.dart';
 import 'package:evntas/presentation/util/value_notifier_list.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 //import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -75,32 +76,32 @@ class MemoryDetailsViewModel extends BaseViewModel<MemoryDetailsArgument> {
         status = PermissionStatus.granted;
       }
 
-      //downloadPhotoOnPermissionGranted(status, url);
+      downloadPhotoOnPermissionGranted(status, url);
     } catch (e) {
       Logger.error("Error downloading file: $e");
       showToast(uiText: FixedUiText(text: "Failed to download image"));
     }
   }
 
-  // Future<void> downloadPhotoOnPermissionGranted(PermissionStatus status, String url) async {
-  //   if (status.isGranted) {
-  //     final response = await Dio().get(url, options: Options(responseType: ResponseType.bytes));
-  //     final Uint8List bytes = Uint8List.fromList(response.data);
-  //     final result = await ImageGallerySaver.saveImage(bytes);
-  //     if (result['isSuccess'] == true) {
-  //       showToast(uiText: FixedUiText(text: "Image saved to gallery"));
-  //     } else {
-  //       throw Exception("Failed to save image: ${result['errorMessage']}");
-  //     }
-  //   } else if (status.isDenied) {
-  //     showToast(uiText: FixedUiText(text: Platform.isAndroid
-  //         ? "Please grant storage permission"
-  //         : "Please allow access to Photos"));
-  //   } else if (status.isPermanentlyDenied) {
-  //     showToast(uiText: FixedUiText(text: "Permission denied. Please enable it in settings."));
-  //     await openAppSettings();
-  //   }
-  // }
+  Future<void> downloadPhotoOnPermissionGranted(PermissionStatus status, String url) async {
+    if (status.isGranted) {
+      final response = await Dio().get(url, options: Options(responseType: ResponseType.bytes));
+      final Uint8List bytes = Uint8List.fromList(response.data);
+      final result = await ImageGallerySaverPlus.saveImage(bytes);
+      if (result['isSuccess'] == true) {
+        showToast(uiText: FixedUiText(text: "Image saved to gallery"));
+      } else {
+        throw Exception("Failed to save image: ${result['errorMessage']}");
+      }
+    } else if (status.isDenied) {
+      showToast(uiText: FixedUiText(text: Platform.isAndroid
+          ? "Please grant storage permission"
+          : "Please allow access to Photos"));
+    } else if (status.isPermanentlyDenied) {
+      showToast(uiText: FixedUiText(text: "Permission denied. Please enable it in settings."));
+      await openAppSettings();
+    }
+  }
 
   Future<int> _getAndroidSdkVersion() async {
     if (Platform.isAndroid) {

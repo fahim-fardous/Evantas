@@ -107,7 +107,7 @@ class EventListMobilePortraitState
         vertical: Dimens.dimen_36,
       ),
       decoration: BoxDecoration(
-        color: AppColors.of(context).mainColor.withOpacity(.25),
+        color: AppColors.of(context).mainColor.withOpacity(.5),
         borderRadius: BorderRadius.circular(Dimens.dimen_16),
       ),
       child: valueListenableBuilder(
@@ -122,7 +122,7 @@ class EventListMobilePortraitState
                   'You Have ${events.length}',
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         color:
-                            Theme.of(context).colorScheme.scrim.withOpacity(.4),
+                            Theme.of(context).colorScheme.onPrimary,
                         fontSize: Dimens.dimen_28,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.bold,
@@ -215,7 +215,9 @@ class EventListMobilePortraitState
                       ),
                       child: Text(
                         DateFormat('d MMMM').format(date),
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
                       ),
                     ),
                     ...eventList.map(

@@ -42,24 +42,42 @@ class HomeUiMobilePortraitState extends BaseUiState<HomeUiMobilePortrait> {
     return valueListenableBuilder(
       listenable: widget.viewModel.currentPageIndex,
       builder: (context, value) {
-        return NavigationBar(
-          elevation: Dimens.dimen_10,
-          surfaceTintColor: AppColors.of(context).mainColor,
-          indicatorColor: AppColors.of(context).mainColor.withOpacity(.25),
-          selectedIndex: value,
-          onDestinationSelected: (index) {
-            _pageController.jumpToPage(index);
-            widget.viewModel.onNavigationItemClicked(index);
-          },
-          destinations: widget.viewModel.navigationItems
-              .map(
-                (e) => NavigationDestination(
-                  icon: Icon(e.icon),
-                  selectedIcon: Icon(e.selectedIcon),
-                  label: e.getLocalizedName(context.localizations),
-                ),
-              )
-              .toList(),
+        return NavigationBarTheme(
+          data: NavigationBarThemeData(
+            labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
+              (Set<WidgetState> states) {
+                if (states.contains(WidgetState.selected)) {
+                  return TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  );
+                }
+                return TextStyle(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onPrimary,
+                );
+              },
+            ),
+          ),
+          child: NavigationBar(
+            elevation: Dimens.dimen_10,
+            surfaceTintColor: AppColors.of(context).mainColor,
+            indicatorColor: AppColors.of(context).mainColor.withOpacity(.25),
+            selectedIndex: value,
+            onDestinationSelected: (index) {
+              _pageController.jumpToPage(index);
+              widget.viewModel.onNavigationItemClicked(index);
+            },
+            destinations: widget.viewModel.navigationItems
+                .map(
+                  (e) => NavigationDestination(
+                    icon: Icon(e.icon),
+                    selectedIcon: Icon(e.selectedIcon),
+                    label: e.getLocalizedName(context.localizations),
+                  ),
+                )
+                .toList(),
+          ),
         );
       },
     );

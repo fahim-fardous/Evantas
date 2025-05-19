@@ -1,3 +1,5 @@
+import 'package:evntas/presentation/feature/event_list/route/event_list_argument.dart';
+import 'package:evntas/presentation/feature/home/route/home_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:evntas/presentation/base/base_argument.dart';
 import 'package:evntas/presentation/base/base_route.dart';
@@ -6,9 +8,9 @@ import 'package:evntas/presentation/feature/user_onboarding/route/user_onboardin
 import 'package:evntas/presentation/navigation/route_path.dart';
 
 class AppRouter {
-  static final initialRoute = RoutePath.splash.toPathString;
+  static final initialRoute = RoutePath.home.toPathString;
 
-  static BaseArgument initialArguments = SplashArgument();
+  static BaseArgument initialArguments = HomeArgument();
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final argObj = settings.arguments;

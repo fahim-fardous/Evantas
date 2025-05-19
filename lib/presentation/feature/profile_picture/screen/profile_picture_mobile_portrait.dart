@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:evntas/presentation/theme/color/app_colors.dart';
 import 'package:evntas/presentation/values/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:evntas/presentation/base/base_ui_state.dart';
@@ -42,10 +43,18 @@ class ProfilePictureMobilePortraitState
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      title: const Text('Profile Picture'),
+      title: Text(
+        'Profile Picture',
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+      ),
       leading: IconButton(
         onPressed: () => widget.viewModel.onBackPress(),
-        icon: const Icon(Icons.arrow_back),
+        icon: Icon(
+          Icons.arrow_back,
+          color: Theme.of(context).colorScheme.primary,
+        ),
       ),
     );
   }

@@ -28,7 +28,7 @@ class IssueCardListTile extends StatelessWidget {
       onTap: () => onTap(issue.id),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.background,
           borderRadius: BorderRadius.circular(Dimens.dimen_8),
           boxShadow: [
             BoxShadow(
@@ -75,7 +75,7 @@ class IssueCardListTile extends StatelessWidget {
               child: Text(
                 issue.description,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       fontWeight: FontWeight.normal,
                     ),
                 maxLines: 3,
@@ -99,14 +99,14 @@ class IssueCardListTile extends StatelessWidget {
                       height: Dimens.dimen_16,
                       color: isLiked
                           ? Theme.of(context).colorScheme.primary
-                          : null,
+                          : Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
                   SizedBox(width: Dimens.dimen_8),
                   Text(
                     '${issue.upvoteCount} ${issue.upvoteCount <= 1 ? 'vote' : 'votes'}',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontWeight: FontWeight.normal,
                         ),
                   ),
@@ -120,14 +120,14 @@ class IssueCardListTile extends StatelessWidget {
                       color:
                           isDisliked
                               ? Theme.of(context).colorScheme.error
-                              : null,
+                              : Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
                   SizedBox(width: Dimens.dimen_8),
                   Text(
                     '${issue.downvoteCount} ${issue.downvoteCount <= 1 ? 'vote' : 'votes'}',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontWeight: FontWeight.normal,
                         ),
                   ),

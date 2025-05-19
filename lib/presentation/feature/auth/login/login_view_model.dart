@@ -42,33 +42,7 @@ class LoginViewModel extends BaseViewModel<LoginArgument> {
   }
 
   Future<void> onLoginButtonClicked() async {
-    // if (email.value == null || password.value == null) {
-    //   showToast(
-    //     uiText: DynamicUiText(
-    //       textId: PleaseFillUpAllTheRequiredFieldsTextId(),
-    //       fallbackText: "Please fill up all fields",
-    //     ),
-    //   );
-    //   return;
-    // }
-    //
-    // if (!EmailValidator.isValid(email.value) ||
-    //     !PasswordValidator.isValid(password.value)) {
-    //   showToast(
-    //     uiText: DynamicUiText(
-    //       textId: PleaseFillUpAllTheRequiredFieldsTextId(),
-    //       fallbackText: "Please fill up all fields",
-    //     ),
-    //   );
-    //   return;
-    // }
-
-    final userSession = await loadData(authRepository.login(
-      email: 'email.value!',
-      password: 'password.value!',
-    ));
-
-    signInWithGoogle();
+    showToast(uiText: FixedUiText(text: "Please try with Google"));
   }
 
   onForgotPasswordButtonClicked() {}

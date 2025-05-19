@@ -27,10 +27,16 @@ class IssueListMobilePortraitState
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      title: const Text("Issue List"),
+      title: Text("Issue List",
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+              )),
       leading: IconButton(
         onPressed: () => widget.viewModel.onBackPressed(),
-        icon: const Icon(Icons.arrow_back),
+        icon: Icon(
+          Icons.arrow_back,
+          color: Theme.of(context).colorScheme.primary,
+        ),
       ),
     );
   }
