@@ -23,7 +23,7 @@ class ProfileMenuTile extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(Dimens.dimen_16),
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(Dimens.dimen_8),
             boxShadow: [
               BoxShadow(

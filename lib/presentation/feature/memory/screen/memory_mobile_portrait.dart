@@ -20,7 +20,9 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Memory"),
+        title: Text("Memory", style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          color: Theme.of(context).colorScheme.primary,
+        )),
         centerTitle: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

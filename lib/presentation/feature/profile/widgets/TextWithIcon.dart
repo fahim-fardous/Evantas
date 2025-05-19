@@ -23,7 +23,9 @@ class TextWithIcon extends StatelessWidget {
           SizedBox(width: Dimens.dimen_16),
           Text(
             text,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+            ),
           ),
         ],
       ),

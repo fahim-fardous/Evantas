@@ -29,7 +29,12 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      title: Text("Profile"),
+      title: Text(
+        "Profile",
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+      ),
       centerTitle: true,
     );
   }
@@ -54,6 +59,7 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
               builder: (context, value) => Text(
                 value?.name ?? '',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -63,7 +69,9 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
               listenable: widget.viewModel.userData,
               builder: (context, value) => Text(
                 value?.email ?? '',
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
               ),
             ),
             SizedBox(height: Dimens.dimen_16),

@@ -36,10 +36,14 @@ class IssueDetailsMobilePortraitState
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      title: const Text("Issue Details"),
+      title: Text("Issue Details",
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+              )),
       leading: IconButton(
         onPressed: () => widget.viewModel.onBackPressed(),
-        icon: const Icon(Icons.arrow_back),
+        icon: Icon(Icons.arrow_back,
+            color: Theme.of(context).colorScheme.primary),
       ),
     );
   }
@@ -92,20 +96,27 @@ class IssueDetailsMobilePortraitState
           listenable: widget.viewModel.userData,
           builder: (context, value) => Text(
             value?.name.split(" ").first ?? "",
-            style: Theme.of(context).textTheme.labelMedium,
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
           ),
         ),
         SizedBox(width: Dimens.dimen_4),
         Text(
           ".",
-          style: Theme.of(context).textTheme.labelMedium,
+          style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
         ),
         SizedBox(width: Dimens.dimen_4),
         valueListenableBuilder(
           listenable: widget.viewModel.issue,
           builder: (context, value) => Text(
             HelperFunction.timeAgo(value?.createdAt ?? DateTime.now()),
-            style: Theme.of(context).textTheme.bodySmall,
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall
+                ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
           ),
         ),
       ],
@@ -120,7 +131,9 @@ class IssueDetailsMobilePortraitState
           listenable: widget.viewModel.issue,
           builder: (context, value) => Text(
             value?.title ?? "",
-            style: Theme.of(context).textTheme.labelLarge,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
           ),
         ),
         SizedBox(height: Dimens.dimen_8),
@@ -128,7 +141,9 @@ class IssueDetailsMobilePortraitState
           listenable: widget.viewModel.issue,
           builder: (context, value) => Text(
             value?.description ?? "",
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
           ),
         ),
       ],
@@ -146,7 +161,9 @@ class IssueDetailsMobilePortraitState
             children: [
               Text(
                 comments.isNotEmpty ? "Comments" : "Start a conversation",
-                style: Theme.of(context).textTheme.labelLarge,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                ),
               ),
               SizedBox(height: Dimens.dimen_8),
               comments.isNotEmpty
