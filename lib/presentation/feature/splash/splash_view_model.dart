@@ -1,15 +1,25 @@
+import 'package:data/local/shared_preference/shared_pref_manager.dart';
 import 'package:domain/model/app_info.dart';
 import 'package:domain/repository/app_repository.dart';
+import 'package:domain/repository/auth_repository.dart';
+import 'package:evntas/presentation/feature/home/route/home_argument.dart';
+import 'package:evntas/presentation/feature/home/route/home_route.dart';
 import 'package:flutter/foundation.dart';
-import 'package:hello_flutter/presentation/base/base_viewmodel.dart';
-import 'package:hello_flutter/presentation/feature/auth/login/route/login_argument.dart';
-import 'package:hello_flutter/presentation/feature/auth/login/route/login_route.dart';
-import 'package:hello_flutter/presentation/feature/splash/route/splash_argument.dart';
+import 'package:evntas/presentation/base/base_viewmodel.dart';
+import 'package:evntas/presentation/feature/auth/login/route/login_argument.dart';
+import 'package:evntas/presentation/feature/auth/login/route/login_route.dart';
+import 'package:evntas/presentation/feature/splash/route/splash_argument.dart';
+import 'package:evntas/presentation/feature/user_onboarding/route/user_onboarding_argument.dart';
+import 'package:evntas/presentation/feature/user_onboarding/route/user_onboarding_route.dart';
 
 class SplashViewModel extends BaseViewModel<SplashArgument> {
   final AppRepository appRepository;
+  final AuthRepository authRepository;
 
-  SplashViewModel({required this.appRepository});
+  SplashViewModel({
+    required this.appRepository,
+    required this.authRepository,
+  });
 
   final ValueNotifier<AppInfo?> _appInfo = ValueNotifier(null);
 
@@ -18,8 +28,12 @@ class SplashViewModel extends BaseViewModel<SplashArgument> {
   @override
   void onViewReady({SplashArgument? argument}) {
     super.onViewReady();
-    _fetchAppInfo();
-    _navigateToNextScreen();
+    _init();
+  }
+
+  void _init() async {
+    await _fetchAppInfo();
+    await _navigateToNextScreen();
   }
 
   Future<void> _fetchAppInfo() async {
@@ -27,13 +41,31 @@ class SplashViewModel extends BaseViewModel<SplashArgument> {
   }
 
   Future<void> _navigateToNextScreen() async {
-    await Future.delayed(const Duration(seconds: 2));
-    //If user is logged in, navigate to home screen
-    //If user is not logged in, navigate to login screen
+    final isOnBoardingComplete = await appRepository.isOnBoardingComplete();
+    final isUserLoggedIn = await authRepository.isSignedIn();
+    if (!isOnBoardingComplete) {
+      navigateToScreen(
+        destination: UserOnboardingRoute(
+          arguments: UserOnboardingArgument(),
+        ),
+        isClearBackStack: true,
+      );
+      return;
+    }
+
+    if (!isUserLoggedIn) {
+      navigateToScreen(
+        destination: LoginRoute(
+          arguments: LoginArgument(),
+        ),
+        isClearBackStack: true,
+      );
+      return;
+    }
 
     navigateToScreen(
-      destination: LoginRoute(
-        arguments: LoginArgument(),
+      destination: HomeRoute(
+        arguments: HomeArgument(userId: '123'),
       ),
       isClearBackStack: true,
     );

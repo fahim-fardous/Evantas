@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:domain/exceptions/base_exception.dart';
 import 'package:domain/util/logger.dart';
 import 'package:flutter/foundation.dart';
-import 'package:hello_flutter/presentation/base/base_argument.dart';
-import 'package:hello_flutter/presentation/base/base_route.dart';
-import 'package:hello_flutter/presentation/base/base_state.dart';
-import 'package:hello_flutter/presentation/localization/text_id.dart';
-import 'package:hello_flutter/presentation/localization/ui_text.dart';
+import 'package:evntas/presentation/base/base_argument.dart';
+import 'package:evntas/presentation/base/base_route.dart';
+import 'package:evntas/presentation/base/base_state.dart';
+import 'package:evntas/presentation/localization/text_id.dart';
+import 'package:evntas/presentation/localization/ui_text.dart';
 import 'package:http/http.dart';
 
 abstract class BaseViewModel<A extends BaseArgument> {

@@ -5,7 +5,7 @@ import 'app_colors.dart';
 class DarkAppColors extends AppColors {
   @override
   @override
-  Color primary = const Color(0xff0983e3);
+  Color primary = const Color(0xff62d3b0);
   @override
   Color onPrimary = const Color(0xFFFFFFFF);
   @override
@@ -77,4 +77,13 @@ class DarkAppColors extends AppColors {
   Color tripInfoChipIconColor = Colors.white;
   @override
   Color neutralVariant95 = const Color(0xFF2B322B);
+
+  @override
+  Color mainColor = const Color(0xff1cae81);
+
+  @override
+  Color unfocusedColor = const Color(0x51919EAB);
+
+  @override
+  Color dividerColor = const Color(0xFF888989);
 }

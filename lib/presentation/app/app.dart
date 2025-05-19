@@ -7,15 +7,15 @@ import 'package:domain/di/di_module.dart';
 import 'package:domain/repository/app_repository.dart';
 import 'package:domain/util/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/app/app_viewmodel.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/base/screen_util/screen_util_builder.dart';
-import 'package:hello_flutter/presentation/localization/extension/language_localization_ext.dart';
-import 'package:hello_flutter/presentation/localization/generated/app_localizations.dart';
-import 'package:hello_flutter/presentation/navigation/app_router.dart';
-import 'package:hello_flutter/presentation/theme/dark_app_theme.dart';
-import 'package:hello_flutter/presentation/theme/extension/app_theme_mode_ext.dart';
-import 'package:hello_flutter/presentation/theme/light_app_theme.dart';
+import 'package:evntas/presentation/app/app_viewmodel.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/base/screen_util/screen_util_builder.dart';
+import 'package:evntas/presentation/localization/extension/language_localization_ext.dart';
+import 'package:evntas/presentation/localization/generated/app_localizations.dart';
+import 'package:evntas/presentation/navigation/app_router.dart';
+import 'package:evntas/presentation/theme/dark_app_theme.dart';
+import 'package:evntas/presentation/theme/extension/app_theme_mode_ext.dart';
+import 'package:evntas/presentation/theme/light_app_theme.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

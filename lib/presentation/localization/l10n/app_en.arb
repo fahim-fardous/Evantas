@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "app_name": "Hello Flutter",
+  "app_name": "Evntas",
   "@app_name": {
     "type": "text"
   },
@@ -238,7 +238,7 @@
   },
   "location_error__something_went_wrong": "Something went wrong with location",
   "@location_error__something_went_wrong": {
-   "type": "text"
+    "type": "text"
   },
   "location_error__msg__please_turn_on_location": "Please turn on your location to continue",
   "@location_error__msg__please_turn_on_location": {
@@ -255,5 +255,109 @@
   "location_error_msg__current_country_not_found": "Current country not found. Please try again",
   "@location_error_msg__current_country_not_found": {
     "type": "text"
+  },
+  "welcome_back": "Welcome Back,",
+  "@welcome_back": {
+    "type": "text"
+  },
+  "events": "Events",
+  "@events": {
+    "type": "text"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "type": "text"
+  },
+  "dinner": "Dinner",
+  "@dinner": {
+    "type": "text"
+  },
+  "development": "Development",
+  "@development": {
+    "type": "text"
+  },
+  "birthday": "Birthday",
+  "@birthday": {
+    "type": "text"
+  },
+  "special": "Special",
+  "@special": {
+    "type": "text"
+  },
+  "memories": "Memory",
+  "@memories": {
+    "type": "text"
+  },
+  "join_the_event": "Join The Event",
+  "@join_the_event": {
+    "type": "text"
+  },
+  "event_title_label": "Title",
+  "@event_title_label": {
+    "type": "text"
+  },
+  "event_title_hint_text": "Title",
+  "@event_title_hint_text": {
+    "type": "text"
+  },
+  "event_description_label": "Description(Optional)",
+  "@event_description_label": {
+    "type": "text"
+  },
+  "event_description_hint_text": "Description(Optional)",
+  "@event_description_hint_text": {
+    "type": "text"
+  },
+  "event_date_label": "Date",
+  "@event_date_label": {
+    "type": "text"
+  },
+  "event_time_label": "Time",
+  "@event_time_label": {
+    "type": "text"
+  },
+  "event_location_label": "Location",
+  "@event_location_label": {
+    "type": "text"
+  },
+  "event_location_hint_text": "Location",
+  "@event_location_hint_text": {
+    "type": "text"
+  },
+  "event_type_label": "Event Type",
+  "@event_type_label": {
+    "type": "text"
+  },
+  "event_type_hint_text": "Select event type",
+  "@event_type_hint_text": {
+    "type": "text"
+  },
+  "add_reminder__save_btn_text": "Save",
+  "@add_reminder__save_btn_text": {
+    "type": "text"
+  },
+  "edit_profile": "Edit Profile",
+  "@edit_profile": {
+    "type": "text"
+  },
+  "issues": "Issues",
+  "@issues": {
+    "type": "text"
+  },
+  "points": "Points",
+  "@points": {
+    "type": "text"
+  },
+  "select_profile_picture": "Select profile picture",
+  "@select_profile_picture": {
+  "type": "text"
+  },
+  "see_profile_picture": "See profile picture",
+  "@see_profile_picture": {
+  "type": "text"
+  },
+  "save": "Save",
+  "@save": {
+  "type": "text"
   }
 }

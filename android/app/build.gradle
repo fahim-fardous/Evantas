@@ -5,6 +5,7 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
+    //id 'com.google.gms.google-services'
 }
 
 def localProperties = new Properties()
@@ -50,12 +51,12 @@ flutter {
 }
 
 android {
-    namespace "com.mahfuznow.hello_flutter"
+    namespace "com.mahfuznow.evntas"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     defaultConfig {
-        applicationId "com.mahfuznow.hello_flutter"
+        applicationId "com.mahfuznow.evntas"
 
         println("==================ANDROID Gradle Info ======================")
         println("Current flavor: " + getCurrentFlavor())
@@ -79,21 +80,21 @@ android {
         flavor_dev {
             dimension "env"
             applicationIdSuffix ".dev"
-            resValue "string", "app_name", "Hello Flutter Dev"
+            resValue "string", "app_name", "Evntas Dev"
         }
         flavor_test {
             dimension "env"
             applicationIdSuffix ".test"
-            resValue "string", "app_name", "Hello Flutter Test"
+            resValue "string", "app_name", "Evntas Test"
         }
         flavor_staging {
             dimension "env"
             applicationIdSuffix ".staging"
-            resValue "string", "app_name", "Hello Flutter Staging"
+            resValue "string", "app_name", "Evntas Staging"
         }
         flavor_prod {
             dimension "env"
-            resValue "string", "app_name", "Hello Flutter"
+            resValue "string", "app_name", "Evntas"
         }
     }
 

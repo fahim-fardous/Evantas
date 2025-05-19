@@ -48,7 +48,7 @@ String get featureViewModelFile =>
 String get featureAdaptiveUiFile =>
     '$featurePath/${featurePathName}_adaptive_ui.dart';
 
-const String packageName = 'package:hello_flutter';
+const String packageName = 'package:evntas';
 
 void main(List<String> arguments) {
   String? inputFeatureName = '';
@@ -195,6 +195,7 @@ class ${featureClassName}MobilePortraitState extends BaseUiState<${featureClassN
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _buildAppBar(context),
       body: valueListenableBuilder(
         listenable: widget.viewModel.message,
         builder: (context, value) {
@@ -205,6 +206,16 @@ class ${featureClassName}MobilePortraitState extends BaseUiState<${featureClassN
         },
       ),
     );
+  }
+  
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+        title: const Text("$featureClassName"),
+        leading: IconButton(
+          onPressed: () => widget.viewModel.onBackPressed(),
+          icon: const Icon(Icons.arrow_back),
+        ),
+      );
   }
 }
 ''';

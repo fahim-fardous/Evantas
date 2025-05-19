@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_argument.dart';
-import 'package:hello_flutter/presentation/base/base_route.dart';
-import 'package:hello_flutter/presentation/feature/splash/route/splash_argument.dart';
-import 'package:hello_flutter/presentation/navigation/route_path.dart';
+import 'package:evntas/presentation/base/base_argument.dart';
+import 'package:evntas/presentation/base/base_route.dart';
+import 'package:evntas/presentation/feature/splash/route/splash_argument.dart';
+import 'package:evntas/presentation/feature/user_onboarding/route/user_onboarding_argument.dart';
+import 'package:evntas/presentation/navigation/route_path.dart';
 
 class AppRouter {
   static final initialRoute = RoutePath.splash.toPathString;

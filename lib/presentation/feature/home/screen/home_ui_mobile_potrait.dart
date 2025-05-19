@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/main/flavors.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
-import 'package:hello_flutter/presentation/feature/home/home_view_model.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/main/flavors.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/common/extension/context_ext.dart';
+import 'package:evntas/presentation/feature/home/home_view_model.dart';
+import 'package:evntas/presentation/theme/color/app_colors.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class HomeUiMobilePortrait extends StatefulWidget {
   final HomeViewModel viewModel;
@@ -23,15 +24,6 @@ class HomeUiMobilePortraitState extends BaseUiState<HomeUiMobilePortrait> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          F.getLocalizedAppTitleWithFlavor(context.localizations),
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontSize: Dimens.dimen_18,
-              ),
-        ),
-        centerTitle: true,
-      ),
       body: _homeBody(context),
       bottomNavigationBar: _bottomNavigation(),
     );
@@ -52,7 +44,8 @@ class HomeUiMobilePortraitState extends BaseUiState<HomeUiMobilePortrait> {
       builder: (context, value) {
         return NavigationBar(
           elevation: Dimens.dimen_10,
-          surfaceTintColor: Theme.of(context).colorScheme.primary,
+          surfaceTintColor: AppColors.of(context).mainColor,
+          indicatorColor: AppColors.of(context).mainColor.withOpacity(.25),
           selectedIndex: value,
           onDestinationSelected: (index) {
             _pageController.jumpToPage(index);

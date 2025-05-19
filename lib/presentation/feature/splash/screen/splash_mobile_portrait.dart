@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/common/widget/asset_image_view.dart';
-import 'package:hello_flutter/presentation/feature/splash/splash_view_model.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/base/base_adaptive_ui.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/common/extension/context_ext.dart';
+import 'package:evntas/presentation/common/widget/asset_image_view.dart';
+import 'package:evntas/presentation/feature/splash/splash_view_model.dart';
+import 'package:evntas/presentation/theme/color/app_colors.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class SplashMobilePortrait extends StatefulWidget {
   final SplashViewModel viewModel;
@@ -20,25 +23,27 @@ class SplashMobilePortraitState extends BaseUiState<SplashMobilePortrait> {
       body: valueListenableBuilder(
         listenable: widget.viewModel.appInfo,
         builder: (context, value) {
-          return Stack(
-            children: [
-              Center(
-                child: AssetImageView(
+          return Container(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AssetImageView(
                   fileName: 'app_logo.png',
-                  width: Dimens.dimen_100,
+                  width: Dimens.dimen_120,
+                  height: Dimens.dimen_120,
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: EdgeInsets.all(Dimens.dimen_16),
-                  child: Text(
-                    "App version: ${value?.version}, Build ${value?.buildNumber}",
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                Text(
+                  context.localizations.app_name,
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: Dimens.dimen_24,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-              )
-            ],
+              ],
+            ),
           );
         },
       ),

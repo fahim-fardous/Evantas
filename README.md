@@ -126,9 +126,9 @@ dart create_feature.dart feature_name
 
 In AndroidStudio Go to Edit > Find > Replace in Files (Ctrl + Shift + R) and replace the following
 
-- `Hello Flutter` with `Your App Name`
-- `hello_flutter` with `your_app_name`
-- `hello-flutter` with `your-app-name`
+- `Evntas` with `Your App Name`
+- `evntas` with `your_app_name`
+- `evntas` with `your-app-name`
 - `com.mahfuznow` with `com.yourdomain`
 
 ### Android
@@ -137,42 +137,42 @@ In AndroidStudio Go to Edit > Find > Replace in Files (Ctrl + Shift + R) and rep
 
 ```bash
 android {
-    namespace "com.mahfuznow.hello_flutter"
+    namespace "com.mahfuznow.evntas"
     
     defaultConfig {
-        applicationId "com.mahfuznow.hello_flutter"
+        applicationId "com.mahfuznow.evntas"
     }
     
     productFlavors {
     flavor_dev {
         dimension "env"
         applicationIdSuffix ".dev"
-        resValue "string", "app_name", "Hello Flutter Dev"
+        resValue "string", "app_name", "Evntas Dev"
     }
     flavor_test {
         dimension "env"
         applicationIdSuffix ".test"
-        resValue "string", "app_name", "Hello Flutter Test"
+        resValue "string", "app_name", "Evntas Test"
     }
     flavor_staging {
         dimension "env"
         applicationIdSuffix ".staging"
-        resValue "string", "app_name", "Hello Flutter Staging"
+        resValue "string", "app_name", "Evntas Staging"
     }
     flavor_prod {
         dimension "env"
-        resValue "string", "app_name", "Hello Flutter"
+        resValue "string", "app_name", "Evntas"
     }
 }
 }
 ```
 
-- Rename the `android/app/src/main/kotlin/com/mahfuznow/hello_flutter` folder to your desired
+- Rename the `android/app/src/main/kotlin/com/mahfuznow/evntas` folder to your desired
   package name.
 - Update the package declaration in the `MainActivity.kt` file to match the new folder name.
-    - For example, if the folder is renamed to `com/mahfuznow/hello_flutter`, the package
+    - For example, if the folder is renamed to `com/mahfuznow/evntas`, the package
       declaration
-      should be `package com.mahfuznow.hello_flutter`.
+      should be `package com.mahfuznow.evntas`.
 
 ### iOS
 

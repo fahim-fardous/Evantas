@@ -4,6 +4,7 @@ import 'package:data/local/shared_preference/shared_pref_manager.dart';
 import 'package:domain/model/app_info.dart';
 import 'package:domain/model/app_language.dart';
 import 'package:domain/model/app_theme_mode.dart';
+import 'package:domain/model/google_user_data.dart';
 import 'package:domain/repository/app_repository.dart';
 import 'package:domain/util/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -74,5 +75,32 @@ class AppRepositoryImpl implements AppRepository {
       version: version,
       buildNumber: buildNumber,
     );
+  }
+
+  @override
+  Future<bool> isOnBoardingComplete() async{
+    final isOnboarded = await sharedPrefManager.getValue<bool>('isOnboarded', false);
+    return isOnboarded ?? false;
+  }
+
+  @override
+  Future<void> setOnBoardingComplete(bool isOnBoardingComplete) async{
+    await sharedPrefManager.saveValue('isOnboarded', isOnBoardingComplete);
+  }
+
+  @override
+  Future<void> setUserId(String id) async{
+    await sharedPrefManager.saveValue('userId', id);
+  }
+
+  @override
+  Future<String?> getUserId() async{
+    final id = await sharedPrefManager.getValue('userId', '');
+    return id;
+  }
+
+  @override
+  Future<void> clearAll() async{
+    await sharedPrefManager.clearAll();
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/theme/color/dark_app_colors.dart';
-import 'package:hello_flutter/presentation/theme/color/light_app_colors.dart';
+import 'package:evntas/presentation/theme/color/dark_app_colors.dart';
+import 'package:evntas/presentation/theme/color/light_app_colors.dart';
 
 abstract class AppColors {
   abstract Brightness brightness;
@@ -34,6 +34,9 @@ abstract class AppColors {
   abstract Color onInverseSurface;
   abstract Color inversePrimary;
   abstract Color surfaceTint;
+  abstract Color mainColor;
+  abstract Color unfocusedColor;
+  abstract Color dividerColor;
 
   abstract Color tripInfoChipIconColor;
   abstract Color neutralVariant95;

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/presentation/base/base_ui_state.dart';
-import 'package:hello_flutter/presentation/common/extension/context_ext.dart';
-import 'package:hello_flutter/presentation/common/widget/overflow_scroll_view.dart';
-import 'package:hello_flutter/presentation/common/widget/primary_button.dart';
-import 'package:hello_flutter/presentation/feature/auth/login/login_view_model.dart';
-import 'package:hello_flutter/presentation/feature/auth/login/widgets/login_email_text_field.dart';
-import 'package:hello_flutter/presentation/feature/auth/login/widgets/login_password_text_field.dart';
-import 'package:hello_flutter/presentation/localization/extension/email_validation_error_ext.dart';
-import 'package:hello_flutter/presentation/localization/extension/password_validation_error_ext.dart';
-import 'package:hello_flutter/presentation/values/dimens.dart';
+import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/common/extension/context_ext.dart';
+import 'package:evntas/presentation/common/widget/overflow_scroll_view.dart';
+import 'package:evntas/presentation/common/widget/primary_button.dart';
+import 'package:evntas/presentation/feature/auth/login/login_view_model.dart';
+import 'package:evntas/presentation/feature/auth/login/widgets/login_email_text_field.dart';
+import 'package:evntas/presentation/feature/auth/login/widgets/login_password_text_field.dart';
+import 'package:evntas/presentation/localization/extension/email_validation_error_ext.dart';
+import 'package:evntas/presentation/localization/extension/password_validation_error_ext.dart';
+import 'package:evntas/presentation/values/dimens.dart';
 
 class LoginUiMobilePortrait extends StatefulWidget {
   final LoginViewModel viewModel;
