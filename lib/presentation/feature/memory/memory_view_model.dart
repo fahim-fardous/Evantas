@@ -116,6 +116,7 @@ class MemoryViewModel extends BaseViewModel<MemoryArgument> {
 
   void onTapPhoto(int index) {
     navigateToScreen(
+      onPop: _fetchImages,
       destination: MemoryDetailsRoute(
         arguments: MemoryDetailsArgument(
           initialIndex: index,

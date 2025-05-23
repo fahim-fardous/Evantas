@@ -1,3 +1,4 @@
+import 'package:evntas/presentation/common/extension/context_ext.dart';
 import 'package:evntas/presentation/localization/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:evntas/presentation/base/base_ui_state.dart';
@@ -77,19 +78,19 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.delete_photo),
-        content: Text(AppLocalizations.of(context)!.delete_photo_confirmation),
+        title: Text(context.localizations.delete_photo),
+        content: Text(context.localizations.delete_photo_confirmation),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(AppLocalizations.of(context)!.cancel),
+            child: Text(context.localizations.cancel),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
               widget.viewModel.deletePhoto(imageUrl);
             },
-            child: Text(AppLocalizations.of(context)!.ok),
+            child: Text(context.localizations.ok),
           ),
         ],
       ),
