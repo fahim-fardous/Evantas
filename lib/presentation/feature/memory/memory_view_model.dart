@@ -40,6 +40,12 @@ class MemoryViewModel extends BaseViewModel<MemoryArgument> {
     _fetchImages();
   }
 
+  Future<void> deletePhoto(String pathName) async {
+    String fileName = pathName.split('/').last;
+    await loadData(memoryRepository.deletePhoto(fileName));
+    _fetchImages();
+  }
+
   Future<void> _fetchImages() async {
       final response =
           await loadData(memoryRepository.fetchImages());

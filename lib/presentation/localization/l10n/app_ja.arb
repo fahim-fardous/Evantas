@@ -235,5 +235,25 @@
   "navigation_item__settings": "設定",
   "@navigation_item__settings": {
     "type": "text"
+  },
+  "photo__delete_title": "写真を削除",
+  "@photo__delete_title": {
+    "type": "text",
+    "description": "Dialog title for deleting a photo"
+  },
+  "photo__delete_message": "この写真を削除しますか？",
+  "@photo__delete_message": {
+    "type": "text",
+    "description": "Dialog message asking user to confirm deletion"
+  },
+  "common__cancel": "キャンセル",
+  "@common__cancel": {
+    "type": "text",
+    "description": "Label for cancel button"
+  },
+  "common__ok": "OK",
+  "@common__ok": {
+    "type": "text",
+    "description": "Label for OK button"
   }
 }

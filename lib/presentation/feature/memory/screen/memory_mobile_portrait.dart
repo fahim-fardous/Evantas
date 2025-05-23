@@ -1,3 +1,4 @@
+import 'package:evntas/presentation/localization/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:evntas/presentation/base/base_ui_state.dart';
 import 'package:evntas/presentation/feature/memory/memory_view_model.dart';
@@ -46,17 +47,22 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
                       mainAxisSpacing: Dimens.dimen_4,
                       childAspectRatio: 1, // square cells
                     ),
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: () => widget.viewModel.onTapPhoto(
-                        index,
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () => widget.viewModel.onTapPhoto(index),
+                        child: GestureDetector(
+                          onLongPress: () => _showDeleteDialog(value[index]),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(Dimens.dimen_10),
+                            child: Image.network(
+                              value.isNotEmpty
+                                  ? value[index]
+                                  : Constants.emptyPlaceholderUrl,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
-                      child: Image.network(
-                        value.isNotEmpty
-                            ? value[index]
-                            : Constants.emptyPlaceholderUrl,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+
                   ),
                 )
               ],
@@ -66,6 +72,31 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
       ),
     );
   }
+
+  void _showDeleteDialog(String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.delete_photo),
+        content: Text(AppLocalizations.of(context)!.delete_photo_confirmation),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(AppLocalizations.of(context)!.cancel),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              widget.viewModel.deletePhoto(imageUrl);
+            },
+            child: Text(AppLocalizations.of(context)!.ok),
+          ),
+        ],
+      ),
+    );
+  }
+
+
 
   Widget _buildFloatingActionButton(BuildContext context) {
     return Padding(
@@ -99,4 +130,5 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
       ),
     );
   }
+
 }
