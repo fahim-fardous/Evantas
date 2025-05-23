@@ -1,3 +1,4 @@
+import 'package:evntas/presentation/localization/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:evntas/presentation/base/base_ui_state.dart';
 import 'package:evntas/presentation/feature/memory/memory_view_model.dart';
@@ -51,7 +52,7 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
                         child: GestureDetector(
                           onLongPress: () => _showDeleteDialog(value[index]),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(Dimens.dimen_10),
                             child: Image.network(
                               value.isNotEmpty
                                   ? value[index]
@@ -76,24 +77,25 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Delete Photo"),
-        content: const Text("Do you want to delete this photo?"),
+        title: Text(AppLocalizations.of(context)!.delete_photo),
+        content: Text(AppLocalizations.of(context)!.delete_photo_confirmation),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text("Cancel"),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
               widget.viewModel.deletePhoto(imageUrl);
             },
-            child: const Text("OK"),
+            child: Text(AppLocalizations.of(context)!.ok),
           ),
         ],
       ),
     );
   }
+
 
 
   Widget _buildFloatingActionButton(BuildContext context) {

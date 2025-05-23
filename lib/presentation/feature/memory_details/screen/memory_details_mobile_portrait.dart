@@ -57,7 +57,7 @@ class MemoryDetailsMobilePortraitState
         listenable: widget.viewModel.uploadedImages,
         builder: (context, value) {
           if (value.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
+            return const SizedBox.shrink();
           }
 
           _pageController ??= PageController(initialPage: widget.initialIndex);
