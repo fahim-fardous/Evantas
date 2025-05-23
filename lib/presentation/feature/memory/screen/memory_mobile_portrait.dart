@@ -46,17 +46,22 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
                       mainAxisSpacing: Dimens.dimen_4,
                       childAspectRatio: 1, // square cells
                     ),
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: () => widget.viewModel.onTapPhoto(
-                        index,
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () => widget.viewModel.onTapPhoto(index),
+                        child: GestureDetector(
+                          onLongPress: () => _showDeleteDialog(value[index]),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              value.isNotEmpty
+                                  ? value[index]
+                                  : Constants.emptyPlaceholderUrl,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
-                      child: Image.network(
-                        value.isNotEmpty
-                            ? value[index]
-                            : Constants.emptyPlaceholderUrl,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+
                   ),
                 )
               ],
@@ -66,6 +71,30 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
       ),
     );
   }
+
+  void _showDeleteDialog(String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Delete Photo"),
+        content: const Text("Do you want to delete this photo?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              widget.viewModel.deletePhoto(imageUrl);
+            },
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
+
 
   Widget _buildFloatingActionButton(BuildContext context) {
     return Padding(
@@ -99,4 +128,5 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
       ),
     );
   }
+
 }

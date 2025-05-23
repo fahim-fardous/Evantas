@@ -300,4 +300,8 @@ class SupabaseService {
       rethrow;
     }
   }
+
+  Future<void> deletePhoto(String fileName) async {
+    await supabaseClient.storage.from('photos').remove([fileName]);
+  }
 }
