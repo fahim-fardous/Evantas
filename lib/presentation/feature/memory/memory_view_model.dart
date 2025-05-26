@@ -36,7 +36,13 @@ class MemoryViewModel extends BaseViewModel<MemoryArgument> {
   }
 
   Future<void> uploadPhoto(ImageSource source) async {
-    await loadData(memoryRepository.uploadPhoto(source));
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: source);
+
+    if (image == null) return;
+    final File file = File(image.path);
+    final String fileName = "${DateTime.now().microsecondsSinceEpoch}.jpg";
+    await loadData(memoryRepository.uploadPhoto(file, fileName));
     _fetchImages();
   }
 
@@ -47,22 +53,21 @@ class MemoryViewModel extends BaseViewModel<MemoryArgument> {
   }
 
   Future<void> _fetchImages() async {
-      final response =
-          await loadData(memoryRepository.fetchImages());
+    final response = await loadData(memoryRepository.fetchImages());
 
-      if (response.isEmpty) return;
+    if (response.isEmpty) return;
 
-      if (response.isNotEmpty) {
-        final List<String> urls = response
-            .where((file) => file.name != '.emptyFolderPlaceholder')
-            .map((file) {
-          return supabaseService.supabaseClient.storage
-              .from('photos')
-              .getPublicUrl(file.name);
-        }).toList();
+    if (response.isNotEmpty) {
+      final List<String> urls = response
+          .where((file) => file.name != '.emptyFolderPlaceholder')
+          .map((file) {
+        return supabaseService.supabaseClient.storage
+            .from('photos')
+            .getPublicUrl(file.name);
+      }).toList();
 
-        _uploadedImages.value = urls;
-      }
+      _uploadedImages.value = urls;
+    }
   }
 
   Future<void> downloadPhoto(String url) async {
@@ -87,9 +92,11 @@ class MemoryViewModel extends BaseViewModel<MemoryArgument> {
     }
   }
 
-  Future<void> downloadPhotoOnPermissionGranted(PermissionStatus status, String url) async {
+  Future<void> downloadPhotoOnPermissionGranted(
+      PermissionStatus status, String url) async {
     if (status.isGranted) {
-      final response = await Dio().get(url, options: Options(responseType: ResponseType.bytes));
+      final response = await Dio()
+          .get(url, options: Options(responseType: ResponseType.bytes));
       final Uint8List bytes = Uint8List.fromList(response.data);
       final result = await ImageGallerySaverPlus.saveImage(bytes);
       if (result['isSuccess'] == true) {
@@ -98,11 +105,15 @@ class MemoryViewModel extends BaseViewModel<MemoryArgument> {
         throw Exception("Failed to save image: ${result['errorMessage']}");
       }
     } else if (status.isDenied) {
-      showToast(uiText: FixedUiText(text: Platform.isAndroid
-          ? "Please grant storage permission"
-          : "Please allow access to Photos"));
+      showToast(
+          uiText: FixedUiText(
+              text: Platform.isAndroid
+                  ? "Please grant storage permission"
+                  : "Please allow access to Photos"));
     } else if (status.isPermanentlyDenied) {
-      showToast(uiText: FixedUiText(text: "Permission denied. Please enable it in settings."));
+      showToast(
+          uiText: FixedUiText(
+              text: "Permission denied. Please enable it in settings."));
       await openAppSettings();
     }
   }

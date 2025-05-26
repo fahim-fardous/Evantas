@@ -12,6 +12,8 @@ import 'package:evntas/presentation/feature/edit_profile/route/edit_profile_argu
 import 'package:evntas/presentation/feature/edit_profile/route/edit_profile_route.dart';
 import 'package:evntas/presentation/feature/issue_list/route/issue_list_argument.dart';
 import 'package:evntas/presentation/feature/issue_list/route/issue_list_route.dart';
+import 'package:evntas/presentation/feature/points/route/points_argument.dart';
+import 'package:evntas/presentation/feature/points/route/points_route.dart';
 import 'package:evntas/presentation/feature/profile_picture/route/profile_picture_argument.dart';
 import 'package:evntas/presentation/feature/profile_picture/route/profile_picture_route.dart';
 import 'package:evntas/presentation/localization/ui_text.dart';
@@ -148,6 +150,14 @@ class ProfileViewModel extends BaseViewModel<ProfileArgument> {
     navigateToScreen(
       destination: IssueListRoute(
         arguments: IssueListArgument(),
+      ),
+    );
+  }
+
+  void onPointsPressed() {
+    navigateToScreen(
+      destination: PointsRoute(
+        arguments: PointsArgument(),
       ),
     );
   }

@@ -30,4 +30,22 @@ class EventRepositoryImpl extends EventRepository {
     }
     return EventMapper.mapResponseToDomain(event);
   }
+
+  @override
+  Future<void> joinEvent(int id, String userId) async{
+    try{
+      await supabaseService.joinEvent(id, userId);
+    }catch(e){
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> isJoined(int id, String userId) async{
+    try{
+      return await supabaseService.isJoined(id, userId);
+    }catch(e){
+      rethrow;
+    }
+  }
 }

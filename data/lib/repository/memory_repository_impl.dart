@@ -11,33 +11,19 @@ class MemoryRepositoryImpl extends MemoryRepository {
   MemoryRepositoryImpl({required this.supabaseService});
 
   @override
-  Future<void> uploadPhoto(source) async {
+  Future<void> uploadPhoto(File file, String fileName) async {
     try {
-      final ImagePicker picker = ImagePicker();
-      final XFile? image = await picker.pickImage(source: source);
-
-      if (image != null) {
-        final File file = File(image.path);
-        final String fileName = "${DateTime.now().microsecondsSinceEpoch}.jpg";
-
-        await supabaseService.supabaseClient.storage.from('photos').upload(
-              fileName,
-              file,
-              fileOptions: const FileOptions(
-                cacheControl: '3600',
-                upsert: false,
-              ),
-            );
-      }
+      await supabaseService.uploadPhoto(file, fileName);
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<List<FileObject>> fetchImages() async{
+  Future<List<FileObject>> fetchImages() async {
     try {
-      final response = await supabaseService.supabaseClient.storage.from('photos').list();
+      final response =
+          await supabaseService.fetchImages();
       return response;
     } catch (e) {
       rethrow;

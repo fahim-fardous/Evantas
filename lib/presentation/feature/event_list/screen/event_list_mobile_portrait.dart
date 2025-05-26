@@ -118,15 +118,17 @@ class EventListMobilePortraitState
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'You Have ${events.length}',
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color:
-                            Theme.of(context).colorScheme.onPrimary,
-                        fontSize: Dimens.dimen_28,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.bold,
-                      ),
+                valueListenableBuilder(
+                  listenable: widget.viewModel.upcomingEvents,
+                  builder: (context, upcomingEvents) => Text(
+                    'You Have ${upcomingEvents.length}',
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: Dimens.dimen_28,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
                 ),
                 Text(
                   (events.length > 1) ? 'Upcoming Events' : 'Upcoming Event',
@@ -211,19 +213,24 @@ class EventListMobilePortraitState
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: Dimens.dimen_16,
-                        vertical: Dimens.dimen_16,
+                        vertical: Dimens.dimen_10,
                       ),
                       child: Text(
                         DateFormat('d MMMM').format(date),
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(
+                              color: Theme.of(context).colorScheme.onBackground,
+                            ),
                       ),
                     ),
                     ...eventList.map(
                       (entry) => GestureDetector(
-                        onTap: () =>
-                            widget.viewModel.onEventClicked(eventId: entry.id),
+                        onTap: () => entry.date.isBefore(DateTime.now())
+                            ? null
+                            : widget.viewModel
+                                .onEventClicked(eventId: entry.id),
                         child: EventCard(event: entry),
                       ),
                     ),

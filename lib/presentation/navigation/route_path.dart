@@ -1,3 +1,5 @@
+import 'package:evntas/presentation/feature/points/route/points_argument.dart';
+import 'package:evntas/presentation/feature/points/route/points_route.dart';
 import 'package:evntas/presentation/feature/issue_details/route/issue_details_argument.dart';
 import 'package:evntas/presentation/feature/issue_details/route/issue_details_route.dart';
 import 'package:evntas/presentation/feature/add_issue/route/add_issue_argument.dart';
@@ -64,6 +66,7 @@ enum RoutePath {
   issueList,
   addIssue,
   issueDetails,
+  points, 
   unknown;
 
   static RoutePath fromString(String? path) {
@@ -112,6 +115,8 @@ enum RoutePath {
         return RoutePath.addIssue;
       case '/issueDetails':
         return RoutePath.issueDetails;
+      case '/points':
+        return RoutePath.points;
       default:
         return RoutePath.unknown;
     }
@@ -161,6 +166,8 @@ enum RoutePath {
         return '/addIssue';
       case RoutePath.issueDetails:
         return '/issueDetails';
+      case RoutePath.points:
+        return '/points';
       default:
         return '';
     }
@@ -262,6 +269,11 @@ enum RoutePath {
           throw Exception('IssueDetailsArgument is required');
         }
         return IssueDetailsRoute(arguments: arguments);
+      case RoutePath.points:
+        if (arguments is! PointsArgument) {
+          throw Exception('PointsArgument is required');
+        }
+        return PointsRoute(arguments: arguments);
       default:
         return UnknownRoute(arguments: arguments);
     }

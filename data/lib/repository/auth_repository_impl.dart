@@ -121,9 +121,9 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<void> addUser(GoogleUserData user) async {
+  Future<void> addUser(GoogleUserData user, String fcmToken) async {
     try {
-      await supabaseService.addUser(user);
+      await supabaseService.addUser(user, fcmToken);
     } catch (e) {
       rethrow;
     }

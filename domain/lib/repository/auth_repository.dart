@@ -27,7 +27,7 @@ abstract class AuthRepository {
 
   Future<GoogleUserData> getUserData();
 
-  Future<void> addUser(GoogleUserData user);
+  Future<void> addUser(GoogleUserData user, String fcmToken);
 
   Future<UserResponseData?> getUserById(String id);
 }

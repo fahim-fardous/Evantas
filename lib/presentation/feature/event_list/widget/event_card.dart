@@ -14,18 +14,27 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(
-        horizontal: Dimens.dimen_8,
-        vertical: Dimens.dimen_4,
-      ),
-      child: Material(
-        elevation: Dimens.dimen_1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Dimens.dimen_24),
+    return Opacity(
+      opacity: event.date.isBefore(DateTime.now())
+          ? Dimens.dimen_1 / Dimens.dimen_2
+          : Dimens.dimen_1,
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.symmetric(
+          horizontal: Dimens.dimen_8,
+          vertical: Dimens.dimen_4,
         ),
-        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+          borderRadius: BorderRadius.circular(Dimens.dimen_8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.5),
+              spreadRadius: Dimens.dimen_0,
+              blurRadius: Dimens.dimen_2,
+            ),
+          ],
+        ),
         child: Padding(
           padding: EdgeInsets.all(Dimens.dimen_16),
           child: Column(
@@ -40,7 +49,7 @@ class EventCard extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.all(Dimens.dimen_8),
                         decoration: BoxDecoration(
-                          color: AppColors.of(context).mainColor,
+                          color: event.date.isBefore(DateTime.now()) ? Colors.grey : AppColors.of(context).mainColor,
                           borderRadius: BorderRadius.circular(Dimens.dimen_48),
                         ),
                         child: Icon(
@@ -53,7 +62,7 @@ class EventCard extends StatelessWidget {
                       Text(
                         event.title,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                              color: AppColors.of(context).mainColor,
+                              color: event.date.isBefore(DateTime.now()) ? Colors.grey : AppColors.of(context).mainColor,
                               fontSize: Dimens.dimen_16,
                               fontFamily: 'Roboto',
                             ),
@@ -62,7 +71,7 @@ class EventCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: Dimens.dimen_24),
+              SizedBox(height: Dimens.dimen_16),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -70,9 +79,9 @@ class EventCard extends StatelessWidget {
                     child: Text(
                       event.description ?? '',
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                            color: AppColors.of(context).mainColor,
+                            color: event.date.isBefore(DateTime.now()) ? Colors.grey : AppColors.of(context).mainColor,
                             fontFamily: 'Roboto',
-                            fontSize: Dimens.dimen_20,
+                            fontSize: Dimens.dimen_18,
                           ),
                       maxLines: 3,
                     ),

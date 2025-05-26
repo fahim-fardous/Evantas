@@ -11,8 +11,13 @@ import 'package:intl/intl.dart';
 
 class EventDetailsMobilePortrait extends StatefulWidget {
   final EventDetailsViewModel viewModel;
+  final int eventId;
 
-  const EventDetailsMobilePortrait({required this.viewModel, super.key});
+  const EventDetailsMobilePortrait({
+    required this.viewModel,
+    super.key,
+    required this.eventId,
+  });
 
   @override
   State<StatefulWidget> createState() => EventDetailsMobilePortraitState();
@@ -227,7 +232,7 @@ class EventDetailsMobilePortraitState
   Widget _buildPrimaryButton(BuildContext context) {
     return PrimaryButton(
       label: context.localizations.join_the_event,
-      onPressed: () {},
+      onPressed: () => widget.viewModel.onJoinButtonClicked(widget.eventId),
       minWidth: double.infinity,
       buttonColor: AppColors.of(context).mainColor,
     );

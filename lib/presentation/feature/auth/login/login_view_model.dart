@@ -1,5 +1,7 @@
+import 'package:data/service/notification_service.dart';
 import 'package:domain/repository/app_repository.dart';
 import 'package:domain/repository/auth_repository.dart';
+import 'package:domain/repository/firebase_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:evntas/presentation/base/base_viewmodel.dart';
 import 'package:evntas/presentation/feature/auth/login/route/login_argument.dart';
@@ -13,10 +15,12 @@ import 'package:evntas/presentation/localization/ui_text.dart';
 class LoginViewModel extends BaseViewModel<LoginArgument> {
   final AuthRepository authRepository;
   final AppRepository appRepository;
+  final FirebaseRepository firebaseRepository;
 
   LoginViewModel({
     required this.authRepository,
     required this.appRepository,
+    required this.firebaseRepository,
   });
 
   final ValueNotifier<String?> _email = ValueNotifier(null);
@@ -57,7 +61,9 @@ class LoginViewModel extends BaseViewModel<LoginArgument> {
     final user = await authRepository.getUserById(userData.id);
 
     if(user == null){
-      await authRepository.addUser(userData);
+      final token = await firebaseRepository.getFCMToken();
+      if(token == null) return;
+      await authRepository.addUser(userData, token);
     }
 
     navigateToScreen(

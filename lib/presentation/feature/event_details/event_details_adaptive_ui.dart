@@ -7,24 +7,36 @@ import 'package:evntas/presentation/feature/event_details/route/event_details_ro
 import 'package:evntas/presentation/feature/event_details/screen/event_details_mobile_portrait.dart';
 import 'package:evntas/presentation/feature/event_details/screen/event_details_mobile_landscape.dart';
 
-class EventDetailsAdaptiveUi extends BaseAdaptiveUi<EventDetailsArgument, EventDetailsRoute> {
+class EventDetailsAdaptiveUi
+    extends BaseAdaptiveUi<EventDetailsArgument, EventDetailsRoute> {
   const EventDetailsAdaptiveUi({super.argument, super.key});
 
   @override
   State<StatefulWidget> createState() => EventDetailsAdaptiveUiState();
 }
 
-class EventDetailsAdaptiveUiState extends BaseAdaptiveUiState<EventDetailsArgument, EventDetailsRoute, EventDetailsAdaptiveUi, EventDetailsViewModel, EventDetailsBinding> {
+class EventDetailsAdaptiveUiState extends BaseAdaptiveUiState<
+    EventDetailsArgument,
+    EventDetailsRoute,
+    EventDetailsAdaptiveUi,
+    EventDetailsViewModel,
+    EventDetailsBinding> {
   @override
   EventDetailsBinding binding = EventDetailsBinding();
 
   @override
   StatefulWidget mobilePortraitContents(BuildContext context) {
-    return EventDetailsMobilePortrait(viewModel: viewModel);
+    return EventDetailsMobilePortrait(
+      viewModel: viewModel,
+      eventId: widget.argument?.eventId ?? 0,
+    );
   }
 
   @override
   StatefulWidget mobileLandscapeContents(BuildContext context) {
-    return EventDetailsMobileLandscape(viewModel: viewModel);
+    return EventDetailsMobileLandscape(
+      viewModel: viewModel,
+      eventId: widget.argument?.eventId ?? 0,
+    );
   }
 }
