@@ -29,4 +29,9 @@ class MemoryRepositoryImpl extends MemoryRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<void> deletePhoto(String fileName) async {
+    await supabaseService.deletePhoto(fileName);
+  }
 }

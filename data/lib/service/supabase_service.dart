@@ -374,6 +374,10 @@ class SupabaseService {
     }
   }
 
+  Future<void> deletePhoto(String fileName) async {
+    await supabaseClient.storage.from('photos').remove([fileName]);
+  }
+
   Future<void> uploadPhoto(File file, String fileName) async {
     try {
       await supabaseClient.storage.from('photos').upload(

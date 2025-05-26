@@ -1,3 +1,4 @@
+import 'package:evntas/presentation/common/extension/context_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:evntas/presentation/base/base_ui_state.dart';
 import 'package:evntas/presentation/feature/memory_details/memory_details_view_model.dart';
@@ -40,17 +41,30 @@ class MemoryDetailsMobilePortraitState
                     listenable: widget.viewModel.currentIndex,
                     builder: (context, index) => (index != null)
                         ? IconButton(
-                            onPressed: () => {
-                              widget.viewModel.downloadPhoto(
-                                value[index],
-                              ),
-                            },
+                            onPressed: () => _showDeleteDialog(value[index]),
                             icon: const Icon(
-                              Icons.download,
+                              Icons.delete,
                             ),
                           )
                         : Container(),
-                  ))
+                  )),
+          valueListenableBuilder(
+              listenable: widget.viewModel.uploadedImages,
+              builder: (context, value) => valueListenableBuilder(
+                listenable: widget.viewModel.currentIndex,
+                builder: (context, index) => (index != null)
+                    ? IconButton(
+                  onPressed: () => {
+                    widget.viewModel.downloadPhoto(
+                      value[index],
+                    ),
+                  },
+                  icon: const Icon(
+                    Icons.download,
+                  ),
+                )
+                    : Container(),
+              ))
         ],
       ),
       body: valueListenableBuilder(
@@ -76,4 +90,28 @@ class MemoryDetailsMobilePortraitState
       ),
     );
   }
+
+  void _showDeleteDialog(String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.localizations.delete_photo),
+        content: Text(context.localizations.delete_photo_confirmation),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(context.localizations.cancel),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              widget.viewModel.deletePhoto(imageUrl);
+            },
+            child: Text(context.localizations.ok),
+          ),
+        ],
+      ),
+    );
+  }
+
 }
