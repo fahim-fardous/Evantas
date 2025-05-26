@@ -15,6 +15,7 @@ import 'package:flutter/foundation.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:path/path.dart' as path;
 
 class MemoryViewModel extends BaseViewModel<MemoryArgument> {
   final SupabaseService supabaseService;
@@ -40,8 +41,10 @@ class MemoryViewModel extends BaseViewModel<MemoryArgument> {
     final XFile? image = await picker.pickImage(source: source);
 
     if (image == null) return;
+
     final File file = File(image.path);
-    final String fileName = "${DateTime.now().microsecondsSinceEpoch}.jpg";
+    final String fileName = path.basename(file.path);
+
     await loadData(memoryRepository.uploadPhoto(file, fileName));
     _fetchImages();
   }
