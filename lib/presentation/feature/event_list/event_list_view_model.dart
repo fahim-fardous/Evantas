@@ -35,12 +35,17 @@ class EventListViewModel extends BaseViewModel<EventListArgument> {
 
   ValueNotifierList<Event> get events => _events;
 
+  final ValueNotifierList<Event> _upcomingEvents = ValueNotifierList([]);
+
+  ValueNotifierList<Event> get upcomingEvents => _upcomingEvents;
+
   EventListViewModel(this.eventRepository);
 
   @override
   void onViewReady({EventListArgument? argument}) {
     super.onViewReady();
     _fetchEvents();
+    getUpcomingEvents();
   }
 
   Future<void> _fetchEvents() async {
@@ -57,15 +62,29 @@ class EventListViewModel extends BaseViewModel<EventListArgument> {
 
   void onEventClicked({required int eventId}) {
     navigateToScreen(
-        destination: EventDetailsRoute(arguments: EventDetailsArgument(eventId: eventId)));
+      destination: EventDetailsRoute(
+        arguments: EventDetailsArgument(eventId: eventId),
+      ),
+    );
   }
 
   void onAddEventButtonClicked() {
     navigateToScreen(
-      destination: AddReminderRoute(
-        arguments: AddReminderArgument(),
-      ),
-      onPop: _fetchEvents
-    );
+        destination: AddReminderRoute(
+          arguments: AddReminderArgument(),
+        ),
+        onPop: _fetchEvents);
+  }
+
+  Future<void> getUpcomingEvents() async {
+    final events = await eventRepository.getEventList();
+
+    final upcomingEvents = events
+        .where(
+          (event) => event.date.isAfter(DateTime.now()),
+        )
+        .toList();
+
+    _upcomingEvents.value = upcomingEvents;
   }
 }

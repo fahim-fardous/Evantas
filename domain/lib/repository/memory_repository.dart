@@ -1,8 +1,8 @@
-import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class MemoryRepository {
-  Future<void> uploadPhoto(ImageSource source);
+  Future<void> uploadPhoto(File file, String fileName);
 
   Future<List<FileObject>> fetchImages();
 }

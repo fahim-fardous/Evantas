@@ -21,6 +21,10 @@ abstract class AppRepository {
   Future<void> setUserId(String id);
 
   Future<String?> getUserId();
+
+  Future<String?> getFCMToken();
+
+  Future<void> setFCMToken(String token);
   
   Future<void> clearAll();
 }

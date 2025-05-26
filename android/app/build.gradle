@@ -5,7 +5,6 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
-    //id 'com.google.gms.google-services'
 }
 
 def localProperties = new Properties()
@@ -189,7 +188,10 @@ android {
     }
 }
 
-dependencies {}
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:33.1.0')
+    implementation 'com.google.firebase:firebase-messaging'
+}
 
 // Function to get secret keys from local.properties
 def getSecretKeys(String keyName) {
@@ -202,3 +204,5 @@ def getSecretKeys(String keyName) {
     }
     return properties.getProperty(keyName)
 }
+
+apply plugin: 'com.google.gms.google-services'

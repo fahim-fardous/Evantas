@@ -1,4 +1,5 @@
 import 'package:domain/repository/auth_repository.dart';
+import 'package:domain/repository/firebase_repository.dart';
 import 'package:domain/util/logger.dart';
 import 'package:evntas/presentation/feature/auth/login/route/login_argument.dart';
 import 'package:evntas/presentation/feature/auth/login/route/login_route.dart';
@@ -22,15 +23,17 @@ class HomeViewModel extends BaseViewModel<HomeArgument> {
   ValueListenable<int> get currentPageIndex => _currentPageIndex;
 
   final AuthRepository authRepository;
+  final FirebaseRepository firebaseRepository;
 
-  HomeViewModel({required this.authRepository});
+  HomeViewModel(
+      {required this.authRepository, required this.firebaseRepository,});
 
   @override
   onViewReady({HomeArgument? argument}) {
     Logger.debug("HomeViewModel onViewReady");
     _userId.value = argument?.userId;
-
     _printUserSession();
+    _getFCMToken();
   }
 
   void _printUserSession() async {
@@ -38,11 +41,19 @@ class HomeViewModel extends BaseViewModel<HomeArgument> {
     Logger.debug("User session: $userSession");
   }
 
+  Future<void> _getFCMToken() async {
+    final token = await firebaseRepository.getFCMToken();
+    if(token != null){
+      return;
+    }
+    Logger.debug("FCM Token: $token");
+  }
+
   void onPageChanged(int index) {
     _currentPageIndex.value = index;
   }
 
-  Future<void> onNavigationItemClicked(int index) async{
+  Future<void> onNavigationItemClicked(int index) async {
     if (NavigationItemType.values[index].isAuthenticationRequired()) {
       bool isUserLoggedIn = await authRepository.isSignedIn();
       if (!isUserLoggedIn) {
@@ -58,6 +69,7 @@ class HomeViewModel extends BaseViewModel<HomeArgument> {
     }
     _currentPageIndex.value = index;
   }
+
 
   onClickBack() {
     navigateBack();

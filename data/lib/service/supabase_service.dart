@@ -1,4 +1,6 @@
-import 'package:data/mapper/google_user_mapper.dart';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:data/remote/response/answer_response.dart';
 import 'package:data/remote/response/comment_response.dart';
 import 'package:data/remote/response/event_response.dart';
@@ -9,23 +11,36 @@ import 'package:domain/model/comment.dart';
 import 'package:domain/model/event.dart';
 import 'package:domain/model/google_user_data.dart';
 import 'package:domain/model/issue.dart';
-import 'package:domain/util/logger.dart';
+import 'package:domain/repository/app_repository.dart';
+import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseService {
   final SupabaseClient supabaseClient;
+  final AppRepository appRepository;
 
-  SupabaseService({required this.supabaseClient});
+  SupabaseService({
+    required this.supabaseClient,
+    required this.appRepository,
+  });
 
   Future<void> addEvent(Event event) async {
-    await supabaseClient.from('events').insert({
-      'title': event.title,
-      'description': event.description,
-      'date': event.date.toIso8601String().split('T')[0],
-      'location': event.location,
-      'event_type': event.eventType.name,
-      'time': "${event.time.hour}:${event.time.minute}",
-    });
+    try {
+      await supabaseClient
+          .from('events')
+          .insert({
+            'title': event.title,
+            'description': event.description,
+            'date': event.date.toIso8601String().split('T')[0],
+            'location': event.location,
+            'event_type': event.eventType.name,
+            'time': "${event.time.hour}:${event.time.minute}",
+          })
+          .select()
+          .single();
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<List<EventResponse>> getEvents() async {
@@ -41,12 +56,63 @@ class SupabaseService {
     return EventResponse.fromJson(response);
   }
 
-  Future<void> addUser(GoogleUserData user) async {
+  Future<void> joinEvent(int id, String userId) async {
+    final event = await getEventById(id);
+    if (event == null) {
+      return;
+    }
+    await supabaseClient.from('attendees').insert({
+      'attendee_id': userId,
+      'event_id': id,
+    });
+
+    // Get tokens of subscribed users
+    final tokenRes = await supabaseClient
+        .from('users')
+        .select('fcm_token')
+        .not('fcm_token', 'is', null);
+    final tokens = tokenRes.map((e) => e['fcm_token'] as String).toList();
+
+    // Send notification
+    await http.post(
+      Uri.parse(
+          'https://ixcgefrdqdlqmpveunyu.functions.supabase.co/sendNotification'),
+      headers: {
+        'Authorization':
+            'Bearer ${supabaseClient.auth.currentSession?.accessToken}',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'type': 'user_joined',
+        'event': {
+          'id': id,
+          'title': event.title,
+        },
+        'tokens': tokens,
+      }),
+    );
+  }
+
+  Future<bool> isJoined(int id, String userId) async {
+    try {
+      await supabaseClient
+          .from('attendees')
+          .select()
+          .eq('attendee_id', userId)
+          .eq('event_id', id)
+          .maybeSingle();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<void> addUser(GoogleUserData user, String fcmToken) async {
     await supabaseClient.from('users').insert({
       'name': user.name,
       'email': user.email,
       'photo_url': user.photoUrl,
-      'fcm_token': user.id,
+      'fcm_token': fcmToken,
       'role': 'admin',
       'user_id': user.id
     });
@@ -74,6 +140,13 @@ class SupabaseService {
     } catch (e) {
       return null;
     }
+  }
+
+  Future<void> updateFCMToken(String token) async {
+    final userId = await appRepository.getUserId();
+    await supabaseClient
+        .from('users')
+        .update({'fcm_token': token}).eq('user_id', userId ?? '');
   }
 
   Future<void> addIssue(Issue issue) async {
@@ -262,7 +335,7 @@ class SupabaseService {
           .eq('issue_id', issueId)
           .eq('user_id', userId)
           .maybeSingle();
-      if(response == null){
+      if (response == null) {
         return null;
       }
       return IssueResponse.fromJson(response);
@@ -296,6 +369,31 @@ class SupabaseService {
       return response.map((comment) {
         return CommentResponse.fromJson(comment);
       }).toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> uploadPhoto(File file, String fileName) async {
+    try {
+      await supabaseClient.storage.from('photos').upload(
+            fileName,
+            file,
+            fileOptions: const FileOptions(
+              cacheControl: '3600',
+              upsert: false,
+            ),
+          );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<FileObject>> fetchImages() async {
+    try {
+      final response =
+          await supabaseClient.storage.from('photos').list();
+      return response;
     } catch (e) {
       rethrow;
     }

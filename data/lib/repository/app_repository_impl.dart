@@ -103,4 +103,14 @@ class AppRepositoryImpl implements AppRepository {
   Future<void> clearAll() async{
     await sharedPrefManager.clearAll();
   }
+
+  @override
+  Future<String?> getFCMToken() async{
+    return sharedPrefManager.getValue('fcmToken', '');
+  }
+
+  @override
+  Future<void> setFCMToken(String token) async{
+    await sharedPrefManager.saveValue('fcmToken', token);
+  }
 }

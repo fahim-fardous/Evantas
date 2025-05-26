@@ -43,7 +43,7 @@ class DarkAppColors extends AppColors {
   @override
   Color background = const Color(0xFF00090f);
   @override
-  Color onBackground = const Color(0xff42affc);
+  Color onBackground = const Color(0xFFFFFFFF);
   @override
   Color surface = const Color(0xFF01121f);
   @override

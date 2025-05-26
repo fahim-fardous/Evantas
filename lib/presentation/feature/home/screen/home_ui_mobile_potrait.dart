@@ -49,12 +49,13 @@ class HomeUiMobilePortraitState extends BaseUiState<HomeUiMobilePortrait> {
                 if (states.contains(WidgetState.selected)) {
                   return TextStyle(
                     color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
                   );
                 }
                 return TextStyle(
                   color: Theme.of(context)
                       .colorScheme
-                      .onPrimary,
+                      .onBackground,
                 );
               },
             ),

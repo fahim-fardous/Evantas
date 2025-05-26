@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:domain/model/user_response_data.dart';
 import 'package:evntas/presentation/common/extension/context_ext.dart';
+import 'package:evntas/presentation/common/widget/common_drop_down_field.dart';
 import 'package:evntas/presentation/feature/profile/widgets/info_card.dart';
 import 'package:evntas/presentation/feature/profile/widgets/profile_menu_tile.dart';
 import 'package:evntas/presentation/feature/profile/widgets/TextWithIcon.dart';
@@ -103,10 +104,13 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
               onTap: () => widget.viewModel.onIssuesPressed(),
             ),
             SizedBox(height: Dimens.dimen_16),
-            ProfileMenuTile(
-              icon: Icons.stars,
-              text: 'Points',
-              color: Theme.of(context).colorScheme.primary,
+            GestureDetector(
+              onTap: () => widget.viewModel.onPointsPressed(),
+              child: ProfileMenuTile(
+                icon: Icons.stars,
+                text: 'Points',
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
             SizedBox(height: Dimens.dimen_16),
             ProfileMenuTile(
@@ -116,25 +120,12 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text("Logout"),
-                    content: const Text("Are you sure you want to logout?"),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text("Cancel"),
-                      ),
-                      TextButton(
-                        onPressed: () => widget.viewModel.signOut(),
-                        child: Text(
-                          "Sign out",
-                          style:
-                              Theme.of(context).textTheme.labelLarge?.copyWith(
-                                    color: Theme.of(context).colorScheme.error,
-                                  ),
-                        ),
-                      ),
-                    ],
+                  builder: (context) => CommonDropDownField(
+                    title: "Logout",
+                    description: "Are you sure you want to logout?",
+                    positiveButtonLabel: "Sign out",
+                    negativeButtonLabel: "Cancel",
+                    onPositiveButtonPressed: () => widget.viewModel.signOut(),
                   ),
                 );
               },
@@ -170,7 +161,7 @@ class ProfileMobilePortraitState extends BaseUiState<ProfileMobilePortrait> {
               child: Icon(
                 Icons.camera_alt, // pen icon
                 size: Dimens.dimen_16,
-                color: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
           ),

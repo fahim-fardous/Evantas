@@ -62,7 +62,7 @@ enum NavigationItemType {
       case NavigationItemType.profile:
         return true;
       case NavigationItemType.memories:
-        return true;
+        return false;
     }
   }
 }
