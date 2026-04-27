@@ -21,9 +21,10 @@ class MemoryViewModel extends BaseViewModel<MemoryArgument> {
   final SupabaseService supabaseService;
   final MemoryRepository memoryRepository;
 
-  final ValueNotifierList<String> _uploadedImages = ValueNotifierList([]);
+  ValueNotifierList<MemoryImageItem>? _uploadedImageItems;
 
-  ValueNotifierList<String> get uploadedImages => _uploadedImages;
+  ValueNotifierList<MemoryImageItem> get uploadedImages =>
+      _uploadedImageItems ??= ValueNotifierList<MemoryImageItem>([]);
 
   MemoryViewModel({
     required this.supabaseService,
@@ -61,16 +62,31 @@ class MemoryViewModel extends BaseViewModel<MemoryArgument> {
     if (response.isEmpty) return;
 
     if (response.isNotEmpty) {
-      final List<String> urls = response
+      final List<MemoryImageItem> urls = response
           .where((file) => file.name != '.emptyFolderPlaceholder')
           .map((file) {
-        return supabaseService.supabaseClient.storage
-            .from('photos')
-            .getPublicUrl(file.name);
+        return MemoryImageItem(
+          url: supabaseService.supabaseClient.storage
+              .from('photos')
+              .getPublicUrl(file.name),
+          createdAt: _resolveFileDate(file),
+        );
       }).toList();
 
-      _uploadedImages.value = urls;
+      uploadedImages.value = urls;
     }
+  }
+
+  DateTime _resolveFileDate(dynamic file) {
+    final dynamic rawDate =
+        file.createdAt ?? file.updatedAt ?? file.lastAccessedAt;
+    if (rawDate is DateTime) {
+      return rawDate.toLocal();
+    }
+    if (rawDate is String) {
+      return DateTime.tryParse(rawDate)?.toLocal() ?? DateTime.now();
+    }
+    return DateTime.now();
   }
 
   Future<void> downloadPhoto(String url) async {
@@ -138,4 +154,14 @@ class MemoryViewModel extends BaseViewModel<MemoryArgument> {
       ),
     );
   }
+}
+
+class MemoryImageItem {
+  final String url;
+  final DateTime createdAt;
+
+  const MemoryImageItem({
+    required this.url,
+    required this.createdAt,
+  });
 }

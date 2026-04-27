@@ -1,14 +1,13 @@
-import 'package:data/service/supabase_service.dart';
+import 'package:domain/repository/event_repository.dart';
 import 'package:evntas/presentation/base/base_binding.dart';
 import 'package:evntas/presentation/feature/add_reminder/add_reminder_view_model.dart';
 
 class AddReminderBinding extends BaseBinding {
   @override
   Future<void> addDependencies() async {
-    // AddReminderRepository createReminderRepository = await diModule.resolve<AddReminderRepository>();
-    SupabaseService supabaseService = await diModule.resolve<SupabaseService>();
+    EventRepository eventRepository = await diModule.resolve<EventRepository>();
     return diModule.registerInstance(
-      AddReminderViewModel(supabaseService: supabaseService),
+      AddReminderViewModel(eventRepository: eventRepository),
     );
   }
 

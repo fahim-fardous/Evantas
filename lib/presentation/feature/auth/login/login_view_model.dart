@@ -3,6 +3,7 @@ import 'package:domain/repository/app_repository.dart';
 import 'package:domain/repository/auth_repository.dart';
 import 'package:domain/repository/firebase_repository.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:evntas/presentation/base/base_viewmodel.dart';
 import 'package:evntas/presentation/feature/auth/login/route/login_argument.dart';
 import 'package:evntas/presentation/feature/auth/validator/email_validator.dart';
@@ -54,21 +55,45 @@ class LoginViewModel extends BaseViewModel<LoginArgument> {
   onForgotPasswordButtonLongPressed() {}
 
   Future<void> signInWithGoogle() async {
-    final userData = await loadData(authRepository.signInWithGoogle());
+    try {
+      final userData = await loadData(authRepository.signInWithGoogle());
+      if (userData.id.isEmpty) {
+        showToast(
+          uiText: FixedUiText(text: 'Google sign-in was cancelled. Please try again.'),
+        );
+        return;
+      }
 
-    await appRepository.setUserId(userData.id);
+      await appRepository.setUserId(userData.id);
 
-    final user = await authRepository.getUserById(userData.id);
+      final user = await authRepository.getUserById(userData.id);
 
-    if(user == null){
-      final token = await firebaseRepository.getFCMToken();
-      if(token == null) return;
-      await authRepository.addUser(userData, token);
+      if (user == null) {
+        final token = await firebaseRepository.getFCMToken();
+        if (token == null) return;
+        await authRepository.addUser(userData, token);
+      }
+
+      navigateToScreen(
+        destination: HomeRoute(arguments: HomeArgument(userId: '123')),
+        isClearBackStack: true,
+      );
+    } on PlatformException catch (e) {
+      if (e.code == 'sign_in_failed') {
+        showToast(
+          uiText: FixedUiText(
+            text: 'Google Sign-In configuration is invalid for this build. Please contact support.',
+          ),
+        );
+        return;
+      }
+      showToast(
+        uiText: FixedUiText(text: 'Google sign-in failed. Please try again.'),
+      );
+    } on Exception catch (_) {
+      showToast(
+        uiText: FixedUiText(text: 'Google sign-in failed. Please try again.'),
+      );
     }
-
-    navigateToScreen(
-      destination: HomeRoute(arguments: HomeArgument(userId: '123')),
-      isClearBackStack: true,
-    );
   }
 }

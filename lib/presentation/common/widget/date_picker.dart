@@ -1410,7 +1410,7 @@ class _DateRangePickerDialogState extends State<DateRangePickerDialog> with Rest
                   : localizations.dateRangePickerHelpText.toUpperCase()
           ),
         );
-        final DialogTheme dialogTheme = Theme.of(context).dialogTheme;
+        final DialogThemeData dialogTheme = Theme.of(context).dialogTheme;
         size = orientation == Orientation.portrait ? _inputPortraitDialogSize : _inputRangeLandscapeDialogSize;
         insetPadding = const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0);
         shape = dialogTheme.shape;

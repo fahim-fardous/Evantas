@@ -5,6 +5,7 @@ class EventMapper {
   static Event mapResponseToDomain(EventResponse event) {
     return Event(
       id: event.id,
+      createdBy: event.createdBy,
       title: event.title,
       description: event.description,
       date: event.date,

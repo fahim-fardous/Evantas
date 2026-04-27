@@ -26,9 +26,11 @@ class SupabaseService {
 
   Future<void> addEvent(Event event) async {
     try {
+      final userId = await appRepository.getUserId();
       await supabaseClient
           .from('events')
           .insert({
+            'created_by': event.createdBy ?? userId,
             'title': event.title,
             'description': event.description,
             'date': event.date.toIso8601String().split('T')[0],
@@ -38,6 +40,37 @@ class SupabaseService {
           })
           .select()
           .single();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> updateEvent({required int eventId, required Event event}) async {
+    try {
+      final userId = await appRepository.getUserId();
+      if (userId == null || userId.trim().isEmpty) {
+        throw Exception('Only authenticated creator can update this event.');
+      }
+
+      final updated = await supabaseClient
+          .from('events')
+          .update({
+            'title': event.title,
+            'description': event.description,
+            'date': event.date.toIso8601String().split('T')[0],
+            'location': event.location,
+            'event_type': event.eventType.name,
+            'time':
+                "${event.time.hour.toString().padLeft(2, '0')}:${event.time.minute.toString().padLeft(2, '0')}",
+          })
+          .eq('id', eventId)
+          .eq('created_by', userId)
+          .select('id')
+          .maybeSingle();
+
+      if (updated == null) {
+        throw Exception('You can only update events created by you.');
+      }
     } catch (e) {
       rethrow;
     }
@@ -107,6 +140,38 @@ class SupabaseService {
     }
   }
 
+  Future<List<String>> getEventAttendeeNames(int eventId) async {
+    try {
+      final attendeeRows = await supabaseClient
+          .from('attendees')
+          .select('attendee_id')
+          .eq('event_id', eventId);
+
+      final attendeeIds = attendeeRows
+          .map((row) => (row['attendee_id'] ?? '').toString())
+          .where((id) => id.trim().isNotEmpty)
+          .toSet()
+          .toList();
+
+      if (attendeeIds.isEmpty) {
+        return [];
+      }
+
+      final users = await supabaseClient
+          .from('users')
+          .select('name,user_id')
+          .inFilter('user_id', attendeeIds);
+
+      final names = users
+          .map((row) => (row['name'] ?? '').toString().trim())
+          .where((name) => name.isNotEmpty)
+          .toList();
+      return names;
+    } catch (e) {
+      return [];
+    }
+  }
+
   Future<void> addUser(GoogleUserData user, String fcmToken) async {
     await supabaseClient.from('users').insert({
       'name': user.name,
@@ -120,23 +185,44 @@ class SupabaseService {
 
   Future<UserDataResponse?> getUserById(String userId) async {
     try {
-      final isUserExists = await supabaseClient
+      if (userId.trim().isEmpty) return null;
+
+      final byExternalUserId = await supabaseClient
           .from('users')
           .select()
           .eq('user_id', userId)
           .limit(1)
           .maybeSingle();
-
-      if (isUserExists == null) {
-        return null;
+      if (byExternalUserId != null) {
+        return UserDataResponse.fromJson(byExternalUserId);
       }
 
-      final response = await supabaseClient
+      // Fallback for records that may store numeric local user id.
+      final numericId = int.tryParse(userId);
+      if (numericId != null) {
+        final byNumericId = await supabaseClient
+            .from('users')
+            .select()
+            .eq('id', numericId)
+            .limit(1)
+            .maybeSingle();
+        if (byNumericId != null) {
+          return UserDataResponse.fromJson(byNumericId);
+        }
+      }
+
+      // Fallback for records that may store creator email.
+      final byEmail = await supabaseClient
           .from('users')
           .select()
-          .eq('user_id', userId)
-          .single();
-      return UserDataResponse.fromJson(response);
+          .eq('email', userId)
+          .limit(1)
+          .maybeSingle();
+      if (byEmail != null) {
+        return UserDataResponse.fromJson(byEmail);
+      }
+
+      return null;
     } catch (e) {
       return null;
     }

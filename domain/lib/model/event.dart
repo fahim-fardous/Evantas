@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class Event {
   final int id;
+  final String? createdBy;
   final String title;
   final String? description;
   final DateTime date;
@@ -13,6 +14,7 @@ class Event {
 
   Event({
     this.id = 0,
+    this.createdBy,
     required this.title,
     this.description,
     required this.date,
