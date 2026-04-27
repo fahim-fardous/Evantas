@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class EventResponse {
   final int id;
+  final String? createdBy;
   final String title;
   final String description;
   final DateTime date;
@@ -12,6 +13,7 @@ class EventResponse {
 
   EventResponse({
     required this.id,
+    this.createdBy,
     required this.title,
     required this.description,
     required this.date,
@@ -23,6 +25,7 @@ class EventResponse {
   factory EventResponse.fromJson(Map<String, dynamic> json) {
     return EventResponse(
       id: json['id'],
+      createdBy: json['created_by'] as String?,
       title: json['title'],
       description: json['description'],
       date: DateTime.parse(json['date']),

@@ -83,10 +83,13 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<GoogleUserData> signInWithGoogle() {
+  Future<GoogleUserData> signInWithGoogle() async {
     try {
-      final user = googleSignInService.signIn();
-      return user.then((value) => GoogleUserMapper.mapResponseToDomain(value));
+      final user = await googleSignInService.signIn();
+      if (user == null) {
+        throw Exception('Google sign-in cancelled');
+      }
+      return GoogleUserMapper.mapResponseToDomain(user);
     } catch (e) {
       rethrow;
     }

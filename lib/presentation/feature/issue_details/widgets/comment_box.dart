@@ -33,14 +33,14 @@ class CommentBox extends StatelessWidget {
             Text(
               user.name,
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
+                    color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
             SizedBox(height: Dimens.dimen_8),
             Text(
               comment.comment,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
+                    color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
           ],

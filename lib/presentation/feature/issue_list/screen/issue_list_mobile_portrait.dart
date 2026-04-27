@@ -18,6 +18,7 @@ class IssueListMobilePortraitState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: _buildAppBar(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: _buildFloatingActionButton(context),
@@ -27,6 +28,9 @@ class IssueListMobilePortraitState
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      elevation: 0,
+      centerTitle: true,
       title: Text("Issue List",
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Theme.of(context).colorScheme.primary,
@@ -54,35 +58,82 @@ class IssueListMobilePortraitState
   }
 
   Widget _buildBody(BuildContext context) {
-    return valueListenableBuilder(
-      listenable: widget.viewModel.issues,
-      builder: (context, value) {
-        return Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: Dimens.dimen_16,
-            vertical: Dimens.dimen_16,
-          ),
-          child: ListView.separated(
-            itemCount: value.length,
-            itemBuilder: (context, index) => valueListenableBuilder(
-              listenable: widget.viewModel.issueVotedByCurrentUser,
-              builder: (context, issueVotedByCurrentUser) => IssueCardListTile(
-                issue: value[index],
-                isLiked: issueVotedByCurrentUser.any((issue) =>
-                    issue.id == value[index].id && issue.isLiked == true),
-                isDisliked: issueVotedByCurrentUser.any((issue) =>
-                    issue.id == value[index].id && issue.isDisliked == true),
-                onTap: (id) => widget.viewModel.onIssueClicked(id),
-                onLikeTap: (index) => widget.viewModel.onLikeTap(index),
-                onDislikeTap: (index) => widget.viewModel.onDislikeTap(index),
-              ),
+    return SafeArea(
+      child: valueListenableBuilder(
+        listenable: widget.viewModel.issueVotedByCurrentUser,
+        builder: (context, issueVotedByCurrentUser) {
+          return valueListenableBuilder(
+            listenable: widget.viewModel.issues,
+            builder: (context, issues) {
+              if (issues.isEmpty) {
+                return _buildEmptyState(context);
+              }
+
+              return ListView.separated(
+                padding: EdgeInsets.fromLTRB(
+                  Dimens.dimen_16,
+                  Dimens.dimen_16,
+                  Dimens.dimen_16,
+                  Dimens.dimen_80,
+                ),
+                physics: const BouncingScrollPhysics(),
+                itemCount: issues.length,
+                itemBuilder: (context, index) {
+                  final issue = issues[index];
+                  return IssueCardListTile(
+                    issue: issue,
+                    isLiked: issueVotedByCurrentUser.any((votedIssue) =>
+                        votedIssue.id == issue.id && votedIssue.isLiked == true),
+                    isDisliked: issueVotedByCurrentUser.any((votedIssue) =>
+                        votedIssue.id == issue.id &&
+                        votedIssue.isDisliked == true),
+                    onTap: (id) => widget.viewModel.onIssueClicked(id),
+                    onLikeTap: (id) => widget.viewModel.onLikeTap(id),
+                    onDislikeTap: (id) => widget.viewModel.onDislikeTap(id),
+                  );
+                },
+                separatorBuilder: (context, index) => SizedBox(
+                  height: Dimens.dimen_16,
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: Dimens.dimen_24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.inbox_outlined,
+              color: Theme.of(context).colorScheme.primary,
+              size: Dimens.dimen_48,
             ),
-            separatorBuilder: (context, index) => SizedBox(
-              height: Dimens.dimen_16,
+            SizedBox(height: Dimens.dimen_12),
+            Text(
+              "No issues yet",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
             ),
-          ),
-        );
-      },
+            SizedBox(height: Dimens.dimen_8),
+            Text(
+              "Tap + to add the first issue.",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

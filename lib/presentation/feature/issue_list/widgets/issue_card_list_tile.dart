@@ -75,7 +75,7 @@ class IssueCardListTile extends StatelessWidget {
               child: Text(
                 issue.description,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
+                      color: Theme.of(context).colorScheme.onBackground,
                       fontWeight: FontWeight.normal,
                     ),
                 maxLines: 3,
@@ -99,14 +99,14 @@ class IssueCardListTile extends StatelessWidget {
                       height: Dimens.dimen_16,
                       color: isLiked
                           ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.onPrimary,
+                          : Theme.of(context).colorScheme.onBackground,
                     ),
                   ),
                   SizedBox(width: Dimens.dimen_8),
                   Text(
                     '${issue.upvoteCount} ${issue.upvoteCount <= 1 ? 'vote' : 'votes'}',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color: Theme.of(context).colorScheme.onBackground,
                           fontWeight: FontWeight.normal,
                         ),
                   ),
@@ -120,14 +120,14 @@ class IssueCardListTile extends StatelessWidget {
                       color:
                           isDisliked
                               ? Theme.of(context).colorScheme.error
-                              : Theme.of(context).colorScheme.onPrimary,
+                              : Theme.of(context).colorScheme.onBackground,
                     ),
                   ),
                   SizedBox(width: Dimens.dimen_8),
                   Text(
                     '${issue.downvoteCount} ${issue.downvoteCount <= 1 ? 'vote' : 'votes'}',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color: Theme.of(context).colorScheme.onBackground,
                           fontWeight: FontWeight.normal,
                         ),
                   ),

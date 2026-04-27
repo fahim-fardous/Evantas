@@ -3,6 +3,8 @@ import 'package:data/remote/api_client/api_client.dart';
 import 'package:data/remote/api_client/movie_api_client.dart';
 import 'package:data/remote/api_service/movie_api_service.dart';
 import 'package:data/remote/api_service/movie_api_service_impl.dart';
+import 'package:data/remote/api_service/event_api_service.dart';
+import 'package:data/remote/api_service/event_api_service_impl.dart';
 import 'package:data/repository/auth_repository_impl.dart';
 import 'package:data/repository/event_repository_impl.dart';
 import 'package:data/repository/firebase_repository_impl.dart';
@@ -58,10 +60,12 @@ class DataModule {
   Future<void> injectSupabaseService() async {
     final supabaseClient = Supabase.instance.client;
     final appRepository = await _diModule.resolve<AppRepository>();
-    await _diModule.registerSingleton<SupabaseService>(SupabaseService(
-      supabaseClient: supabaseClient,
-      appRepository: appRepository,
-    ));
+    await _diModule.registerSingleton<SupabaseService>(
+      SupabaseService(
+        supabaseClient: supabaseClient,
+        appRepository: appRepository,
+      ),
+    );
   }
 
   Future<void> removeSupabaseService() async {
@@ -71,7 +75,8 @@ class DataModule {
   Future<void> injectFirebaseService() async {
     final appRepository = await _diModule.resolve<AppRepository>();
     await _diModule.registerSingleton<FirebaseNotificationService>(
-        FirebaseNotificationService());
+      FirebaseNotificationService(),
+    );
     await FirebaseNotificationService.initialize();
   }
 
@@ -92,15 +97,20 @@ class DataModule {
     await _diModule.registerSingleton<MovieApiService>(
       MovieApiServiceImpl(apiClient: apiClient),
     );
+    await _diModule.registerSingleton<EventApiService>(
+      EventApiServiceImpl(apiClient: apiClient),
+    );
   }
 
   Future<void> removeApiService() async {
+    await _diModule.unregisterSingleton<EventApiService>();
     await _diModule.unregisterSingleton<MovieApiService>();
   }
 
   Future<void> injectGoogleSignInService() async {
-    await _diModule
-        .registerSingleton<GoogleSignInService>(GoogleSignInService());
+    await _diModule.registerSingleton<GoogleSignInService>(
+      GoogleSignInService(),
+    );
   }
 
   Future<void> removeGoogleSignInService() async {
@@ -122,39 +132,47 @@ class DataModule {
   Future<void> injectRepositories() async {
     final movieApiService = await _diModule.resolve<MovieApiService>();
     final supabaseService = await _diModule.resolve<SupabaseService>();
+    final eventApiService = await _diModule.resolve<EventApiService>();
     final googleSignInService = await _diModule.resolve<GoogleSignInService>();
-    final firebaseService =
-        await _diModule.resolve<FirebaseNotificationService>();
+    final firebaseService = await _diModule
+        .resolve<FirebaseNotificationService>();
 
     await _diModule.registerSingleton<MovieRepository>(
       MovieRepositoryImpl(movieApiService: movieApiService),
     );
 
-    await _diModule.registerSingleton<AuthRepository>(AuthRepositoryImpl(
-      googleSignInService: googleSignInService,
-      supabaseService: supabaseService,
-    ));
+    await _diModule.registerSingleton<AuthRepository>(
+      AuthRepositoryImpl(
+        googleSignInService: googleSignInService,
+        supabaseService: supabaseService,
+      ),
+    );
 
-    await _diModule
-        .registerSingleton<LocationRepository>(LocationRepositoryImpl());
+    await _diModule.registerSingleton<LocationRepository>(
+      LocationRepositoryImpl(),
+    );
 
     await _diModule.registerSingleton<EventRepository>(
-        EventRepositoryImpl(supabaseService));
+      EventRepositoryImpl(
+        supabaseService: supabaseService,
+        eventApiService: eventApiService,
+      ),
+    );
 
     await _diModule.registerSingleton<MemoryRepository>(
-        MemoryRepositoryImpl(supabaseService: supabaseService));
+      MemoryRepositoryImpl(supabaseService: supabaseService),
+    );
 
-    await _diModule.registerSingleton<ProfileRepository>(ProfileRepositoryImpl(
-      supabaseService: supabaseService,
-    ));
+    await _diModule.registerSingleton<ProfileRepository>(
+      ProfileRepositoryImpl(supabaseService: supabaseService),
+    );
 
     await _diModule.registerSingleton<IssueRepository>(
-        IssueRepositoryImpl(supabaseService: supabaseService));
+      IssueRepositoryImpl(supabaseService: supabaseService),
+    );
 
     await _diModule.registerSingleton<FirebaseRepository>(
-      FirebaseRepositoryImpl(
-        firebaseService: firebaseService,
-      ),
+      FirebaseRepositoryImpl(firebaseService: firebaseService),
     );
   }
 

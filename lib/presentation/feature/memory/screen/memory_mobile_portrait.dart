@@ -2,9 +2,9 @@ import 'package:evntas/presentation/common/extension/context_ext.dart';
 import 'package:evntas/presentation/localization/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:evntas/presentation/base/base_ui_state.dart';
+import 'package:evntas/presentation/feature/memory/widget/memory_cards_section.dart';
+import 'package:evntas/presentation/feature/memory/widget/memory_header.dart';
 import 'package:evntas/presentation/feature/memory/memory_view_model.dart';
-import 'package:evntas/presentation/theme/color/app_colors.dart';
-import 'package:evntas/presentation/util/constants.dart';
 import 'package:evntas/presentation/values/dimens.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -20,55 +20,36 @@ class MemoryMobilePortrait extends StatefulWidget {
 class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Memory",
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-              ),
-        ),
-        centerTitle: true,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: _buildFloatingActionButton(context),
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: valueListenableBuilder(
           listenable: widget.viewModel.uploadedImages,
           builder: (context, value) => Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: Dimens.dimen_16,
+              horizontal: Dimens.dimen_20,
               vertical: Dimens.dimen_16,
             ),
             child: Column(
               children: [
+                MemoryHeader(
+                  onAddMemoryTap: _showUploadSourceSheet,
+                ),
+                SizedBox(height: Dimens.dimen_18),
                 Expanded(
-                  child: GridView.builder(
-                    itemCount: value.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: Dimens.dimen_4,
-                      mainAxisSpacing: Dimens.dimen_4,
-                      childAspectRatio: 1, // square cells
-                    ),
-                      itemBuilder: (context, index) => GestureDetector(
-                        onTap: () => widget.viewModel.onTapPhoto(index),
-                        child: GestureDetector(
-                          onLongPress: () => _showDeleteDialog(value[index]),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(Dimens.dimen_10),
-                            child: Image.network(
-                              value.isNotEmpty
-                                  ? value[index]
-                                  : Constants.emptyPlaceholderUrl,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
+                  child: ListView(
+                    children: [
+                      MemoryCardsSection(
+                        images: value,
+                        onTapImage: widget.viewModel.onTapPhoto,
+                        onLongPressImage: _showDeleteDialog,
+                        onAddMemoryTap: _showUploadSourceSheet,
                       ),
-
+                    ],
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -100,39 +81,41 @@ class MemoryMobilePortraitState extends BaseUiState<MemoryMobilePortrait> {
     );
   }
 
-
-
-  Widget _buildFloatingActionButton(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: Dimens.dimen_16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          FloatingActionButton(
-            heroTag: "camera",
-            backgroundColor: AppColors.of(context).mainColor,
-            child: const Icon(
-              Icons.camera_alt,
-              color: Colors.white,
+  void _showUploadSourceSheet() {
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (context) {
+        return SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: Dimens.dimen_16,
+              vertical: Dimens.dimen_8,
             ),
-            onPressed: () => widget.viewModel.uploadPhoto(ImageSource.camera),
-          ),
-          SizedBox(
-            width: Dimens.dimen_4,
-          ),
-          FloatingActionButton(
-            heroTag: "gallery",
-            backgroundColor: AppColors.of(context).secondary,
-            child: const Icon(
-              Icons.image,
-              color: Colors.white,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.camera_alt_outlined),
+                  title: const Text("Camera"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    widget.viewModel.uploadPhoto(ImageSource.camera);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.image_outlined),
+                  title: const Text("Gallery"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    widget.viewModel.uploadPhoto(ImageSource.gallery);
+                  },
+                ),
+              ],
             ),
-            onPressed: () => widget.viewModel.uploadPhoto(ImageSource.gallery),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
-
 }

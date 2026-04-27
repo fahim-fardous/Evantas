@@ -9,8 +9,10 @@ abstract class ApiClient {
 
   Future<Map<String, String>> getCustomHeader();
 
-  Future<Map<String, dynamic>> get(String endpoint,
-      {Map<String, dynamic>? queryParameters}) async {
+  Future<Map<String, dynamic>> get(
+    String endpoint, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
     final url = Uri.parse('$baseUrl/$endpoint').replace(
       queryParameters: queryParameters?.map(
         (key, value) => MapEntry(key, value.toString()),
@@ -26,38 +28,76 @@ abstract class ApiClient {
     return _processResponse(response);
   }
 
-  Future<Map<String, dynamic>> post(String endpoint,
-      {Map<String, dynamic>? data, Map<String, String>? headers}) async {
+  Future<Map<String, dynamic>> post(
+    String endpoint, {
+    Map<String, dynamic>? data,
+    Map<String, String>? headers,
+  }) async {
     final response = await http.post(
       Uri.parse('$baseUrl/$endpoint'),
       body: jsonEncode(data),
       headers: await _buildHeaders(headers),
     );
 
-    _logRequest('POST', Uri.parse('$baseUrl/$endpoint'),
-        data: data, headers: headers);
+    _logRequest(
+      'POST',
+      Uri.parse('$baseUrl/$endpoint'),
+      data: data,
+      headers: headers,
+    );
     _logResponse(response);
 
     return _processResponse(response);
   }
 
-  Future<Map<String, dynamic>> put(String endpoint,
-      {Map<String, dynamic>? data, Map<String, String>? headers}) async {
+  Future<Map<String, dynamic>> put(
+    String endpoint, {
+    Map<String, dynamic>? data,
+    Map<String, String>? headers,
+  }) async {
     final response = await http.put(
       Uri.parse('$baseUrl/$endpoint'),
       body: jsonEncode(data),
       headers: await _buildHeaders(headers),
     );
 
-    _logRequest('PUT', Uri.parse('$baseUrl/$endpoint'),
-        data: data, headers: headers);
+    _logRequest(
+      'PUT',
+      Uri.parse('$baseUrl/$endpoint'),
+      data: data,
+      headers: headers,
+    );
     _logResponse(response);
 
     return _processResponse(response);
   }
 
-  Future<Map<String, dynamic>> delete(String endpoint,
-      {Map<String, String>? headers}) async {
+  Future<Map<String, dynamic>> patch(
+    String endpoint, {
+    Map<String, dynamic>? data,
+    Map<String, String>? headers,
+  }) async {
+    final response = await http.patch(
+      Uri.parse('$baseUrl/$endpoint'),
+      body: jsonEncode(data),
+      headers: await _buildHeaders(headers),
+    );
+
+    _logRequest(
+      'PATCH',
+      Uri.parse('$baseUrl/$endpoint'),
+      data: data,
+      headers: headers,
+    );
+    _logResponse(response);
+
+    return _processResponse(response);
+  }
+
+  Future<Map<String, dynamic>> delete(
+    String endpoint, {
+    Map<String, String>? headers,
+  }) async {
     _logRequest('DELETE', Uri.parse('$baseUrl/$endpoint'), headers: headers);
 
     final response = await http.delete(
@@ -71,12 +111,17 @@ abstract class ApiClient {
   }
 
   Future<Map<String, String>> _buildHeaders(
-      Map<String, String>? headers) async {
+    Map<String, String>? headers,
+  ) async {
     return {...await getCustomHeader(), ...?headers};
   }
 
-  void _logRequest(String method, Uri url,
-      {Map<String, dynamic>? data, Map<String, String>? headers}) {
+  void _logRequest(
+    String method,
+    Uri url, {
+    Map<String, dynamic>? data,
+    Map<String, String>? headers,
+  }) {
     Logger.info('Sending $method request to $url', prettyPrint: true);
     if (headers != null && headers.isNotEmpty) {
       var formattedHeaders = const JsonEncoder.withIndent(' ').convert(headers);
@@ -96,8 +141,9 @@ abstract class ApiClient {
       prettyPrint: true,
     );
     if (response.headers.isNotEmpty) {
-      var formattedHeaders =
-          const JsonEncoder.withIndent(' ').convert(response.headers);
+      var formattedHeaders = const JsonEncoder.withIndent(
+        ' ',
+      ).convert(response.headers);
       Logger.info('Response Headers: $formattedHeaders');
     }
   }
